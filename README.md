@@ -1,0 +1,2 @@
+# nixosConfigruation
+nixosConfigurationGeneral&amp;Cyber
