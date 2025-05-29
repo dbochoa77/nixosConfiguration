@@ -15,25 +15,12 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.initrd.luks.devices."luks-UUID-HERE".device = "/dev/disk/by-uuid/UUID-HERE";
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-    [
-      ./hardware-configuration.nix
-    ];
-
 ##############
 # Bootloader #
 ##############
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
   boot.initrd.luks.devices."luks-5f8ec843-3be5-4997-b9c4-7203d3c3b575".device = "/dev/disk/by-uuid/5f8ec843-3be5-4997-b9c4-7203d3c3b575";
 
 ########################
@@ -53,20 +40,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-
-  services.xserver.enable = true;
-  services.xserver.displayManager.startx.enable = true;
-  services.xserver.windowManager.dwm.enable = true; REMOVED IF CUSTOM DWM 
-
-
-  # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
-
-  # Select internationalisation properties.
-
 #####################
 # Enable networking #
 #####################
@@ -79,6 +52,8 @@
 
   services.xserver.enable = true;
   services.xserver.displayManager.startx.enable = true;
+  services.xserver.windowManager.dwm.enable = true; REMOVED IF CUSTOM DWM 
+
 
 ############
 # Timezone #
@@ -132,47 +107,6 @@
 #services.xserver.displayManager.startx.enable = true;
 
  # services.xserver.windowManager.dwm.enable = false;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-
-
-  # Audio
-  mesa
-  libva
-  vdpauinfo
-  vlc
-
-  # School
-  obsidian
-
-  # General Desktop Tools
-  htop
-  btop
-  curl
-  unzip
-  rtkit
-  zip
-  fastfetch
-  timeshift
-  zsh
-  pkg-config
-  flameshot
-  yt-dlp
-  mpv
-  rsync
-  discord
-
-#########################
-# Allow unfree packages #
-#########################
-
-  nixpkgs.config.allowUnfree = true;
-
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
  
 #######################
 ### System Packages ###
@@ -375,26 +309,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-
-  # Virtualization
-
-systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
-
-  # Pipewire
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true; # if not already enabled
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-  };
-
-#sound.enable = true;
-#hardware.pipewire.enable = true;
 
 ##################################
 #### --- Services Enabled  --- ###
