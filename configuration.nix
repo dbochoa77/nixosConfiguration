@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-=======
 ###############################################
 ### --- Diego Ochoa NixOS Configuration --- ###
 ###############################################
@@ -10,13 +5,12 @@
 ###################
 #Config & Packages#
 ###################
->>>>>>> 17e1b34 (Add configuration.nix)
 
 { config, pkgs, ... }:
 
 {
   imports =
-<<<<<<< HEAD
+ 
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
@@ -29,7 +23,6 @@
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-=======
     [
       ./hardware-configuration.nix
     ];
@@ -56,32 +49,24 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
->>>>>>> 17e1b34 (Add configuration.nix)
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-<<<<<<< HEAD
   # Enable networking
   networking.networkmanager.enable = true;
 
 
   services.xserver.enable = true;
   services.xserver.displayManager.startx.enable = true;
-/*  services.xserver.windowManager.dwm.enable = true; REMOVED SINCE CUSTOM DWM */
+  services.xserver.windowManager.dwm.enable = true; REMOVED IF CUSTOM DWM 
 
-/*  services.getty."tty1".autoLogin = {
-    enable = true;
-    user = "isNormalUser";
-    };
-
-*/
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
   # Select internationalisation properties.
-=======
+
 #####################
 # Enable networking #
 #####################
@@ -105,9 +90,7 @@
 # Select internationalisation properties. #
 ###########################################
 
->>>>>>> 17e1b34 (Add configuration.nix)
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -120,27 +103,19 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-<<<<<<< HEAD
-  # Configure keymap in X11
-=======
 ###########################
 # Configure keymap in X11 #
 ###########################
 
->>>>>>> 17e1b34 (Add configuration.nix)
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-<<<<<<< HEAD
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-=======
 ################
 # User Account #
 ################
 
->>>>>>> 17e1b34 (Add configuration.nix)
   users.users.dbochoa77 = {
     isNormalUser = true;
     description = "dbochoa77";
@@ -148,7 +123,6 @@
     packages = with pkgs; [];
   };
 
-<<<<<<< HEAD
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -190,7 +164,6 @@
   rsync
   discord
 
-=======
 #########################
 # Allow unfree packages #
 #########################
@@ -217,7 +190,6 @@
   vdpauinfo
   vlc
 
->>>>>>> 17e1b34 (Add configuration.nix)
   # Bluetooth
   bluez
   bluez-tools
@@ -227,7 +199,6 @@
   firefox
   brave
 
-<<<<<<< HEAD
   # X11
   xorg.xinit
   xorg.xsetroot
@@ -237,8 +208,6 @@
   xorg.libX11
   xorg.libXext
 
-=======
->>>>>>> 17e1b34 (Add configuration.nix)
   # Rice
   dmenu
   nerdfonts
@@ -250,20 +219,15 @@
   bibata-cursors
   jetbrains-mono
 
-<<<<<<< HEAD
-=======
   # School
   discord
   obsidian
   gimp 
   libreoffice 
->>>>>>> 17e1b34 (Add configuration.nix)
 
   # Terminal
   alacritty
 
-<<<<<<< HEAD
-=======
   # Utlities
   p7zip
   curl
@@ -291,7 +255,6 @@
   xorg.libXrandr
   xorg.libX11
   xorg.libXext
->>>>>>> 17e1b34 (Add configuration.nix)
 
   # 3D Printing Tools
   prusa-slicer
@@ -299,16 +262,13 @@
   freecad
   blender
 
-<<<<<<< HEAD
   #################
   # Delovper Tools#
   #################
-=======
 
 #######################
 ### Developer Tools ###
 #######################
->>>>>>> 17e1b34 (Add configuration.nix)
 
   # General Tools
   git
@@ -324,15 +284,13 @@
   # Aseembly
   nasm
   yasm
-<<<<<<< HEAD
-=======
+ 
+
   glibc
   binutils
   pkg-config
   gcc_multi
   glibc_multi  
-
->>>>>>> 17e1b34 (Add configuration.nix)
 
   # C/C++
   gcc
@@ -351,13 +309,10 @@
   python3Packages.requests
   python3Packages.flask
 
-<<<<<<< HEAD
-=======
 ###########################
 ### Cybersecuirty Tools ###
 ###########################
 
->>>>>>> 17e1b34 (Add configuration.nix)
   # Cybersecurity Tools
   nmap
   whois
@@ -421,7 +376,6 @@
   #   enableSSHSupport = true;
   # };
 
-<<<<<<< HEAD
   # List services that you want to enable:
 
   # Virtualization
@@ -442,8 +396,6 @@ systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share
 #sound.enable = true;
 #hardware.pipewire.enable = true;
 
-  # Bluetooth
-=======
 ##################################
 #### --- Services Enabled  --- ###
 ##################################
@@ -452,8 +404,7 @@ systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share
 # Bluetooth #
 #############
 
->>>>>>> 17e1b34 (Add configuration.nix)
-  services.pipewire.wireplumber.extraConfig."10-bluez" = {
+services.pipewire.wireplumber.extraConfig."10-bluez" = {
     "monitor.bluez.properties" = {
       "bluez5.enable-sbc-xq" = true;
       "bluez5.enable-msbc" = true;
@@ -473,8 +424,6 @@ hardware.bluetooth = {
 };
 services.blueman.enable = true;
 
-<<<<<<< HEAD
-=======
 ############
 # Pipewire #
 ############
@@ -501,7 +450,6 @@ virtualisation.libvirtd.enable = true;
 
 virtualisation.spiceUSBRedirection.enable = true;
 
->>>>>>> 17e1b34 (Add configuration.nix)
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -516,28 +464,10 @@ virtualisation.spiceUSBRedirection.enable = true;
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
 
-<<<<<<< HEAD
-/*ChatGPT Generated*/
-/*services.xserver.displayManager.lightdm = {
-  enable = true;
-  greeters.gtk.enable = true;
-  greeters.gtk.extraConfig = ''
-    background = /etc/nixos/wallpapers/matrix.png
-    theme-name = Adwaita-dark
-    font-name = JetBrains Mono 11
-    position = 50%,center 50%,center
-  '';
-};
-*/
-=======
-
 #######################
 # Intel Video Drivers #
 #######################
 
 services.xserver.videoDrivers = [ "modesetting" ];
-
-#ChatGPTGenerated
->>>>>>> 17e1b34 (Add configuration.nix)
 
 }
