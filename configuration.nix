@@ -10,10 +10,10 @@
 
 {
   imports =
- 
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
 
 ##############
 # Bootloader #
@@ -21,14 +21,30 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices."luks-5f8ec843-3be5-4997-b9c4-7203d3c3b575".device = "/dev/disk/by-uuid/5f8ec843-3be5-4997-b9c4-7203d3c3b575";
+
+#####################
+# Use latest kernel #
+#####################
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+##############
+# Encryption #
+##############
+
+  boot.initrd.luks.devices."luks-6f5a683b-a714-46fb-88b5-db4d59342ef4".device = "/dev/disk/by-uuid/6f5a683b-a714-46fb-88b5-db4d59342ef4";
 
 ########################
-# Networking Host Name # 
+# Networking Host Name #
 ########################
- 
-  networking.hostName = "nixos"; 
+
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
 
 ##########
 # Flakes #
@@ -36,24 +52,19 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
 #####################
 # Enable networking #
 #####################
 
+  # Enable networking
   networking.networkmanager.enable = true;
 
 ####################
 # Services Xserver #
 ####################
 
-  services.xserver.enable = true;
-  services.xserver.displayManager.startx.enable = true;
-  services.xserver.windowManager.dwm.enable = true; REMOVED IF CUSTOM DWM 
-
+services.xserver.enable = true;
+services.xserver.windowManager.dwm.enable = true;
 
 ############
 # Timezone #
@@ -66,6 +77,7 @@
 ###########################################
 
   i18n.defaultLocale = "en_US.UTF-8";
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -78,14 +90,16 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+
 ###########################
 # Configure keymap in X11 #
 ###########################
 
-  services.xserver.xkb = {
+    services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
+
 
 ################
 # User Account #
@@ -98,16 +112,15 @@
     packages = with pkgs; [];
   };
 
-  # Allow unfree packages
+  # Enable automatic login for the user.
+  services.getty.autologinUser = "dbochoa77";
+
+############################
+# Priopitory Packages True #
+############################
+
   nixpkgs.config.allowUnfree = true;
 
-
-#{  services.xserver.enable = true;
-
-#services.xserver.displayManager.startx.enable = true;
-
- # services.xserver.windowManager.dwm.enable = false;
- 
 #######################
 ### System Packages ###
 #######################
@@ -144,8 +157,8 @@
 
   # Rice
   dmenu
-  nerdfonts
-  font-awesome
+  #nerdfonts
+  #font-awesome
   feh
   slock
   adwaita-qt
@@ -156,11 +169,12 @@
   # School
   discord
   obsidian
-  gimp 
-  libreoffice 
+  gimp
+  libreoffice
 
   # Terminal
   alacritty
+  st
 
   # Utlities
   p7zip
@@ -180,7 +194,7 @@
   yt-dlp
   zip
   zsh
-
+  wget
   # X11
   xorg.xinit
   xorg.xsetroot
@@ -218,13 +232,13 @@
   # Aseembly
   nasm
   yasm
- 
+
 
   glibc
   binutils
   pkg-config
   gcc_multi
-  glibc_multi  
+  glibc_multi
 
   # C/C++
   gcc
@@ -297,9 +311,6 @@
   bridge-utils       # For bridged networking
   OVMF
 
-
-  # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -309,6 +320,11 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  # List services that you want to enable:
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
 ##################################
 #### --- Services Enabled  --- ###
@@ -376,7 +392,7 @@ virtualisation.spiceUSBRedirection.enable = true;
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 #######################
 # Intel Video Drivers #
