@@ -1,6 +1,4 @@
 ###############################################
-### --- Diego Ochoa NixOS Configuration --- ###
-###############################################
 
 ###################
 #Config & Packages#
@@ -32,19 +30,16 @@
 # Encryption #
 ##############
 
-  boot.initrd.luks.devices."luks-6f5a683b-a714-46fb-88b5-db4d59342ef4".device = "/dev/disk/by-uuid/6f5a683b-a714-46fb-88b5-db4d59342ef4";
-
+  boot.initrd.luks.devices."luks-device".device = "/dev/disk/by-uui/YOUR-UUID-HERE";
+ 
 ########################
-# Networking Host Name #
+# Networking Host Name # 
 ########################
 
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
 
 ##########
 # Flakes #
@@ -62,9 +57,20 @@
 ####################
 # Services Xserver #
 ####################
+  services.xserver.enable = true;
 
-services.xserver.enable = true;
-services.xserver.windowManager.dwm.enable = true;
+#######
+# DWM #
+#######
+  #services.xserver.windowManager.dwm.enable = true;
+  services.xserver.displayManager.startx.enable = true;
+  services.xserver.windowManager.dwm.enable = true;
+
+services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs (old: {
+	src = /dwm;
+});
+
+
 
 ############
 # Timezone #
@@ -105,15 +111,15 @@ services.xserver.windowManager.dwm.enable = true;
 # User Account #
 ################
 
-  users.users.dbochoa77 = {
+  users.users.USERNAME = {
     isNormalUser = true;
-    description = "dbochoa77";
+    description = "USERNAME";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
 
   # Enable automatic login for the user.
-  services.getty.autologinUser = "dbochoa77";
+  services.getty.autologinUser = "USERNAME";
 
 ############################
 # Priopitory Packages True #
@@ -136,6 +142,10 @@ services.xserver.windowManager.dwm.enable = true;
   mesa
   vdpauinfo
   vlc
+  pipewire
+  pavucontrol # GUI volume control
+  alsa-utils  # For `alsamixer`, `speaker-test`, etc
+  dwm
 
   # Bluetooth
   bluez
@@ -143,8 +153,9 @@ services.xserver.windowManager.dwm.enable = true;
   blueman
 
   # Browser
-  firefox
   brave
+  librewolf
+  firefox
 
   # X11
   xorg.xinit
@@ -154,6 +165,7 @@ services.xserver.windowManager.dwm.enable = true;
   xorg.libXrandr
   xorg.libX11
   xorg.libXext
+  xorg.setxkbmap
 
   # Rice
   dmenu
@@ -169,12 +181,20 @@ services.xserver.windowManager.dwm.enable = true;
   # School
   discord
   obsidian
-  gimp
-  libreoffice
+  gimp 
+ libreoffice 
+  signal-desktop
+
+  # Cac Card Tools
+  pcsclite 
+  pcsc-tools
+  opensc
+  ccid 
+  nssTools  
 
   # Terminal
   alacritty
-  st
+  picom
 
   # Utlities
   p7zip
@@ -195,6 +215,19 @@ services.xserver.windowManager.dwm.enable = true;
   zip
   zsh
   wget
+  pkgs.mupdf 
+  zstd
+  brightnessctl
+  dosfstools
+  ntfs3g
+  util-linux
+  udisks
+    freetype
+fontconfig
+freetype
+    fontconfig
+pkgs.xorg.xinit
+
   # X11
   xorg.xinit
   xorg.xsetroot
@@ -203,16 +236,27 @@ services.xserver.windowManager.dwm.enable = true;
   xorg.libXrandr
   xorg.libX11
   xorg.libXext
+    xorg.libXft
+    xorg.libXinerama
+
 
   # 3D Printing Tools
   prusa-slicer
   openscad
-  freecad
   blender
+  freecad
 
-  #################
-  # Delovper Tools#
-  #################
+#######################
+# AUDIO TOOLS CHATGPT #
+#######################
+
+  ffmpeg
+  gst_all_1.gstreamer
+  gst_all_1.gst-plugins-base
+  gst_all_1.gst-plugins-good
+  gst_all_1.gst-plugins-bad
+  gst_all_1.gst-plugins-ugly
+  gst_all_1.gst-libav
 
 #######################
 ### Developer Tools ###
@@ -223,22 +267,23 @@ services.xserver.windowManager.dwm.enable = true;
   nano
   vim
   neovim
+  xclip
 
   # Low Level Language
   gdb # Debugger
 #  make
   cmake
   ninja
+  
   # Aseembly
   nasm
   yasm
-
-
+ 
   glibc
   binutils
   pkg-config
   gcc_multi
-  glibc_multi
+  glibc_multi  
 
   # C/C++
   gcc
@@ -311,93 +356,124 @@ services.xserver.windowManager.dwm.enable = true;
   bridge-utils       # For bridged networking
   OVMF
 
+################################
+# Electrical Engineering Toool #
+################################
+  
+  # Schematics
+  kicad            # Schematic + PCB editor
+  
+  # Extras 
+  kicadAddons.kikit
+  kicadAddons.kikit-library
+  
+  # Other   
+  fritzing         # Visual breadboard view
+  librepcb         # Lightweight alternative to KiCad
+  ngspice          # Circuit simulation
+  xschem           # Simple schematic tool
+  gnuplot          # Graph simulation results
+  inkscape         # For diagram annotation/export
+  imagemagick      # Convert/export images (PDF/PNG)
+  
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
 ##################################
 #### --- Services Enabled  --- ###
 ##################################
 
+#############################
+# Enable the OpenSSH daemon #
+#############################   
+  services.openssh.enable = true;
+
 #############
 # Bluetooth #
 #############
+  services.pipewire.wireplumber.extraConfig."10-bluez" = {
+      "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+        "bluez5.roles" = [
+          "hsp_hs"
+          "hsp_ag"
+          "hfp_hf"
+          "hfp_ag"
+          ];
+       };
+    };
 
-services.pipewire.wireplumber.extraConfig."10-bluez" = {
-    "monitor.bluez.properties" = {
-      "bluez5.enable-sbc-xq" = true;
-      "bluez5.enable-msbc" = true;
-      "bluez5.enable-hw-volume" = true;
-      "bluez5.roles" = [
-        "hsp_hs"
-        "hsp_ag"
-        "hfp_hf"
-        "hfp_ag"
-        ];
-     };
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
   };
+  services.blueman.enable = true;
 
-hardware.bluetooth = {
-  enable = true;
-  powerOnBoot = true;
-};
-services.blueman.enable = true;
+#####################
+### --- Sound --- ###
+#####################
+  boot.extraModprobeConfig = ''
+    options snd slots=snd-hda-intel
+  '';
+
+#######
+# CAC #
+#######
+  services.pcscd.enable = true; 
 
 ############
 # Pipewire #
 ############
-
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true; # if not already enabled
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
   };
+
+  services.pulseaudio.enable = false;
+
+##########################
+# Nix Package Management #
+##########################
 
 ####################
 # Virtual Machines #
 ####################
 
-programs.virt-manager.enable = true;
+  programs.virt-manager.enable = true;
 
-users.groups.libvirtd.members = ["dbochoa77"];
+  users.groups.libvirtd.members = ["USERNAME"];
 
-virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.enable = true;
 
-virtualisation.spiceUSBRedirection.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+########################
+# System State Version #
+########################
+  system.stateVersion = "25.05"; # Did you read the comment? YES
 
 #######################
 # Intel Video Drivers #
 #######################
+  services.xserver.videoDrivers = [ "modesetting" ];
+  hardware.graphics.enable = true;
 
-services.xserver.videoDrivers = [ "modesetting" ];
+  hardware.graphics.extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+    ];
+  
+
+################
+# Card Readers #
+################
+  boot.kernelModules = [ "usb_storage" "sd_mod" "mmc_block" ];
+
 
 }
