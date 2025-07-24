@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./qemu-kvm.nix
+  ];
+}
