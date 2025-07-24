@@ -7,7 +7,7 @@
     ./pipewire/pipewire.nix
     ./xserver/xserver.nix
     ./encryption/encryption.nix
-    ./boot
+    ./boot/default.nix
   ];
 }
 
