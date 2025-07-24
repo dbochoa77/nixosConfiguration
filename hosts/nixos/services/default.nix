@@ -5,6 +5,7 @@
     ./bluetooth/bluetooth.nix
     ./ssh/ssh.nix
     ./pipewire/pipewire.nix
+    ./xserver/xserver.nix
   ];
 }
 

@@ -1,4 +1,6 @@
-./home/features/cli/xinitrc.nix
+===============================
+FILE: ./home/features/cli/xinitrc.nix
+===============================
 { config, pkgs, ... }:
 
 {
@@ -13,7 +15,12 @@
   '';
 }
 
-./home/features/cli/fastfetch.nix
+
+
+
+===============================
+FILE: ./home/features/cli/fastfetch.nix
+===============================
 {
   config,
   lib,
@@ -31,7 +38,12 @@ in {
 }
 
 
-./home/features/cli/default.nix
+
+
+
+===============================
+FILE: ./home/features/cli/default.nix
+===============================
 {pkgs, ...}: {
     imports = [
     ./alias.nix
@@ -63,7 +75,12 @@ in {
     zip 
   ];
 }
-./home/features/cli/bash_profile.nix
+
+
+
+===============================
+FILE: ./home/features/cli/bash_profile.nix
+===============================
  { config, lib, pkgs, ... }:
 
 {
@@ -72,7 +89,12 @@ in {
   '';
 }
 
-./home/features/cli/alias.nix
+
+
+
+===============================
+FILE: ./home/features/cli/alias.nix
+===============================
 {
   config, 
   lib,
@@ -183,7 +205,12 @@ in {
   };
 }
 
-./home/dbochoa77/default.nix
+
+
+
+===============================
+FILE: ./home/dbochoa77/default.nix
+===============================
 {
   config,
   lib,
@@ -221,7 +248,12 @@ in {
     };
   };
 }
-./home/nixos/dbochoa77.nix
+
+
+
+===============================
+FILE: ./home/nixos/dbochoa77.nix
+===============================
 { config, ... }: { 
   imports = [ 
     ../dbochoa77
@@ -237,7 +269,12 @@ in {
   };
 }
 
-./home/nixos/dotfiles/default.nix
+
+
+
+===============================
+FILE: ./home/nixos/dotfiles/default.nix
+===============================
 {
   inputs, 
   ...
@@ -245,11 +282,21 @@ in {
 
 {
 home.file.".config/nvim" = { 
-    source = "${inputs.dotfiles}/nvim";
+    source = "${inputs.nvimDotfiles}/nvim";
     recursive = true;
   };
+
+home.file.".config/dwm" = { 
+    source = "$inputs.dwmDotfiles}/dwm";
+    recursive = true;
+  }
 }
-./home/nixos/home.nix
+
+
+
+===============================
+FILE: ./home/nixos/home.nix
+===============================
 { config, lib, pkgs, ... }:
 
 {
@@ -328,7 +375,12 @@ home.file.".config/nvim" = {
 
   programs.home-manager.enable = true;
 }
-./flake.nix
+
+
+
+===============================
+FILE: ./flake.nix
+===============================
 {
   description = "Configuration for Nixos Server";
 
@@ -340,8 +392,14 @@ home.file.".config/nvim" = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     
-    dotfiles = {
+    nvimDotfiles = {
     url = "git+https://github.com/dbochoa77/nvim.git";
+    flake = false;
+    };
+  };
+
+    dwmDotfiles = { 
+    url = "git+https://github.com/dbochoa77/dwmRepo.git";
     flake = false;
     };
   };
@@ -382,7 +440,12 @@ home.file.".config/nvim" = {
       };
     };
 } 
-./overlays/default.nix
+
+
+
+===============================
+FILE: ./overlays/default.nix
+===============================
 { inputs, ... }: {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs { pkgs = final; };
@@ -405,17 +468,37 @@ home.file.".config/nvim" = {
   };
 }
 
-./README.md
+
+
+
+===============================
+FILE: ./README.md
+===============================
 nixosConfigruation 
-My NixOS configuration../pkgs/my-packages/default.nix
+My NixOS configuration.
+
+
+===============================
+FILE: ./pkgs/my-packages/default.nix
+===============================
 # Your custom nix-package
-./pkgs/default.nix
+
+
+
+===============================
+FILE: ./pkgs/default.nix
+===============================
 { pkgs, ... }:
 
 {
 
 }
-./flake.lock
+
+
+
+===============================
+FILE: ./flake.lock
+===============================
 {
   "nodes": {
     "dotfiles": {
@@ -498,8 +581,12 @@ My NixOS configuration../pkgs/my-packages/default.nix
   "root": "root",
   "version": 7
 }
-./all_files.txt
-./hosts/dbochoa77/users/dbochoa77.nix
+
+
+
+===============================
+FILE: ./hosts/dbochoa77/users/dbochoa77.nix
+===============================
 { 
    config, 
    pkgs, 
@@ -516,12 +603,22 @@ My NixOS configuration../pkgs/my-packages/default.nix
   home-manager.users.${user} =
     import ../../../home/${user}/${config.networking.hostName}.nix;
  }
-./hosts/dbochoa77/users/default.nix
+
+
+
+===============================
+FILE: ./hosts/dbochoa77/users/default.nix
+===============================
 {
   imports = [./${host}.nix];
 }
 
-./hosts/dbochoa77/default.nix
+
+
+
+===============================
+FILE: ./hosts/dbochoa77/default.nix
+===============================
 {
   lib,
   pkgs,
@@ -581,13 +678,23 @@ My NixOS configuration../pkgs/my-packages/default.nix
   };
 }
 
-./hosts/dbochoa77/ExtraServices/default.nix
+
+
+
+===============================
+FILE: ./hosts/dbochoa77/ExtraServices/default.nix
+===============================
 {
   imports = [
     ./podman.nix
   ];
 }
-./hosts/dbochoa77/ExtraServices/podman.nix
+
+
+
+===============================
+FILE: ./hosts/dbochoa77/ExtraServices/podman.nix
+===============================
 {
   config,
   lib,
@@ -621,7 +728,12 @@ in {
   };
 }
 
-./hosts/nixos/services/bluetooth/bluetooth.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/bluetooth/bluetooth.nix
+===============================
 { config, pkgs, ... }: 
 
 {
@@ -645,13 +757,23 @@ in {
     };
     services.blueman.enable = true;
 }
-./hosts/nixos/services/cacReader/default.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/cacReader/default.nix
+===============================
 {
   imports = [
     ./cacReader.nix
   ];
 }
-./hosts/nixos/services/cacReader/cacReader.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/cacReader/cacReader.nix
+===============================
 { config, pkgs, ... }: 
 
 {
@@ -659,7 +781,12 @@ in {
 services.pcscd.enable = true;
 
 }
-./hosts/nixos/services/virtualization/qemu-kvm.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/virtualization/qemu-kvm.nix
+===============================
 { config, pkgs, ... }:
  
 { 
@@ -678,13 +805,23 @@ environment.systemPackages = with pkgs; [
     dnsmasq     # optional: if using user-mode networking
   ];
 }
-./hosts/nixos/services/virtualization/default.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/virtualization/default.nix
+===============================
 {
   imports = [
     ./qemu-kvm.nix
   ];
 }
-./hosts/nixos/services/ssh/ssh.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/ssh/ssh.nix
+===============================
 { config, pkgs, ... }:
 
 {
@@ -692,7 +829,12 @@ environment.systemPackages = with pkgs; [
   services.openssh.enable = true;
 
 }
-./hosts/nixos/services/default.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/default.nix
+===============================
 {
   imports = [
     ./containers
@@ -703,7 +845,12 @@ environment.systemPackages = with pkgs; [
   ];
 }
 
-./hosts/nixos/services/pipewire/pipewire.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/pipewire/pipewire.nix
+===============================
 { config, pkgs, ... }:
 
 { 
@@ -720,15 +867,30 @@ environment.systemPackages = with pkgs; [
     services.pulseaudio.enable = false;
   
 }
-./hosts/nixos/services/containers/wireguard.nix
-./hosts/nixos/services/containers/default.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/services/containers/wireguard.nix
+===============================
+
+
+
+===============================
+FILE: ./hosts/nixos/services/containers/default.nix
+===============================
 {
   imports = [
     ./echo.nix
   ];
 }
 
-./hosts/nixos/configuration.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/configuration.nix
+===============================
 { config, pkgs, lib, ... }:
 
 {
@@ -844,7 +1006,12 @@ environment.systemPackages = with pkgs; [
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
-./hosts/nixos/default.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/default.nix
+===============================
 { config, inputs, outputs, lib, pkgs, ... }:
 
 {
@@ -870,7 +1037,12 @@ home-manager = {
 
   }; 
 }
-./hosts/nixos/hardware-configuration.nix
+
+
+
+===============================
+FILE: ./hosts/nixos/hardware-configuration.nix
+===============================
 # Do not modify this file!  It was generated by ‘nixos-generate-config’
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
@@ -914,3 +1086,6 @@ home-manager = {
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
+
+
+

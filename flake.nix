@@ -13,7 +13,7 @@
     url = "git+https://github.com/dbochoa77/nvim.git";
     flake = false;
     };
-  };
+  
 
     dwmDotfiles = { 
     url = "git+https://github.com/dbochoa77/dwmRepo.git";
