@@ -1,0 +1,1014 @@
+===============================
+FILE: ./flake.lock 
+===============================
+{
+  "nodes": {
+    "dwmDotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753394873,
+        "narHash": "sha256-Hd4HLOhJdVlaL9VZ+zKthur4GRRpUMBEs2KyxW+ovB4=",
+        "ref": "refs/heads/main",
+        "rev": "4b538363e07ad723139c84fb67c0727c2eb0f9ae",
+        "revCount": 2,
+        "type": "git",
+        "url": "https://github.com/dbochoa77/dwmRepo.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/dbochoa77/dwmRepo.git"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1751751054,
+        "narHash": "sha256-qUEejOOj1jc+y5anxDgay+NqVgLHVeY0So5PEDzlV18=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "af8a884164bb50ad34c09719bdbdb2a1b01b917c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1751637120,
+        "narHash": "sha256-xVNy/XopSfIG9c46nRmPaKfH1Gn/56vQ8++xWA8itO4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5c724ed1388e53cc231ed98330a60eb2f7be4be3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1735563628,
+        "narHash": "sha256-OnSAY7XDSx7CtDoqNh8jwVwh4xNL/2HaJxGjryLWzX8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "b134951a4c9f3c995fd7be05f3243f8ecd65d798",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nvimDotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752018499,
+        "narHash": "sha256-UzDfqXYSskgF+YN+fN5x11PtKksBNtrSmgt6gKskDxE=",
+        "ref": "refs/heads/main",
+        "rev": "a7e4974e17d2633a3e788962f8ec385bd87c2d5f",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nvim.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nvim.git"
+      }
+    },
+    "root": {
+      "inputs": {
+        "dwmDotfiles": "dwmDotfiles",
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-stable": "nixpkgs-stable",
+        "nvimDotfiles": "nvimDotfiles"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
+===============================
+FILE: ./all_files.txt 
+===============================
+===============================
+FILE: ./pkgs/my-packages/default.nix 
+===============================
+# Your custom nix-package
+===============================
+FILE: ./pkgs/default.nix 
+===============================
+{ pkgs, ... }:
+
+{
+
+}
+===============================
+FILE: ./flake.nix 
+===============================
+{
+  description = "Configuration for Nixos Server";
+
+ inputs = {
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    
+    nvimDotfiles = {
+    url = "git+https://github.com/dbochoa77/nvim.git";
+    flake = false;
+    };
+  
+
+    dwmDotfiles = { 
+    url = "git+https://github.com/dbochoa77/dwmRepo.git";
+    flake = false;
+    };
+  };
+
+  outputs = { 
+	self, 
+	dwmDotfiles,
+	nvimDotfiles,
+	home-manager,
+	nixpkgs,
+	...
+    } @ inputs: let
+      inherit (self) outputs;
+      systems = [
+        "x86_64-linux"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+  
+  in {
+    packages =
+      forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    overlays = import ./overlays {inherit inputs;};
+
+
+    nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+	  specialArgs = {inherit inputs outputs;};
+	  modules = [./hosts/nixos/configuration.nix
+		     ./hosts/nixos/hardware-configuration.nix
+	  ];
+	};
+      };
+      homeConfigurations = { 
+        "nixos" = home-manager.lib.homeManagerConfiguration {
+	  pkgs = nixpkgs.legacyPackages."x86_64-linux";
+	  extraSpecialArgs = {inherit inputs outputs;};
+	  modules = [./home/nixos/dbochoa77.nix];
+	};
+      };
+    };
+} 
+===============================
+FILE: ./overlays/default.nix 
+===============================
+{ inputs, ... }: {
+  # This one brings our custom packages from the 'pkgs' directory
+  additions = final: _prev: import ../pkgs { pkgs = final; };
+
+  # This one contains whatever you want to overlay
+  # You can change versions, add patches, set compilation flags, anything really.
+  # https://nixos.wiki/wiki/Overlays
+  modifications = final: prev:
+    {
+      # example = prev.example.overrideAttrs (oldAttrs: rec {
+      # ...
+      # });
+    };
+
+  stable-packages = final: _prev: {
+    pkgsStable = import inputs.nixpkgs-stable {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
+}
+
+===============================
+FILE: ./home/nixos/dotfiles/default.nix 
+===============================
+{
+  inputs, 
+  ...
+}:
+
+{
+home.file.".config/nvim" = { 
+    source = "${inputs.nvimDotfiles}/nvim";
+    recursive = true;
+  };
+
+home.file.".config/dwm" = { 
+    source = "${inputs.dwmDotfiles}/dwm";
+    recursive = true;
+  };
+}
+===============================
+FILE: ./home/nixos/dbochoa77.nix 
+===============================
+{ config, ... }: { 
+  imports = [ 
+    ../dbochoa77
+    ../features/cli
+    ./home.nix
+    ./dotfiles
+  ]; 
+
+  features = {
+    cli = {
+    fastfetch.enable = true;
+    };
+  };
+}
+
+===============================
+FILE: ./home/nixos/home.nix 
+===============================
+{ config, lib, pkgs, ... }:
+
+{
+  home.username = lib.mkDefault "dbochoa77";
+  home.homeDirectory = lib.mkDefault "/home/${config.home.username}";
+
+  home.stateVersion = "24.05";
+
+  home.packages = with pkgs; [
+    #############################
+    ### Browsers & GUI Tools ###
+    #############################
+    brave
+    librewolf
+    firefox
+    vlc
+    mpv
+    gimp
+    obsidian
+    discord
+    signal-desktop
+    thunderbird
+    libreoffice
+    pdfarranger
+    flameshot
+    timeshift
+
+    #######################
+    ### Terminal Tools ###
+    #######################
+    git
+    curl
+    neovim
+    htop
+    unzip
+    zip
+    wget
+    fastfetch
+    xclip
+
+    ##########################
+    ### 3D Printing / CAD ###
+    ##########################
+    prusa-slicer
+    openscad
+    blender
+    freecad
+    kicad
+    kicadAddons.kikit-library
+    fritzing
+    librepcb
+    ngspice
+    xschem
+    gnuplot
+    inkscape
+    imagemagick
+
+    #######################
+    ### Python + SciPy ###
+    #######################
+    (python3.withPackages (ps: with ps; [
+      requests
+      numpy
+      scipy
+      matplotlib
+      flask
+  ]))
+  ];
+
+  home.file = {
+  };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
+  programs.home-manager.enable = true;
+}
+===============================
+FILE: ./home/dbochoa77/default.nix 
+===============================
+{
+  config,
+  lib,
+  outputs,
+  pkgs,
+  ...
+}: {
+ 
+  #  home.stateVersion = "24.05";
+  #  home.username = "dbochoa77";
+  #  home.homeDirectory = "/home/dbochoa77";
+
+
+    nixpkgs = {
+    # Overlays
+    overlays = [
+    outputs.overlays.additions
+    outputs.overlays.modifications
+    outputs.overlays.stable-packages
+
+    ];
+
+    config = {
+    allowUnfree = true;
+
+    allowUnfreePredicate = _: true;
+  };
+};
+
+  nix = {
+    package = lib.mkDefault pkgs.nix;
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      warn-dirty = false;
+    };
+  };
+}
+===============================
+FILE: ./home/features/cli/alias.nix 
+===============================
+{
+  config,
+  lib,
+  ...
+}:
+
+{
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+
+      # Youtube Downloader
+      yt = "yt-dlp";
+      "yt.rock" = "yt-dlp -x --audio-format mp3 -o \"~/music/rock/%(title)s.%(ext)s\"";
+      "yt.pop" = "yt-dlp -x --audio-format mp3 -o \"~/music/pop/%(title)s.%(ext)s\"";
+      "yt.hipHop" = "yt-dlp -x --audio-format mp3 -o \"~/music/hipHop/%(title)s.%(ext)s\"";
+      "yt.rnbSoul" = "yt-dlp -x --audio-format mp3 -o \"~/music/rnbSoul/%(title)s.%(ext)s\"";
+      "yt.classical" = "yt-dlp -x --audio-format mp3 -o \"~/music/classical/%(title)s.%(ext)s\"";
+      "yt.country" = "yt-dlp -x --audio-format mp3 -o \"~/music/country/%(title)s.%(ext)s\"";
+      "yt.folk" = "yt-dlp -x --audio-format mp3 -o \"~/music/folk/%(title)s.%(ext)s\"";
+      "yt.jazz" = "yt-dlp -x --audio-format mp3 -o \"~/music/jazz/%(title)s.%(ext)s\"";
+      "yt.blues" = "yt-dlp -x --audio-format mp3 -o \"~/music/blues/%(title)s.%(ext)s\"";
+      "yt.electronic" = "yt-dlp -x --audio-format mp3 -o \"~/music/electronic/%(title)s.%(ext)s\"";
+      "yt.world" = "yt-dlp -x --audio-format mp3 -o \"~/music/world/%(title)s.%(ext)s\"";
+      "yt.gospel" = "yt-dlp -x --audio-format mp3 -o \"~/music/gospel/%(title)s.%(ext)s\"";
+      "yt.soundtrack" = "yt-dlp -x --audio-format mp3 -o \"~/music/soundtrack/%(title)s.%(ext)s\"";
+      "yt.latin" = "yt-dlp -x --audio-format mp3 -o \"~/music/latin/%(title)s.%(ext)s\"";
+      "yt.rap" = "yt-dlp -x --audio-format mp3 -o \"~/music/rap/%(title)s.%(ext)s\"";
+
+      # MPV Shuffle Play
+      "mpv.rock" = "mpv --shuffle ~/music/rock";
+      "mpv.pop" = "mpv --shuffle ~/music/pop";
+      "mpv.hipHop" = "mpv --shuffle ~/music/hipHop";
+      "mpv.rnbSoul" = "mpv --shuffle ~/music/rnbSoul";
+      "mpv.classical" = "mpv --shuffle ~/music/classical";
+      "mpv.country" = "mpv --shuffle ~/music/country";
+      "mpv.folk" = "mpv --shuffle ~/music/folk";
+      "mpv.jazz" = "mpv --shuffle ~/music/jazz";
+      "mpv.blues" = "mpv --shuffle ~/music/blues";
+      "mpv.electronic" = "mpv --shuffle ~/music/electronic";
+      "mpv.world" = "mpv --shuffle ~/music/world";
+      "mpv.gospel" = "mpv --shuffle ~/music/gospel";
+      "mpv.soundtrack" = "mpv --shuffle ~/music/soundtrack";
+      "mpv.latin" = "mpv --shuffle ~/music/latin";
+      "mpv.rap" = "mpv --shuffle ~/music/rap";
+      "mpv.phonk" = "mpv --shuffle ~/music/phonk";
+
+      # Brightness Control
+      "bright.down" = "echo 2 | sudo tee /sys/class/backlight/acpi_video0/brightness";
+      "bright.up" = "echo 15 | sudo tee /sys/class/backlight/acpi_video0/brightness";
+      "bright.max" = "echo 18 | sudo tee /sys/class/backlight/acpi_video0/brightness";
+
+      # PDF
+      pdf = "mupdf";
+
+      # Screenshots
+      flameshot = "flameshot gui";
+
+      # Basic Commands
+      c = "clear";
+      h = "history";
+      now = "date +%T";
+      grep = "rg";
+      ps = "procs";
+      top = "htop";
+      df = "df -h";
+      du = "du -sh";
+      t = "tree -L 2";
+
+      # File Listing
+      ls = "eza -a --icons --git";
+      la = "exa -la --icons --git";
+      lt = "eza -T --git-ignore --icons";
+
+      # Directory Movement
+      mkdir = "mkdir -p";
+      ".." = "cd ..";
+      "..." = "cd ../../";
+      "...." = "cd ../../../..";
+      ".4" = "cd ../../../../";
+      ".5" = "cd ../../../../../";
+      exam = "cd /home/dbochoa77/work/military/USN/trainingAndReadiness/training/examPrep";
+      github = "cd /home/dbochoa77/tech/github/workspace";
+      hoyah = "cd /home/dbochoa77/work/military/USN";
+      lifelong = "xrandr --output HDMI-1 --mode 1920x1080 --right-of eDP-1 --auto";
+
+      # Git Shortcuts
+      ga = "git add .";
+      gc = "git commit -";
+      gs = "git status";
+
+      # Nix Config Rebuild
+      rebuild = "sudo nixos-rebuild switch --flake ~/nixos#nixos && home-manager switch --flake ~/nixos#nixos";
+
+      # Neovim (root)
+      v = "sudo -E nvim";
+    };
+
+    initExtra = ''
+      cd() {
+        builtin cd "$@" && eza -1A --color=auto;
+      }
+
+      fastfetch
+      ls -d -- * .*
+    '';
+  };
+}
+
+===============================
+FILE: ./home/features/cli/xinitrc.nix 
+===============================
+{ config, pkgs, ... }:
+
+{
+  services.xserver.enable = true;
+
+  xsession.enable = true;
+  xsession.windowManager.command = ''
+    #!/bin/sh
+    exec ~/.config/dwm/dwm &
+    feh --no-fehbg --bg-scale /home/dbochoa77/personal/Wallpapers/hannibalCrossingTheAlps.jpg &
+    picom --config ~/.config/picom.conf
+  '';
+}
+
+===============================
+FILE: ./home/features/cli/fastfetch.nix 
+===============================
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let 
+  cfg = config.features.cli.fastfetch;
+in {
+    options.features.cli.fastfetch.enable = mkEnableOption "enable fastfetch";
+
+    config = mkIf cfg.enable {
+        home.packages = with pkgs; [fastfetch];
+    };
+}
+
+
+===============================
+FILE: ./home/features/cli/bash_profile.nix 
+===============================
+ { config, lib, pkgs, ... }:
+
+{
+  programs.bash.initExtra = ''
+    fastfetch
+  '';
+}
+
+===============================
+FILE: ./home/features/cli/default.nix 
+===============================
+{pkgs, ...}: {
+    imports = [
+    ./alias.nix
+    ./fastfetch.nix
+    ./bash_profile.nix
+    ];
+
+
+  programs.eza = {
+    enable = true;
+    enableFishIntegration = true;
+    enableBashIntegration = true;
+    extraOptions = ["-l" "--icons" "--git" "-a"];
+  };
+
+  programs.bat = {enable = true;};
+
+
+
+  home.packages = with pkgs; [
+    coreutils 
+    fd
+    htop
+    httpie
+    jq
+    procs
+    ripgrep
+    tldr
+    zip 
+  ];
+}
+===============================
+FILE: ./hosts/nixos/services/ssh/ssh.nix 
+===============================
+{ config, pkgs, ... }:
+
+{
+  
+  services.openssh = {
+     enable = true;
+     settings.PermitRootLogin = "no";
+     allowSFTP = true;
+   };
+
+}
+===============================
+FILE: ./hosts/nixos/services/cacReader/cacReader.nix 
+===============================
+{ config, pkgs, ... }: 
+
+{
+
+services.pcscd.enable = true;
+
+}
+===============================
+FILE: ./hosts/nixos/services/cacReader/default.nix 
+===============================
+{
+  imports = [
+    ./cacReader.nix
+  ];
+}
+===============================
+FILE: ./hosts/nixos/services/xserver/xserver.nix 
+===============================
+{ config, pkgs, ... }:
+
+{
+
+  services.xserver.enable = true;
+
+}
+===============================
+FILE: ./hosts/nixos/services/pipewire/pipewire.nix 
+===============================
+{ config, pkgs, ... }:
+
+{ 
+
+  security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true; # if not already enabled
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+  
+    services.pulseaudio.enable = false;
+  
+}
+===============================
+FILE: ./hosts/nixos/services/virtualization/qemu-kvm.nix 
+===============================
+{ config, pkgs, ... }:
+ 
+{ 
+  programs.virt-manager.enable = true;
+  virtualisation = { 
+  libvirtd.enable = true;
+  qemu.package = pkgs.qemu_kvm;
+  spiceUSBRedirection.enable = true;
+};
+
+  users.users.dbochoa77.extraGroups = [ "libvirtd" "kvm" ];
+
+environment.systemPackages = with pkgs; [
+    qemu_kvm
+    virtiofsd   # optional: for shared folder support
+    dnsmasq     # optional: if using user-mode networking
+  ];
+}
+===============================
+FILE: ./hosts/nixos/services/virtualization/default.nix 
+===============================
+{
+  imports = [
+    ./qemu-kvm.nix
+  ];
+}
+===============================
+FILE: ./hosts/nixos/services/default.nix 
+===============================
+{
+  imports = [
+    ./containers
+    ./virtualization
+    ./bluetooth/bluetooth.nix
+    ./ssh/ssh.nix
+    ./pipewire/pipewire.nix
+    ./xserver/xserver.nix
+  ];
+}
+
+===============================
+FILE: ./hosts/nixos/services/containers/wireguard.nix 
+===============================
+===============================
+FILE: ./hosts/nixos/services/containers/default.nix 
+===============================
+{
+  imports = [
+    ./echo.nix
+  ];
+}
+
+===============================
+FILE: ./hosts/nixos/services/bluetooth/bluetooth.nix 
+===============================
+{ config, pkgs, ... }: 
+
+{
+  services.pipewire.wireplumber.extraConfig."10-bluez" = {
+        "monitor.bluez.properties" = {
+          "bluez5.enable-sbc-xq" = true;
+          "bluez5.enable-msbc" = true;
+          "bluez5.enable-hw-volume" = true;
+          "bluez5.roles" = [
+            "hsp_hs"
+            "hsp_ag"
+            "hfp_hf"
+            "hfp_ag"
+            ];
+         };
+      };
+
+    hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    services.blueman.enable = true;
+}
+===============================
+FILE: ./hosts/nixos/configuration.nix 
+===============================
+{ config, pkgs, lib, ... }:
+
+{
+  imports =
+    [
+      ./hardware-configuration.nix
+    ];
+
+  ##############
+  # Bootloader #
+  ##############
+  boot.loader = {
+     grub.enable = true;
+     grub.device = "/dev/vda";
+     grub.useOSProber = true;
+  };
+  
+  # Flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "root" "dbochoa77" ];
+
+  # Hostname
+  networking.hostName = "nixos"; # Define your hostname.
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "America/Los_Angeles";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.dbochoa77 = {
+    isNormalUser = true;
+    description = "dbochoa77";
+    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
+  };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = with pkgs; [
+
+    # ────── Security ──────
+    nftables
+    fail2ban
+    gnupg
+    openssl
+
+    # ------ Jellyfin -------
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+
+    # ────── Web & Containers ──────
+    nginx
+    caddy
+    docker
+    docker-compose
+    podman
+    traefik
+
+    # ────── Monitoring & Logging ──────
+    prometheus
+    grafana
+    uptime-kuma
+    glances
+    logrotate
+
+    # ────── Virtualization ──────
+    qemu
+    libvirt
+    virt-manager
+    vagrant
+    spice-vdagent
+
+    # ────── NixOS Tools ──────
+    home-manager
+
+    # ------ Developer Tools -----
+    gcc
+    clang
+    gnumake
+    pkg-config    
+
+    ];
+
+  # Enable the OpenSSH daemon.
+   services.openssh = {
+     enable = true;
+     settings.PermitRootLogin = "no";
+     allowSFTP = true;
+   };
+
+  # System State Version
+  system.stateVersion = "25.11"; # Did you read the comment?
+
+}
+===============================
+FILE: ./hosts/nixos/hardware-configuration.nix 
+===============================
+# Do not modify this file!  It was generated by ‘nixos-generate-config’
+# and may be overwritten by future invocations.  Please make changes
+# to /etc/nixos/configuration.nix instead.
+{ config, lib, pkgs, modulesPath, ... }:
+
+{
+  imports =
+    [ (modulesPath + "/profiles/qemu-guest.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/035d61f6-63d6-4cf7-bee3-877866035c5a";
+      fsType = "ext4";
+    };
+
+  swapDevices = [ ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+}
+===============================
+FILE: ./hosts/nixos/default.nix 
+===============================
+{ config, inputs, outputs, lib, pkgs, ... }:
+
+{
+ imports = [
+   ./hardware-configuration.nix
+   inputs.home-manager.nixosModules.home-manager
+];
+
+networking.hostName = "nixos";
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.dbochoa77 = {
+    isNormalUser = true;
+    description = "dbochoa77";
+    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
+  };
+
+home-manager = {
+  useUserPackages = true;
+  extraSpecialArgs = { inherit inputs outputs; };
+  users.dbochoa77 = 
+  import ../../home/nixos/dbochoa77.nix; 
+
+  }; 
+}
+===============================
+FILE: ./hosts/dbochoa77/ExtraServices/podman.nix 
+===============================
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  cfg = config.extraServices.podman;
+in {
+  options.extraServices.podman.enable = mkEnableOption "enable podman";
+
+  config = mkIf cfg.enable {
+    virtualisation = {
+      podman = {
+        enable = true;
+        dockerCompat = true;
+        autoPrune = {
+          enable = true;
+          dates = "weekly";
+          flags = [
+            "--filter=until=24h"
+            "--filter=label!=important"
+          ];
+        };
+        defaultNetwork.settings.dns_enabled = true;
+      };
+    };
+    environment.systemPackages = with pkgs; [
+      podman-compose
+    ];
+  };
+}
+
+===============================
+FILE: ./hosts/dbochoa77/ExtraServices/default.nix 
+===============================
+{
+  imports = [
+    ./podman.nix
+  ];
+}
+===============================
+FILE: ./hosts/dbochoa77/users/dbochoa77.nix 
+===============================
+{ 
+   config, 
+   pkgs, 
+   inputs,
+   ...
+}: { 
+  users.users.${user} = {
+    isNormalUser = true;
+    description = "username";
+    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
+ 
+    packages = [inputs.home-manager.packages.${pkgs.system}.default];
+  };
+  home-manager.users.${user} =
+    import ../../../home/${user}/${config.networking.hostName}.nix;
+ }
+===============================
+FILE: ./hosts/dbochoa77/users/default.nix 
+===============================
+{
+  imports = [./${host}.nix];
+}
+
+===============================
+FILE: ./hosts/dbochoa77/default.nix 
+===============================
+{
+  lib,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}: {
+
+  imports = [
+	./extraServices
+	./users 
+	inputs.home-manager.nixosModules.home-manager
+  ];
+  home-manager = { 
+    useUserPackages = true;
+    extraSpecialArgs = {inherit inputs outputs};
+  };
+
+  nixpkgs = {
+ 
+    overlays = [
+
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.stable-packages
+
+    ];
+
+  # Allows Closed Sourced packages
+    config = {
+      allowUnfree = true;
+    };
+  };
+
+  # Experimental Features Nix-command and Flakes
+  nix = { 
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = [
+        "root"
+	"${user}"
+      ];
+    };
+
+    # Automaticlly Cleans Nixos Generations 30d older
+    gc = {
+      automatic = true; 
+      options = "--delete-older-than 30d";
+    };
+   
+    optimise.automatic = true;
+ 
+    registry = 
+      (lib.mapAttrs (_: flake: {inherit flake;}))
+      ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+    nixPath = ["/${host}-config"];
+  };
+}
+

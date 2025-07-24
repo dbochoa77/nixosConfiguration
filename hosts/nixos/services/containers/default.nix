@@ -1,6 +1,6 @@
 {
   imports = [
-    ./echo.nix
+    ./wireguard.nix
   ];
 }
 

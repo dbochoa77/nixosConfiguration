@@ -1,19 +1,19 @@
 {
   "nodes": {
-    "dotfiles": {
+    "dwmDotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1752018499,
-        "narHash": "sha256-UzDfqXYSskgF+YN+fN5x11PtKksBNtrSmgt6gKskDxE=",
+        "lastModified": 1753394873,
+        "narHash": "sha256-Hd4HLOhJdVlaL9VZ+zKthur4GRRpUMBEs2KyxW+ovB4=",
         "ref": "refs/heads/main",
-        "rev": "a7e4974e17d2633a3e788962f8ec385bd87c2d5f",
-        "revCount": 3,
+        "rev": "4b538363e07ad723139c84fb67c0727c2eb0f9ae",
+        "revCount": 2,
         "type": "git",
-        "url": "https://github.com/dbochoa77/nvim.git"
+        "url": "https://github.com/dbochoa77/dwmRepo.git"
       },
       "original": {
         "type": "git",
-        "url": "https://github.com/dbochoa77/nvim.git"
+        "url": "https://github.com/dbochoa77/dwmRepo.git"
       }
     },
     "home-manager": {
@@ -68,12 +68,29 @@
         "type": "github"
       }
     },
+    "nvimDotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752018499,
+        "narHash": "sha256-UzDfqXYSskgF+YN+fN5x11PtKksBNtrSmgt6gKskDxE=",
+        "ref": "refs/heads/main",
+        "rev": "a7e4974e17d2633a3e788962f8ec385bd87c2d5f",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nvim.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nvim.git"
+      }
+    },
     "root": {
       "inputs": {
-        "dotfiles": "dotfiles",
+        "dwmDotfiles": "dwmDotfiles",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-stable": "nixpkgs-stable"
+        "nixpkgs-stable": "nixpkgs-stable",
+        "nvimDotfiles": "nvimDotfiles"
       }
     }
   },

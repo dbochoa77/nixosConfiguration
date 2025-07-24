@@ -23,7 +23,8 @@
 
   outputs = { 
 	self, 
-	dotfiles,
+	dwmDotfiles,
+	nvimDotfiles,
 	home-manager,
 	nixpkgs,
 	...

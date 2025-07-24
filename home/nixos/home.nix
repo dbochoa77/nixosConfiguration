@@ -30,6 +30,7 @@
     #######################
     git
     curl
+    neovim
     htop
     unzip
     zip
@@ -45,7 +46,6 @@
     blender
     freecad
     kicad
-    kicadAddons.kikit
     kicadAddons.kikit-library
     fritzing
     librepcb

@@ -12,5 +12,5 @@ home.file.".config/nvim" = {
 home.file.".config/dwm" = { 
     source = "${inputs.dwmDotfiles}/dwm";
     recursive = true;
-  }
+  };
 }

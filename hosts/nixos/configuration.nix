@@ -4,17 +4,9 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./services/default.nix
     ];
 
-  ##############
-  # Bootloader #
-  ##############
-  boot.loader = {
-     grub.enable = true;
-     grub.device = "/dev/vda";
-     grub.useOSProber = true;
-  };
-  
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "dbochoa77" ];
@@ -63,29 +55,7 @@
 
     # ────── Security ──────
     nftables
-    fail2ban
-    gnupg
     openssl
-
-    # ------ Jellyfin -------
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
-
-    # ────── Web & Containers ──────
-    nginx
-    caddy
-    docker
-    docker-compose
-    podman
-    traefik
-
-    # ────── Monitoring & Logging ──────
-    prometheus
-    grafana
-    uptime-kuma
-    glances
-    logrotate
 
     # ────── Virtualization ──────
     qemu
@@ -104,13 +74,6 @@
     pkg-config    
 
     ];
-
-  # Enable the OpenSSH daemon.
-   services.openssh = {
-     enable = true;
-     settings.PermitRootLogin = "no";
-     allowSFTP = true;
-   };
 
   # System State Version
   system.stateVersion = "25.11"; # Did you read the comment?
