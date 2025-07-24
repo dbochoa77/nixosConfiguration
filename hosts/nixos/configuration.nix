@@ -9,9 +9,12 @@
   ##############
   # Bootloader #
   ##############
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+  boot.loader = {
+     grub.enable = true;
+     grub.device = "/dev/vda";
+     grub.useOSProber = true;
+  };
+  
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "dbochoa77" ];
