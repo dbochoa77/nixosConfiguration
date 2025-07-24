@@ -9,8 +9,14 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     
-    dotfiles = {
+    nvimDotfiles = {
     url = "git+https://github.com/dbochoa77/nvim.git";
+    flake = false;
+    };
+  };
+
+    dwmDotfiles = { 
+    url = "git+https://github.com/dbochoa77/dwmRepo.git";
     flake = false;
     };
   };
