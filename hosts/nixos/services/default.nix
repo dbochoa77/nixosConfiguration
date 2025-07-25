@@ -1,7 +1,7 @@
 {
   imports = [
-    ./containers
-    ./virtualization
+    ./containers/wireguard.nix
+    ./virtualization/virt.nix
     ./bluetooth/bluetooth.nix
     ./ssh/ssh.nix
     ./pipewire/pipewire.nix
