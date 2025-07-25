@@ -4,4 +4,6 @@
     virt-manager
     vagrant
     spice-vdagent
+    virt-viewer
+    OVMF
 ]

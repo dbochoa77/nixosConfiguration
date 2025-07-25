@@ -8,4 +8,7 @@
 ( import ./virtualization { inherit pkgs; })
 ++
 ( import ./xorg { inherit pkgs; })
-
+++
+( import ./cac { inherit pkgs; })
+++ 
+( import ./utilities{ inherit pkgs; })
