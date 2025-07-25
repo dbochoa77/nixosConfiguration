@@ -1,7 +1,7 @@
-{ config, pkgs, ... };
+{ config, pkgs, ... }:
 
 {
-  nix.setting = {
+  nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     trusted-users = [ "root" "dbochoa77"];
   };
