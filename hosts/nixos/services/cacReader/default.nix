@@ -1,5 +1,5 @@
+{ config, pkgs, ... }:
+
 {
-  imports = [
-    ./cacReader.nix
-  ];
+    services.pcscd.enable = true;
 }
