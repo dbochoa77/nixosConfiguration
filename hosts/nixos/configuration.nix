@@ -51,29 +51,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-
-    # ────── Security ──────
-    nftables
-    openssl
-
-    # ────── Virtualization ──────
-    qemu
-    libvirt
-    virt-manager
-    vagrant
-    spice-vdagent
-
-    # ────── NixOS Tools ──────
-    home-manager
-
-    # ------ Developer Tools -----
-    gcc
-    clang
-    gnumake
-    pkg-config    
-
-    ];
+  environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
 
   # System State Version
   system.stateVersion = "25.11"; # Did you read the comment?
