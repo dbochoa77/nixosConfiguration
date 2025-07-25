@@ -3,6 +3,7 @@
     neovim
     vim
     sutils
-    cowsays
+    cowsay
     tree
+    flameshot
 ]

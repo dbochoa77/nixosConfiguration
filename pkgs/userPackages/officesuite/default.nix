@@ -3,4 +3,5 @@
     libreoffice
     thunderbird
     pdfarranger
+    mupdf
 ]
