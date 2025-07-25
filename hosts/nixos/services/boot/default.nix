@@ -1,6 +1,7 @@
 {
   imports = [
-    ./grub.nix
-    ./plymouth.nix
+    ./grub/default.nix
+    ./plymouth/default.nix
+    ./lastestKernel/default.nix
   ];
 }

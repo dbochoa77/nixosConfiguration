@@ -1,13 +1,23 @@
 {
   imports = [
-    ./containers/wireguard.nix
-    ./virtualization/virt.nix
-    ./bluetooth/bluetooth.nix
-    ./ssh/ssh.nix
-    ./pipewire/pipewire.nix
-    ./xserver/xserver.nix
-    ./encryption/encryption.nix
+    ./autostart/default.nix
+    ./bluetooth/default.nix
     ./boot/default.nix
+    ./cacReader/default.nix
+    ./containers/default.nix
+    ./encryption/default.nix
+    ./flakes/default.nix
+    ./hostname/default.nix
+    ./internationisationProps/default.nix
+    ./keymaps/default.nix
+    ./networking/default.nix
+    ./pipewire/default.nix
+    ./ssh/default.nix
+    ./stateVersion/default.nix
+    ./timezone/default.nix
+    ./unfree/default.nix
+    ./user/default.nix
+    ./virtualization/default.nix
+    ./xserver/xserver.nix
   ];
 }
-
