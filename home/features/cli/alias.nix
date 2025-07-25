@@ -90,7 +90,7 @@
       gs = "git status";
 
       # Nix Config Rebuild
-      rebuild = "sudo nixos-rebuild switch --flake ~/nixos#nixos && home-manager switch --flake ~/nixos#nixos";
+      rebuild = "sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#dbochoa77" 
 
       # Neovim (root)
       v = "sudo -E nvim";

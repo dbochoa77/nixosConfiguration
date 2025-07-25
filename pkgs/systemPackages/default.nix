@@ -6,5 +6,5 @@
 ++
 ( import ./security { inherit pkgs; })
 ++
-( import ./virtualzation { inherit pkgs; })
+( import ./virtualization { inherit pkgs; })
 
