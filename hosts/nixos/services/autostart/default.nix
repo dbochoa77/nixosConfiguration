@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
 
 { 
-  services.getty.autologinUser = dbochoa77;
+  services.getty.autologinUser = "dbochoa77";
 }
