@@ -3,6 +3,7 @@
     ./alias.nix
     ./fastfetch.nix
     ./bash_profile.nix
+    ./xinitrc.nix
     ];
 
 
