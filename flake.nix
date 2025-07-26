@@ -8,6 +8,8 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+
+    agenix.url = "github:ryantm/agenix";
     
     nvimDotfiles = {
     url = "git+https://github.com/dbochoa77/nvim.git";
@@ -23,6 +25,7 @@
 
   outputs = { 
 	self, 
+	agenix,
 	dwmDotfiles,
 	nvimDotfiles,
 	home-manager,
@@ -36,17 +39,21 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
   
   in {
-    packages =
-      forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
+    packages = forAllSystems (system: let 
+	pkgs = nixpkgs.legacyPackages.${system}; 
+      in 
+	import ./pkgs {inherit pkgs; }
+	
     );
-    overlays = import ./overlays {inherit inputs;};
 
+    overlays = import ./overlays {inherit inputs;};
 
     nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
 	  specialArgs = {inherit inputs outputs;};
 	  modules = [./hosts/nixos/configuration.nix
 		     ./hosts/nixos/hardware-configuration.nix
+		     agenix.nixosModules.default
 	  ];
 	};
       };
