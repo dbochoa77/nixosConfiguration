@@ -4,16 +4,17 @@
  imports = [
    ./hardware-configuration.nix
    inputs.home-manager.nixosModules.home-manager
+  ./secrets.nix
 ];
 
-networking.hostName = "nixos";
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.dbochoa77 = {
-    isNormalUser = true;
-    description = "dbochoa77";
-    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
-  };
+  #networking.hostName = "nixos";
+  #
+  #  # Define a user account. Don't forget to set a password with ‘passwd’.
+  #  users.users.dbochoa77 = {
+  #    isNormalUser = true;
+  #    description = "dbochoa77";
+  #    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
+  #  };
 
 home-manager = {
   useUserPackages = true;

@@ -16,7 +16,6 @@
     flake = false;
     };
   
-
     dwmDotfiles = { 
     url = "git+https://github.com/dbochoa77/dwmRepo.git";
     flake = false;
@@ -36,15 +35,12 @@
       systems = [
         "x86_64-linux"
       ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-  
-  in {
-    packages = forAllSystems (system: let 
-	pkgs = nixpkgs.legacyPackages.${system}; 
-      in 
-	import ./pkgs {inherit pkgs; }
-	
-    );
+      forAllSystems = nixpkgs.lib.genAttrs systems;  
+
+    in {
+    #packages =
+    #  forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
+    #);
 
     overlays = import ./overlays {inherit inputs;};
 
@@ -57,6 +53,7 @@
 	  ];
 	};
       };
+
       homeConfigurations = { 
         "nixos" = home-manager.lib.homeManagerConfiguration {
 	  pkgs = nixpkgs.legacyPackages."x86_64-linux";
