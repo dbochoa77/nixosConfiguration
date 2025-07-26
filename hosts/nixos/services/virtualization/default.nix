@@ -7,7 +7,7 @@
   spiceUSBRedirection.enable = true;
 };
 
-  users.users.dbochoa77.extraGroups = [ "libvirtd" "kvm" ];
+  users.users.dbochoa77.extraGroups = [ "libvirtd" "kvm" "tty" "video" "audio"];
 
     environment.systemPackages = with pkgs; [
       qemu_kvm

@@ -1,7 +1,9 @@
 { pkgs }: with pkgs; [
+  dmenu
   curl
   wget
   rsync
+  st
   unzip
   zip
   zstd

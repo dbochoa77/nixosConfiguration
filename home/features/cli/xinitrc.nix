@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  xsession.enable = true;
+  xsession.enable = false;
   xsession.windowManager.command = ''
     #!/bin/sh
    picom --config ~/.config/picom.conf &
