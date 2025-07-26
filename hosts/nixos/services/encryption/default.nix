@@ -1,3 +1,5 @@
+{ config, pkgs, lib, ... }:
+
 {
   options.services.encryption.enable = lib.mkOption {
     type = lib.types.bool;
