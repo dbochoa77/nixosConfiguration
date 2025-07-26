@@ -3,11 +3,13 @@
 {
  imports = [
    ./hardware-configuration.nix
-   inputs.home-manager.nixosModules.home-manager
-  ./secrets.nix
-];
+   ./secrets.nix
+   ./services
+   ./dbochoa77
+  ];
 
-  #networking.hostName = "nixos";
+  # inputs.home-manager.nixosModules.home-manager 
+
   #
   #  # Define a user account. Don't forget to set a password with ‘passwd’.
   #  users.users.dbochoa77 = {
@@ -16,11 +18,11 @@
   #    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
   #  };
 
-home-manager = {
-  useUserPackages = true;
-  extraSpecialArgs = { inherit inputs outputs; };
-  users.dbochoa77 = 
-  import ../../home/nixos/dbochoa77.nix; 
-
-  }; 
+  #home-manager = {
+  #  useUserPackages = true;
+  #  extraSpecialArgs = { inherit inputs outputs; };
+  #  users.dbochoa77 = 
+  #  import ../../home/nixos/dbochoa77.nix; 
+  #
+  #  }; 
 }
