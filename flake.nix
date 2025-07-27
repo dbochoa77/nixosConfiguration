@@ -9,7 +9,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
-    agenix.url = "github:ryantm/agenix";
+    #agenix.url = "github:ryantm/agenix";
     
     nvimDotfiles = {
     url = "git+https://github.com/dbochoa77/nvim.git";
@@ -24,7 +24,7 @@
 
   outputs = { 
 	self, 
-	agenix,
+        #agenix,
 	dwmDotfiles,
 	nvimDotfiles,
 	home-manager,
@@ -49,11 +49,10 @@
 	  specialArgs = {inherit inputs outputs;};
 	  modules = [./hosts/nixos/default.nix
 		     ./hosts/nixos/hardware-configuration.nix
-		     agenix.nixosModules.default
 	  ];
 	};
       };
-
+      #agenix.nixosModules.default
       #./hosts/nixos/configuration.nix was removed, working on fixing podman
 
       homeConfigurations = { 

@@ -10,6 +10,6 @@
   environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
 
   # Encryption   
-  services.encryption.enable = false; 
+  services.encryption.enable = true; 
 
 }

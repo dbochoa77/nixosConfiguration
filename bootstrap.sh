@@ -5,6 +5,9 @@ set -e
 # Variables
 XINITRC="$HOME/.xinitrc"
 
+echo "[*] Changing Repo Name to Nixos"
+mv /home/dbochoa77/nixosConfiguration /home/dbochoa77/nixos
+
 echo "[*] Moving hardware configuration"
 sudo mv /etc/nixos/hardware-configuration.nix /home/dbochoa77/nixos/hosts/nixos/
 
@@ -18,7 +21,7 @@ echo "[*] Rebuilding NixOS system..."
 sudo nixos-rebuild switch --flake .#nixos
 
 echo "[*] Updating Home Manager configuration..."
-sudo home-manager switch --flake .#nixos
+home-manager switch --flake .#nixos
 
 echo "[*] Creating .xinitrc..."
 cat > "$XINITRC" <<EOF

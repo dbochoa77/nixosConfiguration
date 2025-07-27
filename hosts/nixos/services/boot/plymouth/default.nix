@@ -16,7 +16,7 @@
     initrd.verbose = false;
 
     loader = {
-      timeout = 0;
+      timeout = 5;
     };
   };
 }
