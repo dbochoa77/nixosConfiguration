@@ -47,7 +47,9 @@
     nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
 	  specialArgs = {inherit inputs outputs;};
-	  modules = [./hosts/nixos/configuration.nix
+	  modules = [./hosts/nixos/default.nix
+		      #configuration.nix
+
 		     ./hosts/nixos/hardware-configuration.nix
 		     agenix.nixosModules.default
 	  ];
