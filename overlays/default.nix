@@ -9,7 +9,7 @@
     {
       # Patch vagrant to ignore broken symlink check
       vagrant = prev.vagrant.overrideAttrs (old: {
-      dontCheckForBrokenSymlinks = true;
+      dontFixup = true;
       });
     };
 
