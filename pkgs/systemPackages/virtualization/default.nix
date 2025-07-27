@@ -6,4 +6,6 @@
     spice-vdagent
     virt-viewer
     OVMF
+    podman
+    podman-compose
 ]

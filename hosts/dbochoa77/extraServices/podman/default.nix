@@ -1,9 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
+
 with lib; let
   cfg = config.extraServices.podman;
 in {
@@ -25,6 +21,7 @@ in {
         defaultNetwork.settings.dns_enabled = true;
       };
     };
+
     environment.systemPackages = with pkgs; [
       podman-compose
     ];
