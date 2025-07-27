@@ -13,7 +13,7 @@
   ];
   home-manager = { 
     useUserPackages = true;
-    extraSpecialArgs = {inherit inputs outputs};
+    extraSpecialArgs = {inherit inputs outputs; };
   };
 
   nixpkgs = {
@@ -38,7 +38,7 @@
       experimental-features = ["nix-command" "flakes"];
       trusted-users = [
         "root"
-	"${user}"
+	"dbochoa77"
       ];
     };
 
@@ -53,7 +53,7 @@
     registry = 
       (lib.mapAttrs (_: flake: {inherit flake;}))
       ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-    nixPath = ["/${host}-config"];
+    nixPath = ["/$nixos-config"];
   };
 }
 
