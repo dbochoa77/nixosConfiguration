@@ -51,6 +51,8 @@
 │           │   └── default.nix
 │           ├── containers
 │           │   ├── default.nix
+│           │   ├── echo
+│           │   │   └── default.nix
 │           │   └── wireguard
 │           │       └── default.nix
 │           ├── default.nix
@@ -136,7 +138,7 @@
     ├── secret1.age
     └── secrets.nix
 
-62 directories, 74 files
+63 directories, 75 files
 
 ===== FILE CONTENTS =====
 
@@ -850,9 +852,9 @@ home.file.".config/dwm" = {
       ga = "git add .";
       gc = "git commit -";
       gs = "git status";
-
+ 
       # Nix Config Rebuild
-      rebuild = "sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
+      rebuild = "nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
 
       # Neovim (root)
       v = "sudo -E nvim";
@@ -1228,10 +1230,27 @@ in {
 
 }
 
+===== ./hosts/nixos/services/containers/echo/default.nix =====
+{lib, ...}: {
+  virtualisation.oci-containers.containers."echo-http-service" = {
+    image = "hashicorp/http-echo";
+    extraOptions = ["-text='Hello, World!'" "--network=web"];
+    ports = ["5678:5678"];
+  };
+
+  system.activationScripts.createPodmanNetworkWeb = lib.mkAfter ''
+    if ! /run/current-system/sw/bin/podman network exists web; then
+      /run/current-system/sw/bin/podman network create web
+    fi
+  '';
+}
+
+
 ===== ./hosts/nixos/services/containers/default.nix =====
 {
   imports = [
     ./wireguard/default.nix
+    ./echo/default.nix
   ];
 }
 
@@ -1275,6 +1294,9 @@ in {
     secrets = {
       secret1 = {
          file = "${inputs.self}/secrets/secret1.age";
+         owner = "dbochoa77";
+         group = "dbochoa77";
+         path = "home/dbochoa77/.secret1";
         };
       };
     };
