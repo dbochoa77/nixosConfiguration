@@ -4,6 +4,7 @@
     ./fastfetch.nix
     ./bash_profile.nix
     ./xinitrc.nix
+    ./picom.nix
     ];
 
 
