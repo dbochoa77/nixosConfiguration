@@ -48,13 +48,13 @@
         nixos = nixpkgs.lib.nixosSystem {
 	  specialArgs = {inherit inputs outputs;};
 	  modules = [./hosts/nixos/default.nix
-		      #configuration.nix
-
 		     ./hosts/nixos/hardware-configuration.nix
 		     agenix.nixosModules.default
 	  ];
 	};
       };
+
+      #./hosts/nixos/configuration.nix was removed, working on fixing podman
 
       homeConfigurations = { 
         "nixos" = home-manager.lib.homeManagerConfiguration {
