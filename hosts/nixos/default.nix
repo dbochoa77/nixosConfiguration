@@ -3,7 +3,7 @@
 {
  imports = [
    ./hardware-configuration.nix
-   ./secrets.nix
+    #   ./secrets.nix
    ./services
    ../dbochoa77
    ../dbochoa77/extraServices
