@@ -2,8 +2,10 @@
     qemu
     libvirt
     virt-manager
-    vagrant
     spice-vdagent
     virt-viewer
     OVMF
 ]
+
+
+# work in progress vagrant overlay:
