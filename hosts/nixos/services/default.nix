@@ -14,6 +14,7 @@
     ./pipewire/default.nix
     ./ssh/default.nix
     ./stateVersion/default.nix
+    ./steam/default.nix
     ./timezone/default.nix
     ./unfree/default.nix
     ./user/default.nix
