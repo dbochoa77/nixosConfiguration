@@ -8,6 +8,8 @@
    ./dbochoa77
   ];
 
+  extraServices.podman.enable = true;
+
   # inputs.home-manager.nixosModules.home-manager 
 
   #
