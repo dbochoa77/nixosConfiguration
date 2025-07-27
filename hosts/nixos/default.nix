@@ -7,6 +7,7 @@
    ./services
    ../dbochoa77
    ../dbochoa77/extraServices
+   ./configuration.nix
   ];
 
   extraServices.podman.enable = true;
