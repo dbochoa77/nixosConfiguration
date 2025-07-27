@@ -11,7 +11,7 @@
    inputs.home-manager.nixosModules.home-manager
   ];
 
-  extraServices.podman.enable = false;
+  extraServices.podman.enable = true;
 
   #
   #  # Define a user account. Don't forget to set a password with ‘passwd’.
