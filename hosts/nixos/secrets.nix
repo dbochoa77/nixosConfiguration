@@ -1,8 +1,10 @@
+{ inputs, ...}: 
+
 { 
   age = {
     secrets = {
       secret1 = {
-        file = ../../secrets/secret1.age;
+         file = "${inputs.self}/secrets/secret1.age";
         };
       };
     };
