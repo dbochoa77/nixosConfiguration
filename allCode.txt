@@ -2,7 +2,6 @@
 .
 ‚îú‚îÄ‚îÄ allCode.txt
 ‚îú‚îÄ‚îÄ bootstrap.sh
-‚îú‚îÄ‚îÄ documentationo
 ‚îú‚îÄ‚îÄ flake.lock
 ‚îú‚îÄ‚îÄ flake.nix
 ‚îú‚îÄ‚îÄ home
@@ -137,7 +136,7 @@
     ‚îú‚îÄ‚îÄ secret1.age
     ‚îî‚îÄ‚îÄ secrets.nix
 
-63 directories, 74 files
+62 directories, 74 files
 
 ===== FILE CONTENTS =====
 
@@ -147,6 +146,7 @@ age-encryption.org/v1
 AlFjkd1dgGHb77mkWhVZpE8L+lbnWNhQQJoOsk7J6GM
 --- so0xqS//WqcKu25k5XgVkc+k2fmBOZTxPBU4/MIKptE
 ﬂqIπö)ÿÂÆlÑ{ˇ K¥›.Î:˛dK´∆¯≠éEŸD@å˘*ı˛Åe™Âˆé
+
 ===== ./secrets/secrets.nix =====
 let 
   nixos = "";
@@ -614,12 +614,14 @@ in {
     nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
 	  specialArgs = {inherit inputs outputs;};
-	  modules = [./hosts/nixos/configuration.nix
+	  modules = [./hosts/nixos/default.nix
 		     ./hosts/nixos/hardware-configuration.nix
 		     agenix.nixosModules.default
 	  ];
 	};
       };
+
+      #./hosts/nixos/configuration.nix was removed, working on fixing podman
 
       homeConfigurations = { 
         "nixos" = home-manager.lib.homeManagerConfiguration {
@@ -1266,11 +1268,13 @@ in {
 }
 
 ===== ./hosts/nixos/secrets.nix =====
+{ inputs, ...}: 
+
 { 
   age = {
     secrets = {
       secret1 = {
-        file = ../../secrets/secret1.age;
+         file = "${inputs.self}/secrets/secret1.age";
         };
       };
     };
@@ -1334,12 +1338,13 @@ in {
    ./hardware-configuration.nix
    ./secrets.nix
    ./services
-   ./dbochoa77
+   ../dbochoa77
+   ../dbochoa77/extraServices
+   ./configuration.nix
+   inputs.home-manager.nixosModules.home-manager
   ];
 
   extraServices.podman.enable = true;
-
-  # inputs.home-manager.nixosModules.home-manager 
 
   #
   #  # Define a user account. Don't forget to set a password with ‚Äòpasswd‚Äô.
@@ -1349,13 +1354,13 @@ in {
   #    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
   #  };
 
-  #home-manager = {
-  #  useUserPackages = true;
-  #  extraSpecialArgs = { inherit inputs outputs; };
-  #  users.dbochoa77 = 
-  #  import ../../home/nixos/dbochoa77.nix; 
-  #
-  #  }; 
+  home-manager = {
+   useUserPackages = true;
+   extraSpecialArgs = { inherit inputs outputs; };
+   users.dbochoa77 = 
+   import ../../home/nixos/dbochoa77.nix; 
+  
+   }; 
 }
 
 ===== ./hosts/dbochoa77/extraServices/podman/default.nix =====
@@ -1399,26 +1404,24 @@ in {
 }
 
 ===== ./hosts/dbochoa77/users/dbochoa77.nix =====
+{ config, pkgs, inputs, ... }: 
+
 { 
-   config, 
-   pkgs, 
-   inputs,
-   ...
-}: { 
-  users.users.${user} = {
-    isNormalUser = true;
-    description = "username";
-    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
- 
-    packages = [inputs.home-manager.packages.${pkgs.system}.default];
-  };
-  home-manager.users.${user} =
-    import ../../../home/${user}/${config.networking.hostName}.nix;
+  #users.users.dbochoa77 = {
+  #  isNormalUser = true;
+  #  description = "username";
+  #  extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
+  #
+  #  packages = [inputs.home-manager.packages.${pkgs.system}.default];
+  #};
+
+  home-manager.users.dbochoa77 =
+    import ../../../home/dbochoa77/default.nix;
  }
 
 ===== ./hosts/dbochoa77/users/default.nix =====
 {
-  imports = [./${host}.nix];
+  imports = [./dbochoa77.nix];
 }
 
 
@@ -1438,7 +1441,7 @@ in {
   ];
   home-manager = { 
     useUserPackages = true;
-    extraSpecialArgs = {inherit inputs outputs};
+    extraSpecialArgs = {inherit inputs outputs; };
   };
 
   nixpkgs = {
@@ -1463,7 +1466,7 @@ in {
       experimental-features = ["nix-command" "flakes"];
       trusted-users = [
         "root"
-	"${user}"
+	"dbochoa77"
       ];
     };
 
@@ -1478,7 +1481,7 @@ in {
     registry = 
       (lib.mapAttrs (_: flake: {inherit flake;}))
       ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-    nixPath = ["/${host}-config"];
+    nixPath = ["/$nixos-config"];
   };
 }
 

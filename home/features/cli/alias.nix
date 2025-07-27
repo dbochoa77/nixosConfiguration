@@ -88,9 +88,9 @@
       ga = "git add .";
       gc = "git commit -";
       gs = "git status";
-
+ 
       # Nix Config Rebuild
-      rebuild = "sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
+      rebuild = "nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
 
       # Neovim (root)
       v = "sudo -E nvim";
