@@ -1,6 +1,6 @@
 { pkgs }: with pkgs; [
     ccid
-    nssTools
+    #    nssTools
     opensc
     pcsc-tools
     pcsclite
