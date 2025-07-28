@@ -9,6 +9,13 @@
     gdb
     cmake
     pkg-config
+
+    #CAC
+    ccid
+    nssTools
+    opensc
+    pcsc-tools
+    pcsclite
 ]
 
 
