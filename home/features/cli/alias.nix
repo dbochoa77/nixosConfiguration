@@ -98,7 +98,9 @@
 
     initExtra = ''
       cd() {
-        builtin cd "$@" && eza -a --icons --git;
+        if builtin cd "$@"; then
+          eza -a --icons --git
+        fi
       }
 
       fastfetch
