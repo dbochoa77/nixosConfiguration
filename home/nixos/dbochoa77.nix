@@ -2,7 +2,7 @@
   imports = [ 
     ../dbochoa77
     ../features/cli
-    ../features/gui
+    #    ../features/gui
     ./home.nix
     ./dotfiles
   ]; 

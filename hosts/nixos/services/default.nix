@@ -7,6 +7,7 @@
     ./containers/default.nix
     ./encryption/default.nix
     ./flakes/default.nix
+    ./fonts/default.nix
     ./hostname/default.nix
     ./internationisationProps/default.nix
     ./keymaps/default.nix
