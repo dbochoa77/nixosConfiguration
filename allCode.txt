@@ -8,6 +8,111 @@ secrets/
 
 ===== ./allCode.txt =====
 
+===== ./home/features/gui/librewolf/default.nix =====
+{ config, lib, ... };
+
+{
+    {
+  programs.firefox = {
+    enable = true;
+    package = pkgs.librewolf;
+
+    profiles.default = {
+      isDefault = true;
+
+      settings = {
+        # Homepage & Search
+        "browser.startup.homepage" = "https://start.duckduckgo.com";
+        "browser.search.defaultenginename" = "DuckDuckGo";
+
+        # Privacy & Security
+        "privacy.resistFingerprinting" = true;
+        "privacy.firstparty.isolate" = true;
+        "privacy.trackingprotection.enabled" = true;
+        "privacy.trackingprotection.socialtracking.enabled" = true;
+        "privacy.trackingprotection.cryptomining.enabled" = true;
+        "privacy.trackingprotection.fingerprinting.enabled" = true;
+        "network.cookie.cookieBehavior" = 1; # Block third-party cookies
+        "network.dns.disablePrefetch" = true;
+        "network.prefetch-next" = false;
+        "dom.security.https_only_mode" = true;
+        "browser.safebrowsing.malware.enabled" = true;
+        "browser.safebrowsing.phishing.enabled" = true;
+
+        # Disable telemetry
+        "datareporting.healthreport.uploadEnabled" = false;
+        "toolkit.telemetry.enabled" = false;
+        "toolkit.telemetry.unified" = false;
+
+        # UI Tweaks
+        "browser.tabs.warnOnClose" = false;
+        "browser.urlbar.suggest.history" = false;
+        "browser.urlbar.suggest.bookmark" = true;
+        "browser.urlbar.suggest.openpage" = false;
+        "browser.urlbar.trimURLs" = true;
+      };
+
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        ublock-origin
+        bitwarden
+        clearurls
+        decentraleyes
+        privacy-badger
+        cookie-autodelete
+        user-agent-switcher
+      ];
+    };
+  };
+}
+
+===== ./home/features/gui/firefox/default.nix =====
+{ config, lib, ... }:
+
+{ 
+    programs.firefox = {
+    enable = true;
+
+    profiles.default = {
+      id = 0;
+      isDefault = true;
+
+    settings = {
+        "browser.startup.homepage" = "https://start.duckduckgo.com";
+        "browser.search.defaultenginename" = "DuckDuckGo";
+        "privacy.resistFingerprinting" = true;
+        "privacy.firstparty.isolate" = true;
+        "privacy.trackingprotection.enabled" = true;
+        "network.cookie.cookieBehavior" = 1; # Block third-party cookies
+        "network.dns.disablePrefetch" = true;
+        "network.prefetch-next" = false;
+        "dom.security.https_only_mode" = true;
+        "browser.tabs.warnOnClose" = false;
+        "browser.urlbar.suggest.history" = false;
+        "browser.urlbar.suggest.bookmark" = true;
+        "browser.urlbar.suggest.openpage" = false;
+        "browser.urlbar.trimURLs" = true;
+      };
+
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        ublock-origin
+        https-everywhere
+        privacy-badger
+        clearurls
+        decentraleyes
+      ];
+    };
+  };
+}
+
+===== ./home/features/gui/default.nix =====
+{pkgs, ...}: {
+    imports = [
+    ./firefox/default.nix
+    ./librewolf/default.nix
+    ];
+
+}
+
 ===== ./home/features/cli/xinitrc.nix =====
 { config, pkgs, ... }:
 
@@ -223,20 +328,11 @@ in {
 
 
 ===== ./home/dbochoa77/default.nix =====
+{ config, lib, outputs, pkgs, ... }: 
+
 {
-  config,
-  lib,
-  outputs,
-  pkgs,
-  ...
-}: {
- 
-  #  home.stateVersion = "24.05";
-  #  home.username = "dbochoa77";
-  #  home.homeDirectory = "/home/dbochoa77";
+   nixpkgs = {
 
-
-    nixpkgs = {
     # Overlays
     overlays = [
     outputs.overlays.additions
@@ -329,7 +425,7 @@ home.file.".config/dwm" = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
-    agenix.url = "github:ryantm/agenix";
+    #agenix.url = "github:ryantm/agenix";
     
     nvimDotfiles = {
     url = "git+https://github.com/dbochoa77/nvim.git";
@@ -344,7 +440,7 @@ home.file.".config/dwm" = {
 
   outputs = { 
 	self, 
-	agenix,
+        #agenix,
 	dwmDotfiles,
 	nvimDotfiles,
 	home-manager,
@@ -369,11 +465,10 @@ home.file.".config/dwm" = {
 	  specialArgs = {inherit inputs outputs;};
 	  modules = [./hosts/nixos/default.nix
 		     ./hosts/nixos/hardware-configuration.nix
-		     agenix.nixosModules.default
 	  ];
 	};
       };
-
+      #agenix.nixosModules.default
       #./hosts/nixos/configuration.nix was removed, working on fixing podman
 
       homeConfigurations = { 
@@ -1224,7 +1319,7 @@ in {
   nixpkgs.config.allowUnfree = true;    
 }
 
-===== ./hosts/nixos/services/boot/grub/default.nix =====
+===== ./hosts/nixos/services/boot/systemd/default.nix =====
 { config, pkgs, ... }:
 
 {
@@ -1245,7 +1340,7 @@ in {
 ===== ./hosts/nixos/services/boot/default.nix =====
 {
   imports = [
-    ./grub/default.nix
+    ./systemd/default.nix
     ./plymouth/default.nix
     ./latestKernel/default.nix
   ];
@@ -1270,7 +1365,7 @@ in {
     initrd.verbose = false;
 
     loader = {
-      timeout = 0;
+      timeout = 5;
     };
   };
 }
