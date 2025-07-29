@@ -158,7 +158,6 @@ secrets/
 { config, lib, ... };
 
 {
-    {
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
@@ -263,7 +262,6 @@ secrets/
 { config, pkgs, ... }:
 
 {
-  xsession.enable = false;
   xsession.windowManager.command = ''
     #!/bin/sh
    picom --config ~/.config/picom.conf &
@@ -271,7 +269,6 @@ secrets/
     '';
 }
 
-#feh --no-fehbg --bg-scale /home/dbochoa77/personal/Wallpapers/hannibalCrossingTheAlps.jpg &
     
 
 
@@ -450,7 +447,7 @@ in {
       gs = "git status";
  
       # Nix Config Rebuild
-      rebuild = "nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
+      rebuild = "cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
 
       # Neovim (root)
       v = "sudo -E nvim";
@@ -1569,11 +1566,6 @@ in {
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-    [
-      #./hardware-configuration.nix
-      ./services/default.nix
-    ];
 
   environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
 
