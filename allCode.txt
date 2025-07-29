@@ -1,4 +1,150 @@
 ===== DIRECTORY STRUCTURE =====
+.
+├── allCode.txt
+├── bootstrap.sh
+├── flake.lock
+├── flake.nix
+├── home
+│   ├── dbochoa77
+│   │   └── default.nix
+│   ├── features
+│   │   ├── cli
+│   │   │   ├── alias.nix
+│   │   │   ├── bash_profile.nix
+│   │   │   ├── default.nix
+│   │   │   ├── fastfetch.nix
+│   │   │   ├── picom.nix
+│   │   │   └── xinitrc.nix
+│   │   └── gui
+│   │       ├── default.nix
+│   │       ├── firefox
+│   │       │   └── default.nix
+│   │       └── librewolf
+│   │           └── default.nix
+│   └── nixos
+│       ├── dbochoa77.nix
+│       ├── dotfiles
+│       │   └── default.nix
+│       └── home.nix
+├── hosts
+│   ├── dbochoa77
+│   │   ├── default.nix
+│   │   ├── extraServices
+│   │   │   ├── default.nix
+│   │   │   └── podman
+│   │   │       └── default.nix
+│   │   └── users
+│   │       ├── dbochoa77.nix
+│   │       └── default.nix
+│   └── nixos
+│       ├── configuration.nix
+│       ├── default.nix
+│       ├── hardware-configuration.nix
+│       ├── secrets.nix
+│       └── services
+│           ├── autostart
+│           │   └── default.nix
+│           ├── bluetooth
+│           │   └── default.nix
+│           ├── boot
+│           │   ├── default.nix
+│           │   ├── latestKernel
+│           │   │   └── default.nix
+│           │   ├── plymouth
+│           │   │   └── default.nix
+│           │   └── systemd
+│           │       └── default.nix
+│           ├── cacReader
+│           │   └── default.nix
+│           ├── containers
+│           │   ├── default.nix
+│           │   ├── echo
+│           │   │   └── default.nix
+│           │   └── wireguard
+│           │       └── default.nix
+│           ├── default.nix
+│           ├── encryption
+│           │   └── default.nix
+│           ├── flakes
+│           │   └── default.nix
+│           ├── fonts
+│           │   └── default.nix
+│           ├── hostname
+│           │   └── default.nix
+│           ├── internationisationProps
+│           │   └── default.nix
+│           ├── keymaps
+│           │   └── default.nix
+│           ├── networking
+│           │   └── default.nix
+│           ├── pipewire
+│           │   └── default.nix
+│           ├── ssh
+│           │   └── default.nix
+│           ├── stateVersion
+│           │   └── default.nix
+│           ├── steam
+│           │   └── default.nix
+│           ├── timezone
+│           │   └── default.nix
+│           ├── unfree
+│           │   └── default.nix
+│           ├── user
+│           │   └── default.nix
+│           ├── virtualization
+│           │   └── default.nix
+│           └── xserver
+│               └── xserver.nix
+├── overlays
+│   └── default.nix
+├── pkgs
+│   ├── default.nix
+│   ├── systemPackages
+│   │   ├── cac
+│   │   │   └── default.nix
+│   │   ├── default.nix
+│   │   ├── developerTools
+│   │   │   └── default.nix
+│   │   ├── nixos-tools
+│   │   │   └── default.nix
+│   │   ├── security
+│   │   │   └── default.nix
+│   │   ├── utilities
+│   │   │   └── default.nix
+│   │   ├── virtualization
+│   │   │   └── default.nix
+│   │   └── xorg
+│   │       └── default.nix
+│   └── userPackages
+│       ├── 3DPrinting
+│       │   └── default.nix
+│       ├── assembly
+│       │   └── default.nix
+│       ├── audio
+│       │   └── default.nix
+│       ├── browsers
+│       │   └── default.nix
+│       ├── comms
+│       │   └── default.nix
+│       ├── default.nix
+│       ├── editing
+│       │   └── default.nix
+│       ├── kicad
+│       │   └── default.nix
+│       ├── media
+│       │   └── default.nix
+│       ├── officesuite
+│       │   └── default.nix
+│       ├── rice
+│       │   └── default.nix
+│       ├── terminal
+│       │   └── default.nix
+│       └── utilities
+│           └── default.nix
+├── printAll.sh
+└── README.md
+
+66 directories, 78 files
 
 ===== FILE CONTENTS =====
 
@@ -317,7 +463,9 @@ in {
 
     initExtra = ''
       cd() {
-        builtin cd "$@" && eza -1A --color=auto;
+        if builtin cd "$@"; then
+          eza -a --icons --git
+        fi
       }
 
       fastfetch
@@ -362,6 +510,7 @@ in {
   imports = [ 
     ../dbochoa77
     ../features/cli
+    #    ../features/gui
     ./home.nix
     ./dotfiles
   ]; 
@@ -799,49 +948,6 @@ echo "[*] Done! You can start your DWM session with 'startx'."
 ===== ./flake.lock =====
 {
   "nodes": {
-    "agenix": {
-      "inputs": {
-        "darwin": "darwin",
-        "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs",
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1750173260,
-        "narHash": "sha256-9P1FziAwl5+3edkfFcr5HeGtQUtrSdk/MksX39GieoA=",
-        "owner": "ryantm",
-        "repo": "agenix",
-        "rev": "531beac616433bac6f9e2a19feb8e99a22a66baf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ryantm",
-        "repo": "agenix",
-        "type": "github"
-      }
-    },
-    "darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "agenix",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1744478979,
-        "narHash": "sha256-dyN+teG9G82G+m+PX/aSAagkC+vUv0SgUw3XkPhQodQ=",
-        "owner": "lnl7",
-        "repo": "nix-darwin",
-        "rev": "43975d782b418ebf4969e9ccba82466728c2851b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lnl7",
-        "ref": "master",
-        "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
     "dwmDotfiles": {
       "flake": false,
       "locked": {
@@ -861,36 +967,15 @@ echo "[*] Done! You can start your DWM session with 'startx'."
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "agenix",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1745494811,
-        "narHash": "sha256-YZCh2o9Ua1n9uCvrvi5pRxtuVNml8X2a03qIFfRKpFs=",
+        "lastModified": 1753812716,
+        "narHash": "sha256-OjnjoalP00CyV34zg6T+Un2QoYiHCdRvMbqrweopyyY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "abfad3d2958c9e6300a883bd443512c55dfeb1be",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager_2": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1753617834,
-        "narHash": "sha256-WEVfKrdIdu5CpppJ0Va3vzP0DKlS+ZTLbBjugMO2Drg=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "72cc1e3134a35005006f06640724319caa424737",
+        "rev": "2f588d275ebd8243be6c29e7bf3ec7409baa0aa7",
         "type": "github"
       },
       "original": {
@@ -901,15 +986,15 @@ echo "[*] Done! You can start your DWM session with 'startx'."
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1745391562,
-        "narHash": "sha256-sPwcCYuiEopaafePqlG826tBhctuJsLx/mhKKM5Fmjo=",
-        "owner": "NixOS",
+        "lastModified": 1753694789,
+        "narHash": "sha256-cKgvtz6fKuK1Xr5LQW/zOUiAC0oSQoA9nOISB0pJZqM=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8a2f738d9d1f1d986b5a4cd2fd2061a7127237d7",
+        "rev": "dc9637876d0dcc8c9e5e22986b857632effeb727",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "nixos",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -927,22 +1012,6 @@ echo "[*] Done! You can start your DWM session with 'startx'."
       "original": {
         "owner": "nixos",
         "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1753429684,
-        "narHash": "sha256-9h7+4/53cSfQ/uA3pSvCaBepmZaz/dLlLVJnbQ+SJjk=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "7fd36ee82c0275fb545775cc5e4d30542899511d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -965,27 +1034,11 @@ echo "[*] Done! You can start your DWM session with 'startx'."
     },
     "root": {
       "inputs": {
-        "agenix": "agenix",
         "dwmDotfiles": "dwmDotfiles",
-        "home-manager": "home-manager_2",
-        "nixpkgs": "nixpkgs_2",
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "nvimDotfiles": "nvimDotfiles"
-      }
-    },
-    "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
       }
     }
   },
@@ -1218,6 +1271,80 @@ in {
 }
 
 
+===== ./hosts/nixos/services/fonts/default.nix =====
+{ pkgs, config, ... }:
+
+{
+    fonts.packages = with pkgs; [
+      nerd-fonts._3270
+      nerd-fonts.agave
+      nerd-fonts.anonymice
+      nerd-fonts.arimo
+      nerd-fonts.aurulent-sans-mono
+      nerd-fonts.bigblue-terminal
+      nerd-fonts.bitstream-vera-sans-mono
+      nerd-fonts.blex-mono
+      nerd-fonts.caskaydia-cove
+      nerd-fonts.caskaydia-mono
+      nerd-fonts.code-new-roman
+      nerd-fonts.comic-shanns-mono
+      nerd-fonts.commit-mono
+      nerd-fonts.cousine
+      nerd-fonts.d2coding
+      nerd-fonts.daddy-time-mono
+      nerd-fonts.departure-mono
+      nerd-fonts.dejavu-sans-mono
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.envy-code-r
+      nerd-fonts.fantasque-sans-mono
+      nerd-fonts.fira-code
+      nerd-fonts.fira-mono
+      nerd-fonts.geist-mono
+      nerd-fonts.go-mono
+      nerd-fonts.gohufont
+      nerd-fonts.hack
+      nerd-fonts.hasklug
+      nerd-fonts.heavy-data
+      nerd-fonts.hurmit
+      nerd-fonts.im-writing
+      nerd-fonts.inconsolata
+      nerd-fonts.inconsolata-go
+      nerd-fonts.inconsolata-lgc
+      nerd-fonts.intone-mono
+      nerd-fonts.iosevka
+      nerd-fonts.iosevka-term
+      nerd-fonts.iosevka-term-slab
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.lekton
+      nerd-fonts.liberation
+      nerd-fonts.lilex
+      nerd-fonts.martian-mono
+      nerd-fonts.meslo-lg
+      nerd-fonts.monaspace
+      nerd-fonts.monofur
+      nerd-fonts.monoid
+      nerd-fonts.mononoki
+      nerd-fonts.noto
+      nerd-fonts.open-dyslexic
+      nerd-fonts.overpass
+      nerd-fonts.profont
+      nerd-fonts.proggy-clean-tt
+      nerd-fonts.recursive-mono
+      nerd-fonts.roboto-mono
+      nerd-fonts.shure-tech-mono
+      nerd-fonts.sauce-code-pro
+      nerd-fonts.space-mono
+      nerd-fonts.symbols-only
+      nerd-fonts.terminess-ttf
+      nerd-fonts.tinos
+      nerd-fonts.ubuntu
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.ubuntu-sans
+      nerd-fonts.victor-mono
+      nerd-fonts.zed-mono
+   ];
+}
+
 ===== ./hosts/nixos/services/stateVersion/default.nix =====
 { config, pkgs, ... }:
 
@@ -1267,6 +1394,7 @@ in {
     ./containers/default.nix
     ./encryption/default.nix
     ./flakes/default.nix
+    ./fonts/default.nix
     ./hostname/default.nix
     ./internationisationProps/default.nix
     ./keymaps/default.nix
@@ -1326,7 +1454,6 @@ in {
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
-    loader.timeout = 5;
     };
 }
 
@@ -1519,27 +1646,39 @@ in {
 
 {
   imports =
-    [ (modulesPath + "/profiles/qemu-guest.nix")
+    [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/035d61f6-63d6-4cf7-bee3-877866035c5a";
+    { device = "/dev/disk/by-uuid/950941a4-e959-4e9a-8a05-8a5a4c8a4ddb";
       fsType = "ext4";
     };
 
-  swapDevices = [ ];
+  boot.initrd.luks.devices."luks-95ba61d7-adce-435d-84f8-c9551c8c035e".device = "/dev/disk/by-uuid/95ba61d7-adce-435d-84f8-c9551c8c035e";
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/63CE-0BD9";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/cf1f3af9-8a03-416a-9426-50b875215172"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s20f0u1c2.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp46s0f0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
