@@ -1,5 +1,6 @@
 { pkgs }: with pkgs; [
   dmenu
+  papirus-icon-theme
   curl
   wget
   rsync
