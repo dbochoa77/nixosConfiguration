@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 {
   programs.bash = {
@@ -69,7 +65,7 @@
 
       # File Listing
       ls = "eza -a --icons --git";
-      la = "exa -la --icons --git";
+      la = "eza -la --icons --git";
       lt = "eza -T --git-ignore --icons";
 
       # Directory Movement
@@ -86,7 +82,7 @@
 
       # Git Shortcuts
       ga = "git add .";
-      gc = "git commit -";
+      gc = "git commit -m";
       gs = "git status";
  
       # Nix Config Rebuild

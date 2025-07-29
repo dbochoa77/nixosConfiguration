@@ -297,7 +297,6 @@ in {
 ===== ./home/features/cli/picom.nix =====
 {
   services.picom = {
-    enable = true;
     backend = "glx";
 
     settings = {
@@ -363,11 +362,7 @@ in {
 
 
 ===== ./home/features/cli/alias.nix =====
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 {
   programs.bash = {
@@ -434,7 +429,7 @@ in {
 
       # File Listing
       ls = "eza -a --icons --git";
-      la = "exa -la --icons --git";
+      la = "eza -la --icons --git";
       lt = "eza -T --git-ignore --icons";
 
       # Directory Movement
@@ -451,7 +446,7 @@ in {
 
       # Git Shortcuts
       ga = "git add .";
-      gc = "git commit -";
+      gc = "git commit -m";
       gs = "git status";
  
       # Nix Config Rebuild
@@ -1109,14 +1104,9 @@ in {
 
 
 ===== ./hosts/dbochoa77/default.nix =====
-{
-  lib,
-  pkgs,
-  inputs,
-  outputs,
-  ...
-}: {
+{ lib, pkgs, inputs, outputs, ... }: 
 
+{
   imports = [
 	./extraServices
 	./users 
@@ -1578,7 +1568,7 @@ in {
 {
   imports =
     [
-      ./hardware-configuration.nix
+      #./hardware-configuration.nix
       ./services/default.nix
     ];
 
