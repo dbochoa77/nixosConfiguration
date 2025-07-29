@@ -2,7 +2,7 @@
 
 {
 
-  environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
+  environment.systemPackages = import ../../nixos/pkgs/systemPackages {inherit pkgs; };
 
   # Encryption   
   services.encryption.enable = true; 
