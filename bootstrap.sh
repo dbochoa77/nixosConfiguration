@@ -43,3 +43,5 @@ chmod +x "$XINITRC"
 echo "[*] .xinitrc created successfully."
 echo "[*] Done! You can start your DWM session with 'startx'."
 
+echo "[*] Removing Bootstrap.sh, Thank you !!"
+rm ~/nixos/bootstrap.sh
