@@ -3,5 +3,5 @@
     nssTools
     opensc
     pcsc-tools
-    pcsclite
+    pcsc-lite
 ]
