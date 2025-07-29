@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
+#imports =
     [
       #./hardware-configuration.nix
-      ./services/default.nix
-    ];
+  #    ./services/default.nix
+  # ];
 
   environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
 
