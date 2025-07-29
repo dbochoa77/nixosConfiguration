@@ -4,6 +4,7 @@
   programs.virt-manager.enable = true;
   virtualisation = { 
   libvirtd.enable = true;
+  libvirtd.networks.default.enable = true;
   spiceUSBRedirection.enable = true;
 };
 

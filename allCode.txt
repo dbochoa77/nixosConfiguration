@@ -428,6 +428,7 @@ in {
       ls = "eza -a --icons --git";
       la = "eza -la --icons --git";
       lt = "eza -T --git-ignore --icons";
+      cat = "bat";
 
       # Directory Movement
       mkdir = "mkdir -p";
@@ -731,6 +732,7 @@ My NixOS configuration.
 ===== ./pkgs/systemPackages/utilities/default.nix =====
 { pkgs }: with pkgs; [
   dmenu
+  papirus-icon-theme
   curl
   wget
   rsync
@@ -757,6 +759,7 @@ My NixOS configuration.
 
 ===== ./pkgs/systemPackages/default.nix =====
 { pkgs }: 
+
 ( import ./developerTools { inherit pkgs; })
 ++
 ( import ./nixos-tools { inherit pkgs; })
@@ -965,11 +968,11 @@ rm ~/nixos/bootstrap.sh
         ]
       },
       "locked": {
-        "lastModified": 1753812716,
-        "narHash": "sha256-OjnjoalP00CyV34zg6T+Un2QoYiHCdRvMbqrweopyyY=",
+        "lastModified": 1753825287,
+        "narHash": "sha256-axdksEaJBRj6PReTwpOILL6sgvvCsOPGPy32FnFFSMo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2f588d275ebd8243be6c29e7bf3ec7409baa0aa7",
+        "rev": "4bf124678be14242e916f4dec2596158900780d4",
         "type": "github"
       },
       "original": {
@@ -1189,11 +1192,22 @@ in {
          };
       };
 
-    hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Name = "Hello";
+        ControllerMode = "dual";
+        FastConnectable = "true";
+        Experimental = "true";
+      };
+      Policy = {
+        AutoEnable = "true";
+      };
     };
-    services.blueman.enable = true;
+  };
+
+   services.blueman.enable = true;
 }
 
 ===== ./hosts/nixos/services/internationisationProps/default.nix =====
@@ -1501,6 +1515,7 @@ in {
       alsa.support32Bit = true;
       pulse.enable = true;
       jack.enable = true;
+      wireplumber.enable = true;
     };
   
     services.pulseaudio.enable = false;
@@ -1598,7 +1613,7 @@ in {
 {
  imports = [
    ./hardware-configuration.nix
-    #   ./secrets.nix
+    #./secrets.nix
    ./services
    ../dbochoa77
    ../dbochoa77/extraServices
@@ -1607,14 +1622,6 @@ in {
   ];
 
   extraServices.podman.enable = true;
-
-  #
-  #  # Define a user account. Don't forget to set a password with ‘passwd’.
-  #  users.users.dbochoa77 = {
-  #    isNormalUser = true;
-  #    description = "dbochoa77";
-  #    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
-  #  };
 
   home-manager = {
    useUserPackages = true;
