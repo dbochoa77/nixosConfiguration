@@ -1,11 +1,6 @@
-{
-  lib,
-  pkgs,
-  inputs,
-  outputs,
-  ...
-}: {
+{ lib, pkgs, inputs, outputs, ... }: 
 
+{
   imports = [
 	./extraServices
 	./users 
@@ -43,7 +38,7 @@
     };
 
     # Automaticlly Cleans Nixos Generations 30d older
-    gc = {
+    gc = { 
       automatic = true; 
       options = "--delete-older-than 30d";
     };
@@ -53,7 +48,10 @@
     registry = 
       (lib.mapAttrs (_: flake: {inherit flake;}))
       ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-    nixPath = ["/$nixos-config"];
+    nixPath = [
+      "nixpkgs=${pkgs.path}"
+      "nixos-config=${toString ../../hosts/nixos/default.nix}"
+    ];
   };
 }
 
