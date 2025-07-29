@@ -1144,7 +1144,7 @@ in {
     };
 
     # Automaticlly Cleans Nixos Generations 30d older
-    gc = {
+    gc = { 
       automatic = true; 
       options = "--delete-older-than 30d";
     };
@@ -1154,7 +1154,10 @@ in {
     registry = 
       (lib.mapAttrs (_: flake: {inherit flake;}))
       ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-    nixPath = ["/$nixos-config"];
+    nixPath = [
+      "nixpkgs=${pkgs.path}"
+      "nixos-config=${toString ../../hosts/nixos/default.nix}"
+    ];
   };
 }
 

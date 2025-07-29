@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  xsession.enable = false;
   xsession.windowManager.command = ''
     #!/bin/sh
    picom --config ~/.config/picom.conf &
@@ -9,6 +8,5 @@
     '';
 }
 
-#feh --no-fehbg --bg-scale /home/dbochoa77/personal/Wallpapers/hannibalCrossingTheAlps.jpg &
     
 
