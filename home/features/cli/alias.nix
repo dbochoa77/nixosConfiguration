@@ -67,6 +67,7 @@
       ls = "eza -a --icons --git";
       la = "eza -la --icons --git";
       lt = "eza -T --git-ignore --icons";
+      cat = "bat";
 
       # Directory Movement
       mkdir = "mkdir -p";
