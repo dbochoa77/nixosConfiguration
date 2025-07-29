@@ -3,7 +3,7 @@
 {
  imports = [
    ./hardware-configuration.nix
-    #   ./secrets.nix
+    #./secrets.nix
    ./services
    ../dbochoa77
    ../dbochoa77/extraServices
@@ -12,14 +12,6 @@
   ];
 
   extraServices.podman.enable = true;
-
-  #
-  #  # Define a user account. Don't forget to set a password with ‘passwd’.
-  #  users.users.dbochoa77 = {
-  #    isNormalUser = true;
-  #    description = "dbochoa77";
-  #    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
-  #  };
 
   home-manager = {
    useUserPackages = true;
