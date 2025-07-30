@@ -1,4 +1,5 @@
 { pkgs }: with pkgs; [
+    xorg.xauth
     xorg.xinit
     xorg.xrandr        
     xorg.xsetroot

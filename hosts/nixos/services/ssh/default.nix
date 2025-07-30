@@ -15,7 +15,4 @@
 
   services.openssh.settings.X11Forwarding = true;
   
-  environment.systemPackages = with pkgs; [
-    xorg.xauth
-  ];
 }

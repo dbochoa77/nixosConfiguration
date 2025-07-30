@@ -1,5 +1,6 @@
 { pkgs }: with pkgs; [
     qemu
+    qemu_kvm
     libvirt
     virt-manager
     spice-vdagent
