@@ -8,6 +8,7 @@
     ninja
     gdb
     cmake
+    simple-mtpfs
     pkg-config
 ]
 
