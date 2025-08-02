@@ -6,4 +6,6 @@
     cowsay
     tree
     flameshot
+    calc
+    units
 ]
