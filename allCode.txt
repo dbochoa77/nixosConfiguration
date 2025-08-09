@@ -44,6 +44,8 @@
 │       └── services
 │           ├── autostart
 │           │   └── default.nix
+│           ├── autoUpdate
+│           │   └── default.nix
 │           ├── bluetooth
 │           │   └── default.nix
 │           ├── boot
@@ -69,7 +71,7 @@
 │           │   └── default.nix
 │           ├── fonts
 │           │   └── default.nix
-│           ├── hostname
+│           ├── intelDrivers
 │           │   └── default.nix
 │           ├── internationisationProps
 │           │   └── default.nix
@@ -144,7 +146,7 @@
 ├── printAll.sh
 └── README.md
 
-66 directories, 78 files
+67 directories, 79 files
 
 ===== FILE CONTENTS =====
 
@@ -697,6 +699,7 @@ My NixOS configuration.
     ninja
     gdb
     cmake
+    simple-mtpfs
     pkg-config
 ]
 
@@ -704,6 +707,7 @@ My NixOS configuration.
 
 ===== ./pkgs/systemPackages/xorg/default.nix =====
 { pkgs }: with pkgs; [
+    xorg.xauth
     xorg.xinit
     xorg.xrandr        
     xorg.xsetroot
@@ -719,6 +723,7 @@ My NixOS configuration.
 ===== ./pkgs/systemPackages/virtualization/default.nix =====
 { pkgs }: with pkgs; [
     qemu
+    qemu_kvm
     libvirt
     virt-manager
     spice-vdagent
@@ -831,6 +836,8 @@ My NixOS configuration.
     cowsay
     tree
     flameshot
+    calc
+    units
 ]
 
 ===== ./pkgs/userPackages/3DPrinting/default.nix =====
@@ -838,6 +845,7 @@ My NixOS configuration.
     prusa-slicer
     blender
     freecad
+    librecad
 ]
 
 ===== ./pkgs/userPackages/officesuite/default.nix =====
@@ -968,11 +976,11 @@ rm ~/nixos/bootstrap.sh
         ]
       },
       "locked": {
-        "lastModified": 1753825287,
-        "narHash": "sha256-axdksEaJBRj6PReTwpOILL6sgvvCsOPGPy32FnFFSMo=",
+        "lastModified": 1754613544,
+        "narHash": "sha256-ueR1mGX4I4DWfDRRxxMphbKDNisDeMPMusN72VV1+cc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "4bf124678be14242e916f4dec2596158900780d4",
+        "rev": "cc2fa2331aebf9661d22bb507d362b39852ac73f",
         "type": "github"
       },
       "original": {
@@ -983,11 +991,11 @@ rm ~/nixos/bootstrap.sh
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1753694789,
-        "narHash": "sha256-cKgvtz6fKuK1Xr5LQW/zOUiAC0oSQoA9nOISB0pJZqM=",
+        "lastModified": 1754498491,
+        "narHash": "sha256-erbiH2agUTD0Z30xcVSFcDHzkRvkRXOQ3lb887bcVrs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "dc9637876d0dcc8c9e5e22986b857632effeb727",
+        "rev": "c2ae88e026f9525daf89587f3cbee584b92b6134",
         "type": "github"
       },
       "original": {
@@ -1240,23 +1248,17 @@ in {
 { config, pkgs, ... }:
 
 {
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  networking.firewall.enable = false;
 }
 
 
 ===== ./hosts/nixos/services/encryption/default.nix =====
 { config, pkgs, lib, ... }:
 
-{
-  options.services.encryption.enable = lib.mkOption {
-    type = lib.types.bool;
-    default = false;
-    description = "Enable LUKS encryption settings for initrd.";
-  };
-
-  config = lib.mkIf config.services.encryption.enable {
-      boot.initrd.luks.devices."luks-6f5a683b-a714-46fb-88b5-db4d59342ef4".device = "/dev/disk/by-uuid/6f5a683b-a714-46fb-88b5-db4d59342ef4";
-  };
+{      
+  boot.initrd.luks.devices."luks-6f5a683b-a714-46fb-88b5-db4d59342ef4".device = "/dev/disk/by-uuid/6f5a683b-a714-46fb-88b5-db4d59342ef4";
 }
 
 ===== ./hosts/nixos/services/virtualization/default.nix =====
@@ -1264,16 +1266,12 @@ in {
  
 { 
   programs.virt-manager.enable = true;
-  virtualisation = { 
-  libvirtd.enable = true;
-  spiceUSBRedirection.enable = true;
-};
-
-  users.users.dbochoa77.extraGroups = [ "libvirtd" "kvm" "tty" "video" "audio"];
-
-    environment.systemPackages = with pkgs; [
-      qemu_kvm
-    ];
+   
+  users.groups.libvirtd.members = ["dbochoa77"];
+   
+  virtualisation.libvirtd.enable = true;
+   
+  virtualisation.spiceUSBRedirection.enable = true;
 }
 
 
@@ -1358,6 +1356,32 @@ in {
   system.stateVersion = "25.11";
 }
 
+===== ./hosts/nixos/services/autoUpdate/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  system.autoUpgrade = {
+    enable = true;
+
+    # Point to your flake (use a string ref). Include the host attr if you want.
+    flake = "/home/admin/Homelab/nixosBase#nixos";
+
+    # nixos-rebuild flags:
+    flags = [
+      "-L"                           # show logs
+      "--update-input" "nixpkgs"     # update nixpkgs only (or use --recreate-lock-file)
+      "--commit-lock-file"           # commit updated flake.lock (requires the repo to be a git repo)
+    ];
+
+    operation = "switch";            # default
+    dates = "02:00";                 # daily at 02:00
+    randomizedDelaySec = "45min";    # spread updates
+    persistent = true;               # run after boot if missed
+    allowReboot = true;              # reboot automatically if needed (kernel, etc.)
+  };
+}
+
+
 ===== ./hosts/nixos/services/ssh/default.nix =====
 { config, pkgs, ... }:
 
@@ -1376,9 +1400,6 @@ in {
 
   services.openssh.settings.X11Forwarding = true;
   
-  environment.systemPackages = with pkgs; [
-    xorg.xauth
-  ];
 }
 
 ===== ./hosts/nixos/services/xserver/xserver.nix =====
@@ -1401,7 +1422,6 @@ in {
     ./encryption/default.nix
     ./flakes/default.nix
     ./fonts/default.nix
-    ./hostname/default.nix
     ./internationisationProps/default.nix
     ./keymaps/default.nix
     ./networking/default.nix
@@ -1484,24 +1504,49 @@ in {
 
 {
   boot = {
+
     plymouth = {
       enable = true;
-      theme = "spinner"; # Use a safe built-in theme first to confirm it works
+      theme = "rings";
+      themePackages = with pkgs; [
+        # By default we would install all themes
+        (adi1090x-plymouth-themes.override {
+          selected_themes = [ "rings" ];
+        })
+      ];
     };
 
+    # Enable "Silent boot"
+    consoleLogLevel = 3;
+    initrd.verbose = false;
     kernelParams = [
       "quiet"
       "splash"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
     ];
+    # Hide the OS choice for bootloaders.
+    # It's still possible to open the bootloader list by pressing any key
+    # It will just not appear on screen unless a key is pressed
+    # loader.timeout = 0;
 
-    consoleLogLevel = 3;
-    initrd.verbose = false;
-
-    loader = {
-      timeout = 5;
-    };
   };
 }
+
+===== ./hosts/nixos/services/intelDrivers/default.nix =====
+{ config, pkgs, ... }
+
+{
+services.xserver.videoDrivers = [ "modesetting" ];
+   hardware.graphics.enable = true;
+ 
+   hardware.graphics.extraPackages = with pkgs; [
+       intel-media-driver
+           vaapiIntel
+           vaapiVdpau
+   ];
+} 
 
 ===== ./hosts/nixos/services/pipewire/default.nix =====
 { config, pkgs, ... }:
@@ -1560,13 +1605,6 @@ in {
   services.getty.autologinUser = "dbochoa77";
 }
 
-===== ./hosts/nixos/services/hostname/default.nix =====
-{ config, pkgs, ... }:
-
-{
-    networking.hostName = "nixos";
-}
-
 ===== ./hosts/nixos/services/steam/default.nix =====
 { config, pkgs, ... }:
 
@@ -1585,9 +1623,6 @@ in {
 {
 
   environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
-
-  # Encryption   
-  services.encryption.enable = true; 
 
 }
 
