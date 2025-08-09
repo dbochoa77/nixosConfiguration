@@ -2,4 +2,5 @@
     prusa-slicer
     blender
     freecad
+    librecad
 ]
