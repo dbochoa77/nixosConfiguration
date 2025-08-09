@@ -2,6 +2,7 @@
     nano
     neovim
     vim
+    cowsay
     sutils
     tree
     flameshot
