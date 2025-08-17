@@ -68,6 +68,7 @@
       la = "eza -la --icons --git";
       lt = "eza -T --git-ignore --icons";
       cat = "bat";
+      uglycat = "bat -p --style=plain --paging=never --decorations=never";
 
       # Directory Movement
       mkdir = "mkdir -p";
