@@ -22,7 +22,8 @@
       "yt.soundtrack" = "yt-dlp -x --audio-format mp3 -o \"~/music/soundtrack/%(title)s.%(ext)s\"";
       "yt.latin" = "yt-dlp -x --audio-format mp3 -o \"~/music/latin/%(title)s.%(ext)s\"";
       "yt.rap" = "yt-dlp -x --audio-format mp3 -o \"~/music/rap/%(title)s.%(ext)s\"";
-
+      "yt.altRock" = "yt-dlp -x --audio-format mp3 -o \"~/music/altRock/%(title)s.%(ext)s\"";
+  
       # MPV Shuffle Play
       "mpv.rock" = "mpv --shuffle ~/music/rock";
       "mpv.pop" = "mpv --shuffle ~/music/pop";
@@ -40,6 +41,8 @@
       "mpv.latin" = "mpv --shuffle ~/music/latin";
       "mpv.rap" = "mpv --shuffle ~/music/rap";
       "mpv.phonk" = "mpv --shuffle ~/music/phonk";
+      "mpv.altRock" = "mpv --shuffle ~/music/altRock";
+
 
       # Brightness Control
       "bright.down" = "echo 2 | sudo tee /sys/class/backlight/acpi_video0/brightness";
@@ -88,7 +91,7 @@
       gs = "git status";
  
       # Nix Config Rebuild
-      rebuild = "cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
+      rebuild = "rm ~/.bashrc && cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos && source ~/.bashrc"; 
 
       # Neovim (root)
       v = "sudo -E nvim";
