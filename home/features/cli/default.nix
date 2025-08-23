@@ -1,10 +1,10 @@
 {pkgs, ...}: {
     imports = [
-    ./alias.nix
-    ./fastfetch.nix
-    ./bash_profile.nix
-    ./xinitrc.nix
-    ./picom.nix
+    ./alias/default.nix
+    ./fastfetch/default.nix
+    ./bash_profile/default.nix
+    ./xinitrc/default.nix
+    ./picom/default.nix
     ];
 
 
