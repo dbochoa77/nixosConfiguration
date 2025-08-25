@@ -18,7 +18,6 @@
     };
 
     spiceUSBRedirection.enable = true;
-    swtpm.enable = true;                       # run the software TPM
   };
 
   security.tpm2.enable = true;                 # host TPM (optional, safe)
