@@ -13,6 +13,7 @@
   dosfstools
   exfatprogs
   util-linux
+  networkmanagerapplet
   brightnessctl
   htop
   rtkit
