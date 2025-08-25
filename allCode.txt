@@ -9,12 +9,19 @@
 │   │   └── default.nix
 │   ├── features
 │   │   ├── cli
-│   │   │   ├── alias.nix
-│   │   │   ├── bash_profile.nix
+│   │   │   ├── alias
+│   │   │   │   └── default.nix
+│   │   │   ├── bash_profile
+│   │   │   │   └── default.nix
 │   │   │   ├── default.nix
-│   │   │   ├── fastfetch.nix
-│   │   │   ├── picom.nix
-│   │   │   └── xinitrc.nix
+│   │   │   ├── fastfetch
+│   │   │   │   └── default.nix
+│   │   │   ├── github
+│   │   │   │   └── default.nix
+│   │   │   ├── picom
+│   │   │   │   └── default.nix
+│   │   │   └── xinitrc
+│   │   │       └── default.nix
 │   │   └── gui
 │   │       ├── default.nix
 │   │       ├── firefox
@@ -40,7 +47,6 @@
 │       ├── configuration.nix
 │       ├── default.nix
 │       ├── hardware-configuration.nix
-│       ├── secrets.nix
 │       └── services
 │           ├── autostart
 │           │   └── default.nix
@@ -146,7 +152,7 @@
 ├── printAll.sh
 └── README.md
 
-67 directories, 79 files
+73 directories, 79 files
 
 ===== FILE CONTENTS =====
 
@@ -260,7 +266,7 @@ secrets/
 
 }
 
-===== ./home/features/cli/xinitrc.nix =====
+===== ./home/features/cli/xinitrc/default.nix =====
 { config, pkgs, ... }:
 
 {
@@ -274,49 +280,53 @@ secrets/
     
 
 
-===== ./home/features/cli/fastfetch.nix =====
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-with lib; let 
-  cfg = config.features.cli.fastfetch;
-in {
-    options.features.cli.fastfetch.enable = mkEnableOption "enable fastfetch";
+===== ./home/features/cli/github/default.nix =====
+{ config, pkgs, ... }:
 
-    config = mkIf cfg.enable {
-        home.packages = with pkgs; [fastfetch];
+{
+  programs.git = {
+    enable = true;
+
+    userName  = "dbochoa77";
+    userEmail = "dbochoa77@proton.me";
+
+    signing = {
+      key = "~/.ssh/id_ed25519";
+      signByDefault = true;
     };
-}
 
-
-
-===== ./home/features/cli/picom.nix =====
-{
-  services.picom = {
-    backend = "glx";
-
-    settings = {
-      blur-method = "kernel";
-      blur-strength = 5;
-      opacity-rule = [
-        "85:class_g = 'Alacritty'"
-      ];
+    extraConfig = {
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      gpg.format = "ssh";
     };
   };
 }
+
+===== ./home/features/cli/bash_profile/default.nix =====
+ { config, lib, pkgs, ... }:
+
+{
+  programs.bash.initExtra = ''
+    fastfetch
+
+    if [[ -z $DISPLAY && $(tty) == /dev/tty1 ]]; then
+       exec startx
+    fi
+  '';
+}
+
+
 
 
 ===== ./home/features/cli/default.nix =====
 {pkgs, ...}: {
     imports = [
-    ./alias.nix
-    ./fastfetch.nix
-    ./bash_profile.nix
-    ./xinitrc.nix
-    ./picom.nix
+    ./alias/default.nix
+    ./fastfetch/default.nix
+    ./bash_profile/default.nix
+    ./xinitrc/default.nix
+    ./picom/default.nix
     ];
 
 
@@ -344,23 +354,42 @@ in {
   ];
 }
 
-===== ./home/features/cli/bash_profile.nix =====
- { config, lib, pkgs, ... }:
-
+===== ./home/features/cli/picom/default.nix =====
 {
-  programs.bash.initExtra = ''
-    fastfetch
+  services.picom = {
+    backend = "glx";
 
-    if [[ -z $DISPLAY && $(tty) == /dev/tty1 ]]; then
-       exec startx
-    fi
-  '';
+    settings = {
+      blur-method = "kernel";
+      blur-strength = 5;
+      opacity-rule = [
+        "85:class_g = 'Alacritty'"
+      ];
+    };
+  };
+}
+
+
+===== ./home/features/cli/fastfetch/default.nix =====
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let 
+  cfg = config.features.cli.fastfetch;
+in {
+    options.features.cli.fastfetch.enable = mkEnableOption "enable fastfetch";
+
+    config = mkIf cfg.enable {
+        home.packages = with pkgs; [fastfetch];
+    };
 }
 
 
 
-
-===== ./home/features/cli/alias.nix =====
+===== ./home/features/cli/alias/default.nix =====
 { config, lib, ... }:
 
 {
@@ -385,7 +414,8 @@ in {
       "yt.soundtrack" = "yt-dlp -x --audio-format mp3 -o \"~/music/soundtrack/%(title)s.%(ext)s\"";
       "yt.latin" = "yt-dlp -x --audio-format mp3 -o \"~/music/latin/%(title)s.%(ext)s\"";
       "yt.rap" = "yt-dlp -x --audio-format mp3 -o \"~/music/rap/%(title)s.%(ext)s\"";
-
+      "yt.altRock" = "yt-dlp -x --audio-format mp3 -o \"~/music/altRock/%(title)s.%(ext)s\"";
+  
       # MPV Shuffle Play
       "mpv.rock" = "mpv --shuffle ~/music/rock";
       "mpv.pop" = "mpv --shuffle ~/music/pop";
@@ -403,6 +433,8 @@ in {
       "mpv.latin" = "mpv --shuffle ~/music/latin";
       "mpv.rap" = "mpv --shuffle ~/music/rap";
       "mpv.phonk" = "mpv --shuffle ~/music/phonk";
+      "mpv.altRock" = "mpv --shuffle ~/music/altRock";
+
 
       # Brightness Control
       "bright.down" = "echo 2 | sudo tee /sys/class/backlight/acpi_video0/brightness";
@@ -431,6 +463,7 @@ in {
       la = "eza -la --icons --git";
       lt = "eza -T --git-ignore --icons";
       cat = "bat";
+      uglycat = "bat -p --style=plain --paging=never --decorations=never";
 
       # Directory Movement
       mkdir = "mkdir -p";
@@ -450,7 +483,7 @@ in {
       gs = "git status";
  
       # Nix Config Rebuild
-      rebuild = "cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
+      rebuild = "rm ~/.bashrc && cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos && source ~/.bashrc"; 
 
       # Neovim (root)
       v = "sudo -E nvim";
@@ -691,8 +724,8 @@ My NixOS configuration.
 ===== ./pkgs/systemPackages/developerTools/default.nix =====
 { pkgs }: with pkgs; [
     gcc
+    git
     gnumake
-    git 
     python3
     python3Packages.pip
     xclip 
@@ -976,11 +1009,11 @@ rm ~/nixos/bootstrap.sh
         ]
       },
       "locked": {
-        "lastModified": 1754756528,
-        "narHash": "sha256-W1jYKMetZSOHP5m2Z5Wokdj/ct17swPHs+MiY2WT1HQ=",
+        "lastModified": 1756022458,
+        "narHash": "sha256-J1i35r4HfNDdPpwL0vOBaZopQudAUVtartEerc1Jryc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3ec1cd9a0703fbd55d865b7fd2b07d08374f0355",
+        "rev": "9e3a33c0bcbc25619e540b9dfea372282f8a9740",
         "type": "github"
       },
       "original": {
@@ -991,11 +1024,11 @@ rm ~/nixos/bootstrap.sh
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1754498491,
-        "narHash": "sha256-erbiH2agUTD0Z30xcVSFcDHzkRvkRXOQ3lb887bcVrs=",
+        "lastModified": 1755615617,
+        "narHash": "sha256-HMwfAJBdrr8wXAkbGhtcby1zGFvs+StOp19xNsbqdOg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c2ae88e026f9525daf89587f3cbee584b92b6134",
+        "rev": "20075955deac2583bb12f07151c2df830ef346b4",
         "type": "github"
       },
       "original": {
@@ -1263,15 +1296,29 @@ in {
 
 ===== ./hosts/nixos/services/virtualization/default.nix =====
 { config, pkgs, ... }:
- 
-{ 
+
+{
   programs.virt-manager.enable = true;
-   
-  users.groups.libvirtd.members = ["dbochoa77"];
-   
-  virtualisation.libvirtd.enable = true;
-   
-  virtualisation.spiceUSBRedirection.enable = true;
+
+  users.users.dbochoa77.extraGroups = [ "libvirtd" "kvm" ];
+
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        # (optional) make sure we’re on the KVM build
+        package = pkgs.qemu_kvm;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];  # has VARS/SecureBoot
+      };
+    };
+
+    spiceUSBRedirection.enable = true;
+  };
+
+  environment.systemPackages = [ pkgs.swtpm pkgs.virt-viewer pkgs.spice-gtk pkgs.spice-vdagent ];
+
+  security.tpm2.enable = true;                 # host TPM (optional, safe)
 }
 
 
@@ -1494,7 +1541,7 @@ in {
 {
   imports = [
     ./systemd/default.nix
-    ./plymouth/default.nix
+    #    ./plymouth/default.nix
     ./latestKernel/default.nix
   ];
 }
@@ -1625,22 +1672,6 @@ services.xserver.videoDrivers = [ "modesetting" ];
   environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
 
 }
-
-===== ./hosts/nixos/secrets.nix =====
-#{ inputs, ...}: 
-#
-#{ 
-#  age = {
-#    secrets = {
-#      secret1 = {
-#         file = "${inputs.self}/secrets/secret1.age";
-#         owner = "dbochoa77";
-#         group = "dbochoa77";
-#         path = "home/dbochoa77/.secret1";
-#        };
-#      };
-#    };
-#  }
 
 ===== ./hosts/nixos/default.nix =====
 { config, inputs, outputs, lib, pkgs, ... }:

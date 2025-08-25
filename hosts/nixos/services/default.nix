@@ -1,6 +1,6 @@
-{
-  imports = [
+{ imports = [
     ./autostart/default.nix
+    ./autoUpdate/default.nix
     ./bluetooth/default.nix
     ./boot/default.nix
     ./cacReader/default.nix
@@ -19,6 +19,6 @@
     ./unfree/default.nix
     ./user/default.nix
     ./virtualization/default.nix
-    ./xserver/xserver.nix
+    ./xserver/default.nix
   ];
 }
