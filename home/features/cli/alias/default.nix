@@ -92,7 +92,8 @@
       gs = "git status";
  
       # Nix Config Rebuild
-      rebuild = "rm ~/.bashrc && cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos && source ~/.bashrc"; 
+      rebuild = "cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos && source ~/.bashrc"; 
+      doom = "sudo rm ~/.bashrc && source ~/.bashrc";
 
       # Neovim (root)
       v = "sudo -E nvim";

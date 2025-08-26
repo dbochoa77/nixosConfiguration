@@ -1,30 +1,32 @@
 {
   description = "Configuration for Nixos Server";
+    inputs = {
+      home-manager = {
+        url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
- inputs = {
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+      
+      nvimDotfiles = {
+      url = "git+https://github.com/dbochoa77/nvim.git";
+      flake = false;
+      };
+     
+      dwmDotfiles = { 
+      url = "git+https://github.com/dbochoa77/dwmRepo.git";
+      flake = false;
+      };
 
-    #agenix.url = "github:ryantm/agenix";
-    
-    nvimDotfiles = {
-    url = "git+https://github.com/dbochoa77/nvim.git";
-    flake = false;
+    #emacsDotfiles = { 
+    #  url = "git+https://github.com/dbochoa77/doomemacs.git";
+    #  flake = false;
+    #  };
     };
-  
-    dwmDotfiles = { 
-    url = "git+https://github.com/dbochoa77/dwmRepo.git";
-    flake = false;
-    };
-  };
 
   outputs = { 
 	self, 
-        #agenix,
 	dwmDotfiles,
 	nvimDotfiles,
 	home-manager,
@@ -38,11 +40,7 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;  
 
     in {
-    #packages =
-    #  forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; }
-    #);
-
-    overlays = import ./overlays {inherit inputs;};
+       overlays = import ./overlays {inherit inputs;};
 
     nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
@@ -52,10 +50,7 @@
 	  ];
 	};
       };
-      #agenix.nixosModules.default
-      #./hosts/nixos/configuration.nix was removed, working on fixing podman
-
-      homeConfigurations = { 
+         homeConfigurations = { 
         "nixos" = home-manager.lib.homeManagerConfiguration {
 	  pkgs = nixpkgs.legacyPackages."x86_64-linux";
 	  extraSpecialArgs = {inherit inputs outputs;};

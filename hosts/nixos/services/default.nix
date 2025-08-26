@@ -8,7 +8,6 @@
     ./encryption/default.nix
     ./flakes/default.nix
     ./fonts/default.nix
-    ./intelDrivers/default.nix
     ./internationisationProps/default.nix
     ./keymaps/default.nix
     ./networking/default.nix
@@ -21,5 +20,6 @@
     ./user/default.nix
     ./virtualization/default.nix
     ./xserver/default.nix
+    ./emacs/default.nix
   ];
 }

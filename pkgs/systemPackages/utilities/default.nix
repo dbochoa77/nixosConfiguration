@@ -3,6 +3,7 @@
   papirus-icon-theme
   curl
   wget
+  ripgrep
   rsync
   st
   unzip
