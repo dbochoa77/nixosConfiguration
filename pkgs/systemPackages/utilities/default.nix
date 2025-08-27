@@ -2,6 +2,7 @@
   dmenu
   papirus-icon-theme
   curl
+  gnuplot
   wget
   ripgrep
   rsync
@@ -9,6 +10,8 @@
   unzip
   zip
   zstd
+  poppler
+  poppler-utils
   p7zip
   ntfs3g
   dosfstools

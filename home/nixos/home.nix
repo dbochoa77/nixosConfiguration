@@ -15,5 +15,9 @@
     EDITOR = "nvim";
   };
 
+  #home.sessionPath = [
+  #    "$HOME/.emacs.d/bin:$PATH"
+  #];  
+
   programs.home-manager.enable = true;
 }
