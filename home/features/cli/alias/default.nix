@@ -55,6 +55,9 @@
       # Screenshots
       flameshot = "flameshot gui";
 
+      # emacs
+      emacs = "emacsclient -c -a 'emacs'";
+
       # Basic Commands
       c = "clear";
       h = "history";
@@ -93,7 +96,6 @@
  
       # Nix Config Rebuild
       rebuild = "cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
-      #doom = "sudo rm ~/.bashrc && source ~/.bashrc";
 
       # Neovim (root)
       v = "sudo -E nvim";
