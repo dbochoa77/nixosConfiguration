@@ -87,7 +87,7 @@
       github = "cd /home/dbochoa77/tech/github/workspace";
       hoyah = "cd /home/dbochoa77/work/military/USN";
       lifelong = "xrandr --output HDMI-1 --mode 1920x1080 --right-of eDP-1 --auto";
-      college = "cd /home/dbochoa77/education/education/college/school/mercedCollege/2025Fall";
+      college = "cd /home/dbochoa77/education/college/mercedCollege/2025Fall";
 
       # Git Shortcuts
       ga = "git add .";

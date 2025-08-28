@@ -1,8 +1,14 @@
 { pkgs }: with pkgs; [
   dmenu
+  aspell
+  aspellDicts.en
   papirus-icon-theme
   curl
   gnuplot
+  pdftk
+  imagemagick
+  #xournalpp
+  ghostscript
   wget
   ripgrep
   rsync
