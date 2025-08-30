@@ -6,6 +6,9 @@
   programs.emacs = {
     enable = true;
     package = pkgs.emacs29; # or emacs29-pgtk
+    extraPackages = epkgs: [
+      epkgs.pdf-tools   # brings pdf-tools + epdfinfo
+    ];
   };
 
   # (If you're linking Doom via inputs)

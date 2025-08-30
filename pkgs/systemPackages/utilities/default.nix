@@ -1,5 +1,7 @@
 { pkgs }: with pkgs; [
   dmenu
+  texlive.combined.scheme-full
+  (emacsPackagesFor pkgs.emacs).pdf-tools
   aspell
   aspellDicts.en
   papirus-icon-theme
@@ -7,7 +9,7 @@
   gnuplot
   pdftk
   imagemagick
-  #xournalpp
+  xournalpp
   ghostscript
   wget
   ripgrep

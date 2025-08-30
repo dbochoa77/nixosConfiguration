@@ -23,6 +23,7 @@
       "yt.latin" = "yt-dlp -x --audio-format mp3 -o \"~/music/latin/%(title)s.%(ext)s\"";
       "yt.rap" = "yt-dlp -x --audio-format mp3 -o \"~/music/rap/%(title)s.%(ext)s\"";
       "yt.altRock" = "yt-dlp -x --audio-format mp3 -o \"~/music/altRock/%(title)s.%(ext)s\"";
+      "yt.danceLatin" = "yt-dlp -x --audio-format mp3 -o \"~/music/danceLatin/%(title)s.%(ext)s\"";
   
       # MPV Shuffle Play
       "mpv.rock" = "mpv --shuffle ~/music/rock";
@@ -42,6 +43,7 @@
       "mpv.rap" = "mpv --shuffle ~/music/rap";
       "mpv.phonk" = "mpv --shuffle ~/music/phonk";
       "mpv.altRock" = "mpv --shuffle ~/music/altRock";
+      "mpv.danceLatin" = "mpv --shuffle ~/music/danceLatin";
 
 
       # Brightness Control
@@ -87,7 +89,7 @@
       github = "cd /home/dbochoa77/tech/github/workspace";
       hoyah = "cd /home/dbochoa77/work/military/USN";
       lifelong = "xrandr --output HDMI-1 --mode 1920x1080 --right-of eDP-1 --auto";
-      college = "cd /home/dbochoa77/education/college/mercedCollege/2025Fall";      
+      college = "cd /home/dbochoa77/education/college/mercedCollege/2025Fall";
 
       # Git Shortcuts
       ga = "git add .";
