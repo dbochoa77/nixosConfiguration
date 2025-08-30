@@ -1,4 +1,5 @@
 { pkgs }: with pkgs; [
+  gnutls
   dmenu
   texlive.combined.scheme-full
   (emacsPackagesFor pkgs.emacs).pdf-tools
