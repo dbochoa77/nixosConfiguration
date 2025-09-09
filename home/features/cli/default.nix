@@ -5,19 +5,10 @@
     ./bash_profile/default.nix
     ./xinitrc/default.nix
     ./picom/default.nix
+    ./direnv/default.nix
+    ./eza/default.nix
+    ./bat/default.nix
     ];
-
-
-  programs.eza = {
-    enable = true;
-    enableFishIntegration = true;
-    enableBashIntegration = true;
-    extraOptions = ["-l" "--icons" "--git" "-a"];
-  };
-
-  programs.bat = {enable = true;};
-
-
 
   home.packages = with pkgs; [
     coreutils 
