@@ -17,7 +17,6 @@
    useUserPackages = true;
    extraSpecialArgs = { inherit inputs outputs; };
    users.dbochoa77 = 
-   import ../../home/nixos/dbochoa77.nix; 
-  
+   import ../../home/nixos/dbochoa77.nix;   
    }; 
 }
