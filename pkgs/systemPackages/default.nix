@@ -15,3 +15,5 @@
 ( import ./utilities{ inherit pkgs; })
 ++
 ( import ./python{ inherit pkgs; })
+++ 
+( import ./audio{ inherit pkgs; })
