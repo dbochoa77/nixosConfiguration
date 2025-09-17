@@ -19,10 +19,10 @@
       flake = false;
       };
 
-    #emacsDotfiles = { 
-    #  url = "git+https://github.com/dbochoa77/doomemacs.git";
-    #  flake = false;
-    #  };
+      nixos-boot = { 
+      url = "git+https://github.com/dbochoa77/nixos-boot.git";
+      flake = false;
+      };
     };
 
   outputs = { 
@@ -30,6 +30,7 @@
 	dwmDotfiles,
 	nvimDotfiles,
 	home-manager,
+	nixos-boot,
 	nixpkgs,
 	...
     } @ inputs: let

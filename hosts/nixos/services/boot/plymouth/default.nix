@@ -1,33 +1,24 @@
 { config, pkgs, ... }:
 
 {
-  boot = {
+  nixos-boot = {
+    enable  = true;
 
-    plymouth = {
-      enable = true;
-      theme = "rings";
-      themePackages = with pkgs; [
-        # By default we would install all themes
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "rings" ];
-        })
-      ];
-    };
+    # Pick one: "load_unload" (growing/shrinking Nix logo) or "evil-nixos" (spinning logo)
+    theme = "load_unload";
 
-    # Enable "Silent boot"
-    consoleLogLevel = 3;
-    initrd.verbose = false;
-    kernelParams = [
-      "quiet"
-      "splash"
-      "boot.shell_on_fail"
-      "udev.log_priority=3"
-      "rd.systemd.show_status=auto"
-    ];
-    # Hide the OS choice for bootloaders.
-    # It's still possible to open the bootloader list by pressing any key
-    # It will just not appear on screen unless a key is pressed
-    # loader.timeout = 0;
+    # Optional: background color (0–255 each)
+    bgColor = { red = 0; green = 0; blue = 0; };   # black
 
+    # Optional: force the splash to linger N seconds (helps on super-fast boots)
+    duration = 3.0;
+
+    # Different colors
+    # bgColor.red   = 100; # 0 - 255
+    # bgColor.green = 100; # 0 - 255
+    # bgColor.blue  = 100; # 0 - 255
+
+    # If you want to make sure the theme is seen when your computer starts too fast
+    # duration = 3; # in seconds
   };
 }

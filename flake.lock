@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757698511,
-        "narHash": "sha256-UqHHGydF/q3jfYXCpvYLA0TWtvByOp1NwOKCUjhYmPs=",
+        "lastModified": 1758119172,
+        "narHash": "sha256-LnVuGLf0PJHqqIHroxEzwXS57mjAdHSrXi0iODKbbiU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a3fcc92180c7462082cd849498369591dfb20855",
+        "rev": "9f408dc51c8e8216a94379e6356bdadbe8b4fef9",
         "type": "github"
       },
       "original": {
@@ -36,13 +36,29 @@
         "type": "github"
       }
     },
+    "nixos-boot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1757898256,
+        "narHash": "sha256-wFgPuKfInfv58fmnctSzs3zzJN6sRDUUXvVf+fbRE8A=",
+        "ref": "refs/heads/main",
+        "rev": "705d7efd405d9d58d7621fb88d1db56bfbaa0fac",
+        "revCount": 30,
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nixos-boot.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nixos-boot.git"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1757487488,
-        "narHash": "sha256-zwE/e7CuPJUWKdvvTCB7iunV4E/+G0lKfv4kk/5Izdg=",
+        "lastModified": 1757745802,
+        "narHash": "sha256-hLEO2TPj55KcUFUU1vgtHE9UEIOjRcH/4QbmfHNF820=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ab0f3607a6c7486ea22229b92ed2d355f1482ee0",
+        "rev": "c23193b943c6c689d70ee98ce3128239ed9e32d1",
         "type": "github"
       },
       "original": {
@@ -88,6 +104,7 @@
       "inputs": {
         "dwmDotfiles": "dwmDotfiles",
         "home-manager": "home-manager",
+        "nixos-boot": "nixos-boot",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "nvimDotfiles": "nvimDotfiles"
