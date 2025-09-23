@@ -8,6 +8,6 @@
     cmake
     simple-mtpfs
     pkg-config
+    libtool 
 ]
-
 

@@ -12,4 +12,6 @@
 ++ (import ./rice { inherit pkgs; })
 ++ (import ./terminal { inherit pkgs; })
 ++ (import ./utilities { inherit pkgs; })
+++ (import ./emacs { inherit pkgs; })
+
 
