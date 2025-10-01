@@ -6,7 +6,7 @@
     shellAliases = {
 
       # Youtube Downloader
-      yt = "yt-dlp";
+      "yt" = "yt-dlp";
       "yt.rock" = "yt-dlp -x --audio-format mp3 -o \"~/music/rock/%(title)s.%(ext)s\"";
       "yt.pop" = "yt-dlp -x --audio-format mp3 -o \"~/music/pop/%(title)s.%(ext)s\"";
       "yt.hipHop" = "yt-dlp -x --audio-format mp3 -o \"~/music/hipHop/%(title)s.%(ext)s\"";
@@ -24,7 +24,7 @@
       "yt.rap" = "yt-dlp -x --audio-format mp3 -o \"~/music/rap/%(title)s.%(ext)s\"";
       "yt.altRock" = "yt-dlp -x --audio-format mp3 -o \"~/music/altRock/%(title)s.%(ext)s\"";
       "yt.danceLatin" = "yt-dlp -x --audio-format mp3 -o \"~/music/danceLatin/%(title)s.%(ext)s\"";
-      "yt.russian" = "yt-dlp -x --audio-format mp3 -o \"~/music/russian/%(title)s.%(ext)s"";
+      "yt.russian" = "yt-dlp -x --audio-format mp3 -o \"~/music/russian/%(title)s.%(ext)s\"";
   
       # MPV Shuffle Play
       "mpv.rock" = "mpv --shuffle ~/music/rock";
