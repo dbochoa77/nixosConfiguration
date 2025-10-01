@@ -24,6 +24,7 @@
       "yt.rap" = "yt-dlp -x --audio-format mp3 -o \"~/music/rap/%(title)s.%(ext)s\"";
       "yt.altRock" = "yt-dlp -x --audio-format mp3 -o \"~/music/altRock/%(title)s.%(ext)s\"";
       "yt.danceLatin" = "yt-dlp -x --audio-format mp3 -o \"~/music/danceLatin/%(title)s.%(ext)s\"";
+      "yt.russian" = "yt-dlp -x --audio-format mp3 -o \"~/music/russian/%(title)s.%(ext)s"";
   
       # MPV Shuffle Play
       "mpv.rock" = "mpv --shuffle ~/music/rock";
@@ -44,6 +45,7 @@
       "mpv.phonk" = "mpv --shuffle ~/music/phonk";
       "mpv.altRock" = "mpv --shuffle ~/music/altRock";
       "mpv.danceLatin" = "mpv --shuffle ~/music/danceLatin";
+      "mpv.russian" = "mpv --shuffle ~/music/russian";
 
 
       # Brightness Control
