@@ -8,6 +8,7 @@
   papirus-icon-theme
   curl
   gnuplot
+  tmux
   pdftk
   imagemagick
   xournalpp
