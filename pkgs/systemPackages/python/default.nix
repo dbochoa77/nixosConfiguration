@@ -26,5 +26,8 @@
     ps.scikit-learn
     ps.opencv4
     ps.numba
+
+    # Rice
+    pywal
   ]))
 ]
