@@ -15,6 +15,7 @@
     ./ssh/default.nix
     ./stateVersion/default.nix
     ./steam/default.nix
+    ./system76/default.nix
     ./timezone/default.nix
     ./unfree/default.nix
     ./user/default.nix
