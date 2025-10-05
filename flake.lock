@@ -3,11 +3,11 @@
     "dwmDotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1759622640,
-        "narHash": "sha256-Dzfafh+E7MFd7Gp5Z8FwalG96MR5Pop/fIolsGmYaPk=",
+        "lastModified": 1759623665,
+        "narHash": "sha256-IuEeI2LwKZ/OwcK4AxKLc8uBstyNozKvLiTVM+1A+3c=",
         "ref": "refs/heads/main",
-        "rev": "7bd385072b8ab1c6b9248e19aa98b81beb76454e",
-        "revCount": 11,
+        "rev": "abcba4287467044032956c2a7d9da8957029936e",
+        "revCount": 12,
         "type": "git",
         "url": "https://github.com/dbochoa77/dwmRepo.git"
       },
@@ -87,11 +87,11 @@
     "nvimDotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1752018499,
-        "narHash": "sha256-UzDfqXYSskgF+YN+fN5x11PtKksBNtrSmgt6gKskDxE=",
+        "lastModified": 1759627603,
+        "narHash": "sha256-21qg0cZwL2TLbapEeN8ZHoj+IglwLyvSQ+MPtcpL13I=",
         "ref": "refs/heads/main",
-        "rev": "a7e4974e17d2633a3e788962f8ec385bd87c2d5f",
-        "revCount": 3,
+        "rev": "7797fe1b4885e512c4697bb910e024d60f200187",
+        "revCount": 4,
         "type": "git",
         "url": "https://github.com/dbochoa77/nvim.git"
       },
