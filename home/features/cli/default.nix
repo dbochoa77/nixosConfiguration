@@ -3,7 +3,7 @@
     ./alias/default.nix
     ./fastfetch/default.nix
     ./bash_profile/default.nix
-    ./xinitrc/default.nix
+    #./xinitrc/default.nix
     ./picom/default.nix
     ./direnv/default.nix
     ./eza/default.nix
