@@ -2,5 +2,6 @@
     dmenu
     feh
     picom
-    slock
+    hollywood
+    cmatrix
 ]
