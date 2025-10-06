@@ -1,4 +1,5 @@
-{ imports = [
+{ 
+  imports = [
     ./autostart/default.nix
     ./autoUpdate/default.nix
     ./bluetooth/default.nix

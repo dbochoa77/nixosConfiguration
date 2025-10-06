@@ -8,13 +8,12 @@
     outputs.overlays.additions
     outputs.overlays.modifications
     outputs.overlays.stable-packages
-
     ];
 
-    config = {
+  config = {
     allowUnfree = true;
+    };
   };
-};
 
   nix = {
     package = lib.mkDefault pkgs.nix;
