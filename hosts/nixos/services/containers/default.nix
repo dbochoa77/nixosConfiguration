@@ -1,6 +1,6 @@
 {
   imports = [
-    ./wireguard/default.nix
-    ./echo/default.nix
+    #./wireguard/default.nix
+    #./echo/default.nix
   ];
 }

@@ -3,11 +3,11 @@
     "dwmDotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1759633074,
-        "narHash": "sha256-+M+xkHkIsUnzcuVze+HM9P9K+QpFtg/q0u/jIiiMouQ=",
+        "lastModified": 1759655984,
+        "narHash": "sha256-wYaBxoTvtDuE0nlWzukHMWu7ZCgYqKOm+P3vnCQVzXo=",
         "ref": "refs/heads/main",
-        "rev": "b209721b55c1ee47919ef8244b8065536ecd1868",
-        "revCount": 13,
+        "rev": "0355e12d876463df85458097f1d1f4d470e6d21d",
+        "revCount": 15,
         "type": "git",
         "url": "https://github.com/dbochoa77/dwmRepo.git"
       },
@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759573136,
-        "narHash": "sha256-ILSPD0Dm8p0w0fCVzOx98ZH8yFDrR75GmwmH3fS2VnE=",
+        "lastModified": 1759761710,
+        "narHash": "sha256-6ZG7VZZsbg39gtziGSvCJKurhIahIuiCn+W6TGB5kOU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5f06ceafc6c9b773a776b9195c3f47bbe1defa43",
+        "rev": "929535c3082afdf0b18afec5ea1ef14d7689ff1c",
         "type": "github"
       },
       "original": {

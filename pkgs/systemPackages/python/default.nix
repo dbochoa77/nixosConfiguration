@@ -27,7 +27,5 @@
     ps.opencv4
     ps.numba
 
-    # Rice
-    pywal
   ]))
 ]

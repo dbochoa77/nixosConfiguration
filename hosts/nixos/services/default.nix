@@ -11,6 +11,7 @@
     ./internationisationProps/default.nix
     ./keymaps/default.nix
     ./networking/default.nix
+    ./ncsd/default.nix
     ./pipewire/default.nix
     ./ssh/default.nix
     ./stateVersion/default.nix

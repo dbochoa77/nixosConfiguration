@@ -9,5 +9,6 @@
     xorg.libXft
     xorg.libXinerama
     xorg.libXrandr
+    xorg.xev
     xterm
 ] 

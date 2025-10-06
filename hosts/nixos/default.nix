@@ -11,7 +11,6 @@
    inputs.home-manager.nixosModules.home-manager
   ];
 
-  extraServices.podman.enable = true;
 
   home-manager = {
    useUserPackages = true;

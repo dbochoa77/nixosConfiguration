@@ -1,16 +1,9 @@
 { config, ... }: { 
   imports = [ 
     ../dbochoa77
-    ../features/cli
-    #    ../features/gui
+    ../features/default.nix
     ./home.nix
-    ./dotfiles
+    ./default.nix
   ]; 
-
-  features = {
-    cli = {
-    fastfetch.enable = true;
-    };
-  };
 }
 
