@@ -3,10 +3,8 @@
 {
  imports = [
    ./hardware-configuration.nix
-    #./secrets.nix
    ./services
    ../dbochoa77
-   ../dbochoa77/extraServices
    ./configuration.nix
    inputs.home-manager.nixosModules.home-manager
   ];

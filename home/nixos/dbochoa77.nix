@@ -2,7 +2,7 @@
 
 { 
   imports = [ 
-    ../dbochoa77
+    ../dbochoa77/default.nix
     ../features/default.nix
     ./home.nix
     ./default.nix

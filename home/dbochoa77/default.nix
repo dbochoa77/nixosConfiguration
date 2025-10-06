@@ -1,18 +1,18 @@
-{ config, lib, outputs, pkgs, ... }: 
+{ config, lib, outputs, pkgs, ... }:
 
 {
-   nixpkgs = {
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
 
-    # Overlays
+  nixpkgs = {
     overlays = [
     outputs.overlays.additions
     outputs.overlays.modifications
     outputs.overlays.stable-packages
-    ];
 
-  config = {
-    allowUnfree = true;
-    };
+    ];
   };
 
   nix = {

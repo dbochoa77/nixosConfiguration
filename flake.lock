@@ -3,11 +3,11 @@
     "dwmDotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1759655984,
-        "narHash": "sha256-wYaBxoTvtDuE0nlWzukHMWu7ZCgYqKOm+P3vnCQVzXo=",
+        "lastModified": 1759791339,
+        "narHash": "sha256-cQQ2pSejyzJpgIPDuNEA7N3FLfZ4KoCXiR+0dya/nEs=",
         "ref": "refs/heads/main",
-        "rev": "0355e12d876463df85458097f1d1f4d470e6d21d",
-        "revCount": 15,
+        "rev": "ada3803627f2a61c596a1593a0e679203808a90e",
+        "revCount": 17,
         "type": "git",
         "url": "https://github.com/dbochoa77/dwmRepo.git"
       },

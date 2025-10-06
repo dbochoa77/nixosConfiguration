@@ -1,0 +1,1826 @@
+===== DIRECTORY STRUCTURE =====
+.
+├── allCode.txt
+├── bootstrap.sh
+├── flake.lock
+├── flake.nix
+├── home
+│   ├── dbochoa77
+│   │   └── default.nix
+│   ├── features
+│   │   ├── alacritty
+│   │   │   └── default.nix
+│   │   ├── alias
+│   │   │   └── default.nix
+│   │   ├── bash_profile
+│   │   │   └── default.nix
+│   │   ├── bat
+│   │   │   └── default.nix
+│   │   ├── default.nix
+│   │   ├── direnv
+│   │   │   └── default.nix
+│   │   ├── eza
+│   │   │   └── default.nix
+│   │   ├── fastfetch
+│   │   │   └── default.nix
+│   │   ├── github
+│   │   │   └── default.nix
+│   │   ├── picom
+│   │   │   └── default.nix
+│   │   └── xinitrc
+│   │       └── default.nix
+│   └── nixos
+│       ├── dbochoa77.nix
+│       ├── default.nix
+│       └── home.nix
+├── hosts
+│   ├── dbochoa77
+│   │   ├── default.nix
+│   │   ├── ;s
+│   │   └── users
+│   │       ├── dbochoa77.nix
+│   │       └── default.nix
+│   └── nixos
+│       ├── configuration.nix
+│       ├── default.nix
+│       ├── hardware-configuration.nix
+│       └── services
+│           ├── autostart
+│           │   └── default.nix
+│           ├── autoUpdate
+│           │   └── default.nix
+│           ├── bluetooth
+│           │   └── default.nix
+│           ├── boot
+│           │   ├── default.nix
+│           │   ├── latestKernel
+│           │   │   └── default.nix
+│           │   ├── plymouth
+│           │   │   └── default.nix
+│           │   └── systemd
+│           │       └── default.nix
+│           ├── cacReader
+│           │   └── default.nix
+│           ├── default.nix
+│           ├── emacs
+│           │   └── default.nix
+│           ├── encryption
+│           │   └── default.nix
+│           ├── flakes
+│           │   └── default.nix
+│           ├── fonts
+│           │   └── default.nix
+│           ├── internationisationProps
+│           │   └── default.nix
+│           ├── keymaps
+│           │   └── default.nix
+│           ├── ncsd
+│           │   └── default.nix
+│           ├── networking
+│           │   └── default.nix
+│           ├── pipewire
+│           │   └── default.nix
+│           ├── ssh
+│           │   └── default.nix
+│           ├── stateVersion
+│           │   └── default.nix
+│           ├── steam
+│           │   └── default.nix
+│           ├── system76
+│           │   └── default.nix
+│           ├── timezone
+│           │   └── default.nix
+│           ├── unfree
+│           │   └── default.nix
+│           ├── user
+│           │   └── default.nix
+│           ├── virtualization
+│           │   └── default.nix
+│           └── xserver
+│               └── default.nix
+├── overlays
+│   └── default.nix
+├── pkgs
+│   ├── default.nix
+│   ├── systemPackages
+│   │   ├── audio
+│   │   │   └── default.nix
+│   │   ├── cac
+│   │   │   └── default.nix
+│   │   ├── default.nix
+│   │   ├── developerTools
+│   │   │   └── default.nix
+│   │   ├── nixos-tools
+│   │   │   └── default.nix
+│   │   ├── opOrgMode
+│   │   │   └── default.nix
+│   │   ├── python
+│   │   │   └── default.nix
+│   │   ├── security
+│   │   │   └── default.nix
+│   │   ├── utilities
+│   │   │   └── default.nix
+│   │   ├── virtualization
+│   │   │   └── default.nix
+│   │   └── xorg
+│   │       └── default.nix
+│   └── userPackages
+│       ├── 3DPrinting
+│       │   └── default.nix
+│       ├── assembly
+│       │   └── default.nix
+│       ├── audio
+│       │   └── default.nix
+│       ├── browsers
+│       │   └── default.nix
+│       ├── comms
+│       │   └── default.nix
+│       ├── default.nix
+│       ├── editing
+│       │   └── default.nix
+│       ├── emacs
+│       │   └── default.nix
+│       ├── kicad
+│       │   └── default.nix
+│       ├── media
+│       │   └── default.nix
+│       ├── officesuite
+│       │   └── default.nix
+│       ├── rice
+│       │   └── default.nix
+│       ├── terminal
+│       │   └── default.nix
+│       └── utilities
+│           └── default.nix
+├── printAll.sh
+└── README.md
+
+73 directories, 82 files
+
+===== FILE CONTENTS =====
+
+===== ./.gitignore =====
+secrets/*.age
+secrets/
+
+===== ./allCode.txt =====
+
+===== ./home/features/xinitrc/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  xsession.enable = true;
+  xsession.windowManager.command = ''
+    #!/bin/sh
+    picom --config ~/.config/picom/picom.conf &
+
+     feh --no-fehbg --bg-scale /home/dbochoa77/personal/Wallpapers/hannibalCrossingTheAlps.jpg &
+
+    exec ~/.config/slstatus/slstatus &
+    exec ~/.config/dwm/dwm 
+    '';
+}
+
+    
+
+
+===== ./home/features/github/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  programs.git = {
+    enable = true;
+
+    userName  = "dbochoa77";
+    userEmail = "dbochoa77@proton.me";
+
+    #signing = {
+    #  key = "~/.ssh/id_ed25519";
+    #  signByDefault = true;
+    #};
+
+    extraConfig = {
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      gpg.format = "ssh";
+    };
+  };
+}
+
+===== ./home/features/eza/default.nix =====
+{ config, lib, pkgs, ... }:
+
+{
+  programs.eza = {
+    enable = true;
+    enableFishIntegration = true;
+    enableBashIntegration = true;
+    extraOptions = ["-l" "-a" "--icons" "--git"];
+  };
+}
+
+===== ./home/features/bash_profile/default.nix =====
+ { config, lib, pkgs, ... }:
+
+{
+  programs.bash.initExtra = ''
+    fastfetch
+
+    if [[ -z $DISPLAY && $(tty) == /dev/tty1 ]]; then
+       exec startx
+    fi
+  '';
+}
+
+
+
+
+===== ./home/features/default.nix =====
+{pkgs, ...}: {
+    imports = [
+    ./alias/default.nix
+    ./alacritty/default.nix
+    ./fastfetch/default.nix
+    ./bash_profile/default.nix
+    #./xinitrc/default.nix
+    ./picom/default.nix
+    ./direnv/default.nix
+    ./eza/default.nix
+    ./bat/default.nix
+    ];
+
+  home.packages = with pkgs; [
+    coreutils 
+    fd
+    htop
+    httpie
+    jq
+    procs
+    ripgrep
+    tldr
+    zip 
+  ];
+}
+
+===== ./home/features/picom/default.nix =====
+{
+  services.picom = {
+    enable = true;
+    backend = "glx";
+
+    settings = {
+      blur-method = "kernel";
+      blur-strength = 5;
+      opacity-rule = [
+        "85:class_g = 'Alacritty'"
+      ];
+    };
+  };
+}
+
+
+===== ./home/features/bat/default.nix =====
+{ config, lib, ... }:
+
+{
+  programs.bat = {enable = true;};
+}
+
+===== ./home/features/fastfetch/default.nix =====
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let 
+  cfg = config.features.cli.fastfetch;
+in {
+    options.features.cli.fastfetch.enable = mkEnableOption "enable fastfetch";
+
+    config = mkIf cfg.enable {
+        home.packages = with pkgs; [fastfetch];
+    };
+}
+
+
+
+===== ./home/features/direnv/default.nix =====
+{ config, lib, ... }:
+
+{
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;   # recommended, integrates nix flakes nicely
+  };
+}
+
+===== ./home/features/alacritty/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  programs.alacritty = {
+    enable = true;
+  
+    settings = {
+      font = {
+        normal = { family = "JetBrainsMono Nerd Font"; };
+        size = 16; # default zoom level
+      };
+    
+      colors = {
+        primary = {
+          background = "#2e3440";
+          foreground = "#d8dee9";
+          dim_foreground = "#a5abb6";
+        };
+  
+        cursor = {
+          text = "#2e3440";
+          cursor = "#d8dee9";
+        };
+  
+        vi_mode_cursor = {
+          text = "#2e3440";
+          cursor = "#d8dee9";
+        };
+  
+        selection = {
+          text = "CellForeground";
+          background = "#4c566a";
+        };
+  
+        search = {
+          matches = {
+            foreground = "CellBackground";
+            background = "#88c0d0";
+          };
+        };
+  
+        footer_bar = {
+          background = "#434c5e";
+          foreground = "#d8dee9";
+        };
+  
+        normal = {
+          black   = "#3b4252";
+          red     = "#bf616a";
+          green   = "#a3be8c";
+          yellow  = "#ebcb8b";
+          blue    = "#81a1c1";
+          magenta = "#b48ead";
+          cyan    = "#88c0d0";
+          white   = "#e5e9f0";
+        };
+  
+        bright = {
+          black   = "#4c566a";
+          red     = "#bf616a";
+          green   = "#a3be8c";
+          yellow  = "#ebcb8b";
+          blue    = "#81a1c1";
+          magenta = "#b48ead";
+          cyan    = "#8fbcbb";
+          white   = "#eceff4";
+        };
+  
+        dim = {
+          black   = "#373e4d";
+          red     = "#94545d";
+          green   = "#809575";
+          yellow  = "#b29e75";
+          blue    = "#68809a";
+          magenta = "#8c738c";
+          cyan    = "#6d96a5";
+          white   = "#aeb3bb";
+        };
+      };
+    };
+  };
+}
+
+===== ./home/features/alias/default.nix =====
+{ config, lib, ... }:
+
+{
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+
+      # Youtube Downloader
+      "yt" = "yt-dlp";
+      "yt.rock" = "yt-dlp -x --audio-format mp3 -o \"~/music/rock/%(title)s.%(ext)s\"";
+      "yt.pop" = "yt-dlp -x --audio-format mp3 -o \"~/music/pop/%(title)s.%(ext)s\"";
+      "yt.hipHop" = "yt-dlp -x --audio-format mp3 -o \"~/music/hipHop/%(title)s.%(ext)s\"";
+      "yt.rnbSoul" = "yt-dlp -x --audio-format mp3 -o \"~/music/rnbSoul/%(title)s.%(ext)s\"";
+      "yt.classical" = "yt-dlp -x --audio-format mp3 -o \"~/music/classical/%(title)s.%(ext)s\"";
+      "yt.country" = "yt-dlp -x --audio-format mp3 -o \"~/music/country/%(title)s.%(ext)s\"";
+      "yt.folk" = "yt-dlp -x --audio-format mp3 -o \"~/music/folk/%(title)s.%(ext)s\"";
+      "yt.jazz" = "yt-dlp -x --audio-format mp3 -o \"~/music/jazz/%(title)s.%(ext)s\"";
+      "yt.blues" = "yt-dlp -x --audio-format mp3 -o \"~/music/blues/%(title)s.%(ext)s\"";
+      "yt.electronic" = "yt-dlp -x --audio-format mp3 -o \"~/music/electronic/%(title)s.%(ext)s\"";
+      "yt.world" = "yt-dlp -x --audio-format mp3 -o \"~/music/world/%(title)s.%(ext)s\"";
+      "yt.gospel" = "yt-dlp -x --audio-format mp3 -o \"~/music/gospel/%(title)s.%(ext)s\"";
+      "yt.soundtrack" = "yt-dlp -x --audio-format mp3 -o \"~/music/soundtrack/%(title)s.%(ext)s\"";
+      "yt.latin" = "yt-dlp -x --audio-format mp3 -o \"~/music/latin/%(title)s.%(ext)s\"";
+      "yt.rap" = "yt-dlp -x --audio-format mp3 -o \"~/music/rap/%(title)s.%(ext)s\"";
+      "yt.altRock" = "yt-dlp -x --audio-format mp3 -o \"~/music/altRock/%(title)s.%(ext)s\"";
+      "yt.danceLatin" = "yt-dlp -x --audio-format mp3 -o \"~/music/danceLatin/%(title)s.%(ext)s\"";
+      "yt.russian" = "yt-dlp -x --audio-format mp3 -o \"~/music/russian/%(title)s.%(ext)s\"";
+  
+      # MPV Shuffle Play
+      "mpv.rock" = "mpv --shuffle ~/music/rock";
+      "mpv.pop" = "mpv --shuffle ~/music/pop";
+      "mpv.hipHop" = "mpv --shuffle ~/music/hipHop";
+      "mpv.rnbSoul" = "mpv --shuffle ~/music/rnbSoul";
+      "mpv.classical" = "mpv --shuffle ~/music/classical";
+      "mpv.country" = "mpv --shuffle ~/music/country";
+      "mpv.folk" = "mpv --shuffle ~/music/folk";
+      "mpv.jazz" = "mpv --shuffle ~/music/jazz";
+      "mpv.blues" = "mpv --shuffle ~/music/blues";
+      "mpv.electronic" = "mpv --shuffle ~/music/electronic";
+      "mpv.world" = "mpv --shuffle ~/music/world";
+      "mpv.gospel" = "mpv --shuffle ~/music/gospel";
+      "mpv.soundtrack" = "mpv --shuffle ~/music/soundtrack";
+      "mpv.latin" = "mpv --shuffle ~/music/latin";
+      "mpv.rap" = "mpv --shuffle ~/music/rap";
+      "mpv.phonk" = "mpv --shuffle ~/music/phonk";
+      "mpv.altRock" = "mpv --shuffle ~/music/altRock";
+      "mpv.danceLatin" = "mpv --shuffle ~/music/danceLatin";
+      "mpv.russian" = "mpv --shuffle ~/music/russian";
+
+
+      # Brightness Control
+      "bright.down" = "echo 2 | sudo tee /sys/class/backlight/acpi_video0/brightness";
+      "bright.up" = "echo 15 | sudo tee /sys/class/backlight/acpi_video0/brightness";
+      "bright.max" = "echo 18 | sudo tee /sys/class/backlight/acpi_video0/brightness";
+
+      # PDF
+      pdf = "mupdf";
+
+      # Screenshots
+      flameshot = "flameshot gui";
+
+      # emacs
+      emacs = "emacsclient -c -a 'emacs'";
+
+      # Basic Commands
+      c = "clear";
+      h = "history";
+      now = "date +%T";
+      grep = "rg";
+      ps = "procs";
+      top = "htop";
+      df = "df -h";
+      du = "du -sh";
+      t = "tree -L 2";
+
+      # File Listing
+      ls = "eza -a --icons --git";
+      la = "eza -la --icons --git";
+      lt = "eza -T --git-ignore --icons";
+      cat = "bat";
+      uglycat = "bat -p --style=plain --paging=never --decorations=never";
+
+      # Directory Movement
+      mkdir = "mkdir -p";
+      ".." = "cd ..";
+      "..." = "cd ../../";
+      "...." = "cd ../../../..";
+      ".4" = "cd ../../../../";
+      ".5" = "cd ../../../../../";
+      exam = "cd /home/dbochoa77/work/military/USN/trainingAndReadiness/training/examPrep";
+      github = "cd /home/dbochoa77/tech/github/workspace";
+      hoyah = "cd /home/dbochoa77/work/military/USN";
+      lifelong = "xrandr --output HDMI-1 --mode 1920x1080 --right-of eDP-1 --auto";
+      college = "cd /home/dbochoa77/education/college/mercedCollege/fall2025";
+
+      # Git Shortcuts
+      ga = "git add .";
+      gc = "git commit -m";
+      gs = "git status";
+ 
+      # Nix Config Rebuild
+      rebuild = "cd /home/dbochoa77/nixos && nix flake update && sudo nixos-rebuild switch --flake .#nixos && home-manager switch --flake .#nixos"; 
+
+      # Neovim (root)
+      v = "sudo -E nvim";
+    };
+
+    initExtra = ''
+      export PATH="$HOME/.config/emacs/bin:$PATH"
+        cd() {
+          if builtin cd "$@"; then
+            eza -a --icons --git
+          fi
+        }
+
+        fastfetch
+        ls -d -- * .*
+      '';
+  };
+}
+
+
+===== ./home/dbochoa77/default.nix =====
+{ config, lib, outputs, pkgs, ... }:
+
+{
+  #  nixpkgs.config = {
+  #    allowUnfree = true;
+  #    allowUnfreePredicate = _: true;
+  #  };
+
+  nixpkgs = {
+    overlays = [
+    outputs.overlays.additions
+    outputs.overlays.modifications
+    outputs.overlays.stable-packages
+
+    ];
+  };
+
+  nix = {
+    package = lib.mkDefault pkgs.nix;
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      warn-dirty = false;
+    };
+  };
+}
+
+===== ./home/nixos/dbochoa77.nix =====
+{ config, ... }: 
+
+{ 
+  imports = [ 
+    ../dbochoa77/default.nix
+    ../features/default.nix
+    ./home.nix
+    ./default.nix
+  ]; 
+}
+
+
+===== ./home/nixos/home.nix =====
+{ config, lib, pkgs, ... }:
+
+{
+  programs.home-manager.enable = true;
+
+  home.stateVersion = "24.05";
+  home.username = lib.mkDefault "dbochoa77";
+  home.homeDirectory = lib.mkDefault "/home/${config.home.username}"; 
+  home.packages = import ../../pkgs/userPackages { inherit pkgs; };
+
+  home.file = {
+  };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+ 
+  features = {
+    cli = {
+    fastfetch.enable = true;
+    };
+  };
+}
+
+
+===== ./home/nixos/default.nix =====
+{ inputs, ... }:
+
+{
+  home.file.".config/nvim" = { 
+    source = "${inputs.nvimDotfiles}/nvim";
+    recursive = true;
+  };
+  
+  home.file.".config/dwm" = { 
+    source = "${inputs.dwmDotfiles}/dwmRepo";
+    recursive = true;
+  };
+}
+
+===== ./flake.nix =====
+{
+  description = "Configuration for Nixos Server";
+    inputs = {
+      home-manager = {
+        url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+
+      
+      nvimDotfiles = {
+      url = "git+https://github.com/dbochoa77/nvim.git";
+      flake = false;
+      };
+     
+      dwmDotfiles = { 
+      url = "git+https://github.com/dbochoa77/dwmRepo.git";
+      flake = false;
+      };
+
+      nixos-boot = { 
+      url = "git+https://github.com/dbochoa77/nixos-boot.git";
+      flake = false;
+      };
+    };
+
+  outputs = { 
+	self, 
+	dwmDotfiles,
+	nvimDotfiles,
+	home-manager,
+	nixos-boot,
+	nixpkgs,
+	...
+    } @ inputs: let
+      inherit (self) outputs;
+      systems = [
+        "x86_64-linux"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;  
+
+    in {
+       overlays = import ./overlays {inherit inputs;};
+
+    nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+	  specialArgs = {inherit inputs outputs;};
+	  modules = [./hosts/nixos/default.nix
+		     ./hosts/nixos/hardware-configuration.nix
+	  ];
+	};
+      };
+         homeConfigurations = { 
+        "nixos" = home-manager.lib.homeManagerConfiguration {
+	  pkgs = nixpkgs.legacyPackages."x86_64-linux";
+	  extraSpecialArgs = {inherit inputs outputs;};
+	  modules = [./home/nixos/dbochoa77.nix];
+	};
+      };
+    };
+} 
+
+===== ./printAll.sh =====
+#!/usr/bin/env bash
+
+# Usage: ./printAll.sh /path/to/dir output.txt
+
+TARGET_DIR="${1:-.}"             # Default to current directory if not provided
+OUTPUT_FILE="${2:-allCode.txt}"     # Default output file name
+
+# Clear or create output file
+> "$OUTPUT_FILE"
+
+# Add directory tree structure (ignoring .git)
+echo "===== DIRECTORY STRUCTURE =====" >> "$OUTPUT_FILE"
+tree -I ".git" "$TARGET_DIR" >> "$OUTPUT_FILE"
+echo -e "\n===== FILE CONTENTS =====" >> "$OUTPUT_FILE"
+
+# Loop through all files except inside .git and append content
+find "$TARGET_DIR" -type f ! -path "*/.git/*" | while read -r file; do
+    echo -e "\n===== $file =====" >> "$OUTPUT_FILE"
+    cat "$file" >> "$OUTPUT_FILE"
+done
+
+echo "✅ All contents saved to $OUTPUT_FILE"
+
+
+===== ./overlays/default.nix =====
+{ inputs, ... }: {
+  # This one brings our custom packages from the 'pkgs' directory
+  additions = final: _prev: import ../pkgs { pkgs = final; };
+
+  # This one contains whatever you want to overlay
+  # You can change versions, add patches, set compilation flags, anything really.
+  # https://nixos.wiki/wiki/Overlays
+  modifications = final: prev:
+    {
+      # Patch vagrant to ignore broken symlink check
+      vagrant = prev.vagrant.overrideAttrs (old: {
+      dontFixup = true;
+      });
+    };
+
+  stable-packages = final: _prev: {
+    pkgsStable = import inputs.nixpkgs-stable {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
+}
+
+
+===== ./README.md =====
+nixosConfigruation 
+My NixOS configuration.
+===== ./pkgs/default.nix =====
+{ pkgs }:
+
+{
+  systemPackages = import ./systemPackages { inherit pkgs; };
+  userPackages   = import ./userPackages { inherit pkgs; };
+}
+
+
+
+===== ./pkgs/systemPackages/developerTools/default.nix =====
+{ pkgs }: with pkgs; [
+    gcc
+    git
+    gnumake
+    xclip 
+    ninja
+    gdb
+    cmake
+    simple-mtpfs
+    pkg-config
+    libtool 
+]
+
+
+===== ./pkgs/systemPackages/audio/default.nix =====
+{ pkgs }: with pkgs; [
+    alsa-utils
+    pamixer
+    playerctl
+]
+
+===== ./pkgs/systemPackages/opOrgMode/default.nix =====
+
+===== ./pkgs/systemPackages/xorg/default.nix =====
+{ pkgs }: with pkgs; [
+    xorg.xauth
+    xorg.xinit
+    xorg.xrandr        
+    xorg.xsetroot
+    xorg.setxkbmap
+    xorg.libX11
+    xorg.libXext
+    xorg.libXft
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.xev
+    xterm
+] 
+
+===== ./pkgs/systemPackages/python/default.nix =====
+{ pkgs }: with pkgs; [
+  (python3.withPackages (ps: with ps; [
+    # venv
+    direnv
+    nix-direnv          
+
+    # Core scientific
+    ps.numpy
+    ps.scipy
+    ps.sympy
+    ps.pandas
+    ps.matplotlib
+    ps.seaborn
+    ps.jupyter
+
+    # Electrical/control
+    ps.pyvisa
+    ps.pyserial
+    ps.spiderpy
+    ps.scikit-rf
+
+    # Utilities
+    ps.openpyxl
+    ps.h5py
+    ps.networkx
+    ps.scikit-learn
+    ps.opencv4
+    ps.numba
+
+  ]))
+]
+
+===== ./pkgs/systemPackages/virtualization/default.nix =====
+{ pkgs }: with pkgs; [
+    qemu
+    qemu_kvm
+    libvirt
+    virt-manager
+    spice-vdagent
+    virt-viewer
+    OVMF
+]
+
+
+# work in progress vagrant overlay:
+
+===== ./pkgs/systemPackages/utilities/default.nix =====
+{ pkgs }: with pkgs; [
+  gnutls
+  dmenu
+  texlive.combined.scheme-full
+  (emacsPackagesFor pkgs.emacs).pdf-tools
+  aspell
+  aspellDicts.en
+  papirus-icon-theme
+  curl
+  gnuplot
+  tmux
+  pdftk
+  imagemagick
+  xournalpp
+  ghostscript
+  wget
+  ripgrep
+  rsync
+  st
+  unzip
+  zip
+  zstd
+  poppler
+  poppler-utils
+  p7zip
+  ntfs3g
+  dosfstools
+  exfatprogs
+  util-linux
+  networkmanagerapplet
+  brightnessctl
+  htop
+  rtkit
+  timeshift
+  udisks
+]
+
+===== ./pkgs/systemPackages/nixos-tools/default.nix =====
+{ pkgs }: with pkgs; [
+    home-manager
+]
+
+===== ./pkgs/systemPackages/default.nix =====
+{ pkgs }: 
+
+( import ./developerTools { inherit pkgs; })
+++
+( import ./nixos-tools { inherit pkgs; })
+++
+( import ./security { inherit pkgs; })
+++
+( import ./virtualization { inherit pkgs; })
+++
+( import ./xorg { inherit pkgs; })
+++
+( import ./cac { inherit pkgs; })
+++ 
+( import ./utilities{ inherit pkgs; })
+++
+( import ./python{ inherit pkgs; })
+++ 
+( import ./audio{ inherit pkgs; })
+
+===== ./pkgs/systemPackages/security/default.nix =====
+{ pkgs }: with pkgs; [
+    openssl
+    nftables
+]
+
+===== ./pkgs/systemPackages/cac/default.nix =====
+{ pkgs }: with pkgs; [
+    ccid
+    nssTools
+    opensc
+    pcsc-tools
+    pcsclite
+]
+
+===== ./pkgs/userPackages/rice/default.nix =====
+{ pkgs }: with pkgs; [
+    dmenu
+    feh
+    picom
+    hollywood
+    cmatrix
+]
+
+===== ./pkgs/userPackages/media/default.nix =====
+{ pkgs }: with pkgs; [
+    vlc
+    mpv
+    yt-dlp
+    ffmpeg
+]
+
+===== ./pkgs/userPackages/audio/default.nix =====
+{ pkgs }: with pkgs; [
+    pavucontrol
+]
+
+===== ./pkgs/userPackages/kicad/default.nix =====
+{ pkgs }: with pkgs; [
+    kicad
+]
+
+===== ./pkgs/userPackages/assembly/default.nix =====
+{ pkgs }: with pkgs; [
+    nasm
+    yasm
+]
+
+
+===== ./pkgs/userPackages/utilities/default.nix =====
+{ pkgs }: with pkgs; [
+    nano
+    neovim
+    vim
+    cowsay
+    sutils
+    tree
+    flameshot
+    calc
+    units
+]
+
+===== ./pkgs/userPackages/emacs/default.nix =====
+{ pkgs }: with pkgs; [
+    nodePackages.mermaid-cli
+]
+
+===== ./pkgs/userPackages/3DPrinting/default.nix =====
+{ pkgs }: with pkgs; [
+    prusa-slicer
+    blender
+    freecad
+    librecad
+]
+
+===== ./pkgs/userPackages/officesuite/default.nix =====
+{ pkgs }: with pkgs; [
+    obsidian
+    libreoffice
+    thunderbird
+    pdfarranger
+    mupdf
+]
+
+===== ./pkgs/userPackages/default.nix =====
+{ pkgs }:
+
+(import ./3DPrinting { inherit pkgs; })
+++ (import ./assembly { inherit pkgs; })
+++ (import ./audio { inherit pkgs; })
+++ (import ./browsers { inherit pkgs; })
+++ (import ./comms { inherit pkgs; })
+++ (import ./editing { inherit pkgs; })
+++ (import ./kicad { inherit pkgs; })
+++ (import ./media { inherit pkgs; })
+++ (import ./officesuite { inherit pkgs; })
+++ (import ./rice { inherit pkgs; })
+++ (import ./terminal { inherit pkgs; })
+++ (import ./utilities { inherit pkgs; })
+++ (import ./emacs { inherit pkgs; })
+
+
+
+===== ./pkgs/userPackages/comms/default.nix =====
+{ pkgs }: with pkgs; [
+  signal-desktop
+  libnotify
+  discord
+]
+
+===== ./pkgs/userPackages/terminal/default.nix =====
+{ pkgs }: with pkgs; [
+    alacritty
+    zsh
+    fastfetch
+]
+
+===== ./pkgs/userPackages/browsers/default.nix =====
+{ pkgs }: with pkgs; [
+    brave
+    librewolf
+]
+
+===== ./pkgs/userPackages/editing/default.nix =====
+{ pkgs }: with pkgs; [
+    gimp 
+    inkscape
+    obs-studio
+    ffmpeg
+]
+
+===== ./bootstrap.sh =====
+#!/usr/bin/env bash
+
+set -e
+
+# Variables
+XINITRC="$HOME/.xinitrc"
+
+echo "[*] Changing Repo Name to Nixos"
+mv /home/dbochoa77/nixosConfiguration /home/dbochoa77/nixos
+
+echo "[*] Moving hardware configuration"
+sudo mv /etc/nixos/hardware-configuration.nix /home/dbochoa77/nixos/hosts/nixos/
+
+echo "[*] Removing Nixos Legacy Location"
+sudo rm -fr /etc/nixos
+
+echo "[*] Updating Nixos Flake Channel..."
+nix flake update 
+
+echo "[*] Rebuilding NixOS system..."
+sudo nixos-rebuild switch --flake .#nixos
+
+echo "[*] Updating Home Manager configuration..."
+home-manager switch --flake .#nixos
+
+echo "[*] Creating .xinitrc..."
+cat > "$XINITRC" <<EOF
+#!/bin/sh
+
+# Launch DWM
+exec ~/.config/dwm/dwm
+
+# Compositor
+picom --config ~/.config/picom.conf &
+
+# Set wallpaper 
+feh --no-fehbg --bg-scale /home/dbochoa77/personal/Wallpapers/hannibalCrossingTheAlps.jpg &
+
+EOF
+
+chmod +x "$XINITRC"
+
+echo "[*] .xinitrc created successfully."
+echo "[*] Done! You can start your DWM session with 'startx'."
+
+echo "[*] Removing Bootstrap.sh, Thank you !!"
+rm ~/nixos/bootstrap.sh
+
+===== ./flake.lock =====
+{
+  "nodes": {
+    "dwmDotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759655984,
+        "narHash": "sha256-wYaBxoTvtDuE0nlWzukHMWu7ZCgYqKOm+P3vnCQVzXo=",
+        "ref": "refs/heads/main",
+        "rev": "0355e12d876463df85458097f1d1f4d470e6d21d",
+        "revCount": 15,
+        "type": "git",
+        "url": "https://github.com/dbochoa77/dwmRepo.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/dbochoa77/dwmRepo.git"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759761710,
+        "narHash": "sha256-6ZG7VZZsbg39gtziGSvCJKurhIahIuiCn+W6TGB5kOU=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "929535c3082afdf0b18afec5ea1ef14d7689ff1c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixos-boot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1757898256,
+        "narHash": "sha256-wFgPuKfInfv58fmnctSzs3zzJN6sRDUUXvVf+fbRE8A=",
+        "ref": "refs/heads/main",
+        "rev": "705d7efd405d9d58d7621fb88d1db56bfbaa0fac",
+        "revCount": 30,
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nixos-boot.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nixos-boot.git"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1759381078,
+        "narHash": "sha256-gTrEEp5gEspIcCOx9PD8kMaF1iEmfBcTbO0Jag2QhQs=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7df7ff7d8e00218376575f0acdcc5d66741351ee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1735563628,
+        "narHash": "sha256-OnSAY7XDSx7CtDoqNh8jwVwh4xNL/2HaJxGjryLWzX8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "b134951a4c9f3c995fd7be05f3243f8ecd65d798",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nvimDotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759627603,
+        "narHash": "sha256-21qg0cZwL2TLbapEeN8ZHoj+IglwLyvSQ+MPtcpL13I=",
+        "ref": "refs/heads/main",
+        "rev": "7797fe1b4885e512c4697bb910e024d60f200187",
+        "revCount": 4,
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nvim.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/dbochoa77/nvim.git"
+      }
+    },
+    "root": {
+      "inputs": {
+        "dwmDotfiles": "dwmDotfiles",
+        "home-manager": "home-manager",
+        "nixos-boot": "nixos-boot",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-stable": "nixpkgs-stable",
+        "nvimDotfiles": "nvimDotfiles"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
+
+===== ./hosts/dbochoa77/;s =====
+{ lib, pkgs, inputs, outputs, ... }: 
+
+{
+  imports = [
+	./users 
+	inputs.home-manager.nixosModules.home-manager
+  ];
+  home-manager = { 
+    useUserPackages = true;
+    extraSpecialArgs = {inherit inputs outputs; };
+  };
+
+  nixpkgs = {
+ 
+    overlays = [
+
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.stable-packages
+
+    ];
+
+  # Allows Closed Sourced packages
+    config = {
+      allowUnfree = true;
+    };
+  };
+
+  # Experimental Features Nix-command and Flakes
+  nix = { 
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = [
+        "root"
+	"dbochoa77"
+      ];
+    };
+
+    # Automaticlly Cleans Nixos Generations 30d older
+    gc = { 
+      automatic = true; 
+      options = "--delete-older-than 30d";
+    };
+   
+    optimise.automatic = true;
+ 
+    registry = 
+      (lib.mapAttrs (_: flake: {inherit flake;}))
+      ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+    # nixPath = [
+    #   "nixpkgs=${pkgs.path}"
+    #   "nixos-config=${toString ../../hosts/nixos/default.nix}"
+    # ];
+  };
+}
+
+
+===== ./hosts/dbochoa77/users/dbochoa77.nix =====
+{ config, pkgs, inputs, ... }: 
+
+{ 
+  #users.users.dbochoa77 = {
+  #  isNormalUser = true;
+  #  description = "username";
+  #  extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
+  #
+  #  packages = [inputs.home-manager.packages.${pkgs.system}.default];
+  #};
+
+  home-manager.users.dbochoa77 =
+    import ../../../home/dbochoa77/default.nix;
+ }
+
+===== ./hosts/dbochoa77/users/default.nix =====
+{
+  imports = [./dbochoa77.nix];
+}
+
+
+===== ./hosts/dbochoa77/default.nix =====
+{ lib, pkgs, inputs, outputs, ... }: 
+
+{
+  imports = [
+	./users 
+	inputs.home-manager.nixosModules.home-manager
+  ];
+  home-manager = { 
+    useUserPackages = true;
+    extraSpecialArgs = {inherit inputs outputs; };
+  };
+
+  nixpkgs = {
+ 
+    overlays = [
+
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.stable-packages
+
+    ];
+
+  # Allows Closed Sourced packages
+    config = {
+      allowUnfree = true;
+    };
+  };
+
+  # Experimental Features Nix-command and Flakes
+  nix = { 
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = [
+        "root"
+	"dbochoa77"
+      ];
+    };
+
+    # Automaticlly Cleans Nixos Generations 30d older
+    gc = { 
+      automatic = true; 
+      options = "--delete-older-than 30d";
+    };
+   
+    optimise.automatic = true;
+ 
+    registry = 
+      (lib.mapAttrs (_: flake: {inherit flake;}))
+      ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  };
+}
+
+
+===== ./hosts/nixos/services/keymaps/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+}
+
+===== ./hosts/nixos/services/bluetooth/default.nix =====
+{ config, pkgs, ... }: 
+
+{
+  services.pipewire.wireplumber.extraConfig."10-bluez" = {
+        "monitor.bluez.properties" = {
+          "bluez5.enable-sbc-xq" = true;
+          "bluez5.enable-msbc" = true;
+          "bluez5.enable-hw-volume" = true;
+          "bluez5.roles" = [
+            "hsp_hs"
+            "hsp_ag"
+            "hfp_hf"
+            "hfp_ag"
+            ];
+         };
+      };
+
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Name = "Hello";
+        ControllerMode = "dual";
+        FastConnectable = "true";
+        Experimental = "true";
+      };
+      Policy = {
+        AutoEnable = "true";
+      };
+    };
+  };
+
+   services.blueman.enable = true;
+}
+
+===== ./hosts/nixos/services/internationisationProps/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
+}
+
+===== ./hosts/nixos/services/cacReader/default.nix =====
+{ config, pkgs, ... }:
+
+{
+    services.pcscd.enable = true;
+}
+
+===== ./hosts/nixos/services/networking/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  networking.hostName = "nixos";
+  networking.networkmanager.enable = true;
+  networking.firewall.enable = true;
+}
+
+
+===== ./hosts/nixos/services/encryption/default.nix =====
+{ config, pkgs, lib, ... }:
+
+{      
+  boot.initrd.luks.devices."luks-6f5a683b-a714-46fb-88b5-db4d59342ef4".device = "/dev/disk/by-uuid/6f5a683b-a714-46fb-88b5-db4d59342ef4";
+}
+
+===== ./hosts/nixos/services/virtualization/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  programs.virt-manager.enable = true;
+
+  users.users.dbochoa77.extraGroups = [ "libvirtd" "kvm" ];
+
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        };
+    };
+
+    spiceUSBRedirection.enable = true;
+  };
+
+}
+
+
+===== ./hosts/nixos/services/fonts/default.nix =====
+{ pkgs, config, ... }:
+
+{
+    fonts.packages = with pkgs; [
+      nerd-fonts._3270
+      nerd-fonts.agave
+      nerd-fonts.anonymice
+      nerd-fonts.arimo
+      nerd-fonts.aurulent-sans-mono
+      nerd-fonts.bigblue-terminal
+      nerd-fonts.bitstream-vera-sans-mono
+      nerd-fonts.blex-mono
+      nerd-fonts.caskaydia-cove
+      nerd-fonts.caskaydia-mono
+      nerd-fonts.code-new-roman
+      nerd-fonts.comic-shanns-mono
+      nerd-fonts.commit-mono
+      nerd-fonts.cousine
+      nerd-fonts.d2coding
+      nerd-fonts.daddy-time-mono
+      nerd-fonts.departure-mono
+      nerd-fonts.dejavu-sans-mono
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.envy-code-r
+      nerd-fonts.fantasque-sans-mono
+      nerd-fonts.fira-code
+      nerd-fonts.fira-mono
+      nerd-fonts.geist-mono
+      nerd-fonts.go-mono
+      nerd-fonts.gohufont
+      nerd-fonts.hack
+      nerd-fonts.hasklug
+      nerd-fonts.heavy-data
+      nerd-fonts.hurmit
+      nerd-fonts.im-writing
+      nerd-fonts.inconsolata
+      nerd-fonts.inconsolata-go
+      nerd-fonts.inconsolata-lgc
+      nerd-fonts.intone-mono
+      nerd-fonts.iosevka
+      nerd-fonts.iosevka-term
+      nerd-fonts.iosevka-term-slab
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.lekton
+      nerd-fonts.liberation
+      nerd-fonts.lilex
+      nerd-fonts.martian-mono
+      nerd-fonts.meslo-lg
+      nerd-fonts.monaspace
+      nerd-fonts.monofur
+      nerd-fonts.monoid
+      nerd-fonts.mononoki
+      nerd-fonts.noto
+      nerd-fonts.open-dyslexic
+      nerd-fonts.overpass
+      nerd-fonts.profont
+      nerd-fonts.proggy-clean-tt
+      nerd-fonts.recursive-mono
+      nerd-fonts.roboto-mono
+      nerd-fonts.shure-tech-mono
+      nerd-fonts.sauce-code-pro
+      nerd-fonts.space-mono
+      nerd-fonts.symbols-only
+      nerd-fonts.terminess-ttf
+      nerd-fonts.tinos
+      nerd-fonts.ubuntu
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.ubuntu-sans
+      nerd-fonts.victor-mono
+      nerd-fonts.zed-mono
+      font-awesome
+   ];
+}
+
+===== ./hosts/nixos/services/stateVersion/default.nix =====
+{ config, pkgs, ... }:
+
+{ 
+  system.stateVersion = "25.11";
+}
+
+===== ./hosts/nixos/services/emacs/default.nix =====
+{ config, pkgs, ... }:
+
+{
+    services.emacs = {
+        enable = true;
+    };
+}
+
+===== ./hosts/nixos/services/autoUpdate/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  system.autoUpgrade = {
+    enable = true;
+
+    # Point to your flake (use a string ref). Include the host attr if you want.
+    flake = "/home/admin/Homelab/nixosBase#nixos";
+
+    # nixos-rebuild flags:
+    flags = [
+      "-L"                           # show logs
+      "--update-input" "nixpkgs"     # update nixpkgs only (or use --recreate-lock-file)
+      "--commit-lock-file"           # commit updated flake.lock (requires the repo to be a git repo)
+    ];
+
+    operation = "switch";            # default
+    dates = "02:00";                 # daily at 02:00
+    randomizedDelaySec = "45min";    # spread updates
+    persistent = true;               # run after boot if missed
+    allowReboot = true;              # reboot automatically if needed (kernel, etc.)
+  };
+}
+
+
+===== ./hosts/nixos/services/ssh/default.nix =====
+{ config, pkgs, ... }:
+
+{  
+  services.openssh = {
+     enable = true;
+     settings.PermitRootLogin = "no";
+     allowSFTP = true;
+   };
+
+    services.openssh.extraConfig = ''
+    X11Forwarding yes
+    X11DisplayOffset 10
+    X11UseLocalhost yes
+  '';
+
+  services.openssh.settings.X11Forwarding = true;
+  
+}
+
+===== ./hosts/nixos/services/xserver/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  services.xserver.displayManager.startx.enable = true;
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "modesetting" ];
+}
+
+
+===== ./hosts/nixos/services/default.nix =====
+{ 
+  imports = [
+    ./autostart/default.nix
+    ./autoUpdate/default.nix
+    ./bluetooth/default.nix
+    ./boot/default.nix
+    ./cacReader/default.nix
+    ./encryption/default.nix
+    ./flakes/default.nix
+    ./fonts/default.nix
+    ./internationisationProps/default.nix
+    ./keymaps/default.nix
+    ./networking/default.nix
+    ./ncsd/default.nix
+    ./pipewire/default.nix
+    ./ssh/default.nix
+    ./stateVersion/default.nix
+    ./steam/default.nix
+    ./system76/default.nix
+    ./timezone/default.nix
+    ./unfree/default.nix
+    ./user/default.nix
+    ./virtualization/default.nix
+    ./xserver/default.nix
+    ./emacs/default.nix
+  ];
+}
+
+===== ./hosts/nixos/services/system76/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  services.system76-scheduler.enable = true;
+  #services.system76-power.enable = true;
+
+  environment.systemPackages = [
+    pkgs.system76-scheduler
+  ];
+}
+
+===== ./hosts/nixos/services/timezone/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  time.timeZone = "America/Los_Angeles";
+}
+
+===== ./hosts/nixos/services/flakes/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "dbochoa77"];
+  };
+
+  home-manager.backupFileExtension = "backup";
+
+}
+
+
+===== ./hosts/nixos/services/user/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  users.users.dbochoa77 = {
+    isNormalUser = true;
+    description = "dbochoa77";
+    extraGroups = [ "media" "networkmanager" "wheel" "docker" ];
+  };
+}
+
+===== ./hosts/nixos/services/unfree/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  nixpkgs.config.allowUnfree = true;    
+}
+
+===== ./hosts/nixos/services/boot/systemd/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    };
+}
+
+===== ./hosts/nixos/services/boot/latestKernel/default.nix =====
+{ config, pkgs, ... }:
+
+{
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+}
+
+===== ./hosts/nixos/services/boot/default.nix =====
+{
+  imports = [
+    ./systemd/default.nix
+    #    ./plymouth/default.nix
+    ./latestKernel/default.nix
+  ];
+}
+
+===== ./hosts/nixos/services/boot/plymouth/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  nixos-boot = {
+    enable  = true;
+
+    # Pick one: "load_unload" (growing/shrinking Nix logo) or "evil-nixos" (spinning logo)
+    theme = "load_unload";
+
+    # Optional: background color (0–255 each)
+    bgColor = { red = 0; green = 0; blue = 0; };   # black
+
+    # Optional: force the splash to linger N seconds (helps on super-fast boots)
+    duration = 3.0;
+
+    # Different colors
+    # bgColor.red   = 100; # 0 - 255
+    # bgColor.green = 100; # 0 - 255
+    # bgColor.blue  = 100; # 0 - 255
+
+    # If you want to make sure the theme is seen when your computer starts too fast
+    # duration = 3; # in seconds
+  };
+}
+
+===== ./hosts/nixos/services/pipewire/default.nix =====
+{ config, pkgs, ... }:
+
+{ 
+
+  security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true; # if not already enabled
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+      wireplumber.enable = true;
+    };
+  
+    services.pulseaudio.enable = false;
+  
+}
+
+===== ./hosts/nixos/services/autostart/default.nix =====
+{ config, pkgs, ... }:
+
+{ 
+  services.getty.autologinUser = "dbochoa77";
+}
+
+===== ./hosts/nixos/services/ncsd/default.nix =====
+{ lib, config, pkgs, ... }:
+
+{
+  # in your NixOS config
+  services.nscd.enable = true;
+  system.nssModules = lib.mkForce []; 
+  services.nscd.package = pkgs.glibc;          # use classic glibc nscd (not nsncd)
+}
+
+===== ./hosts/nixos/services/steam/default.nix =====
+{ config, pkgs, ... }:
+
+{
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
+
+  environment.systemPackages = with pkgs; [
+    steam
+  ];
+}
+
+===== ./hosts/nixos/configuration.nix =====
+{ config, pkgs, lib, ... }:
+
+{
+
+  environment.systemPackages = import ../../pkgs/systemPackages {inherit pkgs; };
+
+}
+
+===== ./hosts/nixos/default.nix =====
+{ config, inputs, outputs, lib, pkgs, ... }:
+
+{
+ imports = [
+   ./hardware-configuration.nix
+   ./services
+   ../dbochoa77
+   ./configuration.nix
+   inputs.home-manager.nixosModules.home-manager
+  ];
+
+
+  home-manager = {
+   useUserPackages = true;
+   extraSpecialArgs = { inherit inputs outputs; };
+   users.dbochoa77 = 
+   import ../../home/nixos/dbochoa77.nix;   
+   }; 
+}
+
+===== ./hosts/nixos/hardware-configuration.nix =====
+# Do not modify this file!  It was generated by ‘nixos-generate-config’
+# and may be overwritten by future invocations.  Please make changes
+# to /etc/nixos/configuration.nix instead.
+{ config, lib, pkgs, modulesPath, ... }:
+
+{
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/950941a4-e959-4e9a-8a05-8a5a4c8a4ddb";
+      fsType = "ext4";
+    };
+
+  boot.initrd.luks.devices."luks-95ba61d7-adce-435d-84f8-c9551c8c035e".device = "/dev/disk/by-uuid/95ba61d7-adce-435d-84f8-c9551c8c035e";
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/63CE-0BD9";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/cf1f3af9-8a03-416a-9426-50b875215172"; }
+    ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s20f0u1c2.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp46s0f0.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+}

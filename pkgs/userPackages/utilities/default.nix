@@ -8,4 +8,5 @@
     flameshot
     calc
     units
+    slock
 ]

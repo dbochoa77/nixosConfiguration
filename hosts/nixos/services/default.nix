@@ -5,7 +5,6 @@
     ./bluetooth/default.nix
     ./boot/default.nix
     ./cacReader/default.nix
-    ./containers/default.nix
     ./encryption/default.nix
     ./flakes/default.nix
     ./fonts/default.nix
@@ -19,10 +18,11 @@
     ./steam/default.nix
     ./system76/default.nix
     ./timezone/default.nix
-    ./unfree/default.nix
+    #./unfree/default.nix
     ./user/default.nix
     ./virtualization/default.nix
     ./xserver/default.nix
     ./emacs/default.nix
+    ./slock/default.nix
   ];
 }

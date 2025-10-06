@@ -3,15 +3,16 @@
 {
   programs.home-manager.enable = true;
 
-  home = { 
-    username = lib.mkDefault "dbochoa77";
-    packages = import ../../pkgs/userPackages { inherit pkgs; };
-    homeDirectory = lib.mkDefault "/home/${config.home.username}";
-    stateVersion = "24.05";
+  home.stateVersion = "24.05";
+  home.username = lib.mkDefault "dbochoa77";
+  home.homeDirectory = lib.mkDefault "/home/${config.home.username}"; 
+  home.packages = import ../../pkgs/userPackages { inherit pkgs; };
 
-    sessionVariables = {
-      EDITOR = "nvim";
-    };
+  home.file = {
+  };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
   };
  
   features = {
@@ -20,3 +21,4 @@
     };
   };
 }
+
