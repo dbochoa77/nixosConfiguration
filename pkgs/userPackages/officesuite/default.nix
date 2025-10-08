@@ -1,6 +1,6 @@
 { pkgs }: with pkgs; [
     obsidian
-    libreoffice
+    #    libreoffice
     thunderbird
     pdfarranger
     mupdf
