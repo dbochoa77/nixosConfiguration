@@ -1,5 +1,5 @@
 { pkgs }: with pkgs; [
     alsa-utils
-    pamixer
+    #    pamixer
     playerctl
 ]
