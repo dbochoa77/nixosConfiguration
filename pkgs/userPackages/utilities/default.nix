@@ -8,4 +8,6 @@
     flameshot
     calc
     units
+    wineWowPackages.stable  
+    winetricks              
 ]
