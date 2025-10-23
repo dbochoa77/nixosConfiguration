@@ -33,4 +33,6 @@
   rtkit
   timeshift
   udisks
+  graphviz
 ]
+

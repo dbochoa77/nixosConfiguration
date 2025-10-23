@@ -113,7 +113,6 @@
           fi
         }
 
-        fastfetch
         ls -d -- * .*
       '';
   };

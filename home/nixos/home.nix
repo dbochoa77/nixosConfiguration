@@ -14,11 +14,5 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
- 
-  features = {
-    cli = {
-    fastfetch.enable = true;
-    };
-  };
 }
 

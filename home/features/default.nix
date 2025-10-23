@@ -2,7 +2,6 @@
     imports = [
     ./alias/default.nix
     ./alacritty/default.nix
-    ./fastfetch/default.nix
     ./bash_profile/default.nix
     #./xinitrc/default.nix
     ./picom/default.nix
